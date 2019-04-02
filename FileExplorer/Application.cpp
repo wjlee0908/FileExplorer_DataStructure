@@ -188,5 +188,6 @@ int Application::WriteDataToFile()
 
 	output_file_.close();	// file close
 	*/
+
 	return 1;
 }
