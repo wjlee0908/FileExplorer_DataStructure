@@ -76,7 +76,7 @@ int FolderType::AddSubFolder() {
 	string new_folder_path;
 
 	if (num_sub_folder_ == 0) {
-		sub_folder_list_ = new SortedArrayList;
+		sub_folder_list_ = new SortedArrayList<FolderType>;
 	}
 	// 리스트 차면 폴더 추가 실패
 	else if(sub_folder_list_->IsFull()) {

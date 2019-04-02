@@ -148,7 +148,6 @@ int Application::ReadDataFromFile()
 	{
 		// array에 학생들의 정보가 들어있는 structure 저장
 		data.ReadDataFromFile(input_file_);
-		// folder_list_.Add(data);
 	}
 
 	input_file_.close();	// file close

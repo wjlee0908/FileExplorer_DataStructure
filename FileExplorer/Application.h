@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-#include "SortedArrayList.h"
+#include "FolderType.h"
 
 #define FILENAMESIZE 1024
 
@@ -127,7 +127,6 @@ public:
 private:
 	ifstream input_file_;		///< input file descriptor.
 	ofstream output_file_;		///< output file descriptor.
-	SortedArrayList folder_list_;		///< item list.
 	FolderType root_folder_;    ///< default root folder
 	FolderType* current_folder_;   ///< current working folder.
 	int menu_command_;			///< current command number.

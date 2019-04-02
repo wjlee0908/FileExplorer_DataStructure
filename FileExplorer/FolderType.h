@@ -8,11 +8,10 @@
 #include <stdexcept>
 #include <time.h>
 #include <iomanip>
+#include "SortedArrayList.h"
+
 
 using namespace std;
-
-// 서로 include 하는 에러 막기 위해 include 하기 전 이름 선언
-class SortedArrayList;
 
 /**
 *	Relation between two items.
@@ -85,7 +84,7 @@ public:
 	*	@post	none.
 	*	@return	address of sub folders list.
 	*/
-	const SortedArrayList* GetSubFolders() {
+	const SortedArrayList<FolderType>* GetSubFolders() {
 		return sub_folder_list_;
 	}
 
@@ -351,7 +350,7 @@ protected:
 	string name_;		///< folder name.
 	string path_;       ///< folder path.
 	string created_date_;    ///< date that folder created.
-	SortedArrayList* sub_folder_list_;   ///< sorted sub folder list
+	SortedArrayList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
 };
 
 #endif	// _FOLDERTYPE_H
