@@ -24,14 +24,6 @@ void FolderType::GenerateCreatedDate() {
 
 }
 
-// Set folder id from keyboard.
-void FolderType::SetIdFromKeyboard()
-{
-	cout << "\tID : ";
-	cin >> id_;
-}
-
-
 // Set folder name from keyboard.
 void FolderType::SetNameFromKeyboard()
 {
@@ -51,7 +43,6 @@ void FolderType::SetPathFromKeyboard()
 // Set folder record from keyboard.
 void FolderType::SetRecordFromKeyboard()
 {
-	SetIdFromKeyboard();
 	SetNameFromKeyboard();
 }
 
@@ -108,7 +99,6 @@ int FolderType::AddSubFolder() {
 // Read a record from file.
 int FolderType::ReadDataFromFile(ifstream& fin)
 {
-	fin >> id_;
 	fin >> name_;
 	fin >> path_;
 
@@ -120,7 +110,6 @@ int FolderType::ReadDataFromFile(ifstream& fin)
 int FolderType::WriteDataToFile(ofstream& fout)
 {
 	fout << endl;
-	fout << id_ << " ";
 	fout << name_ << " ";
 	fout << path_;
 
@@ -129,11 +118,11 @@ int FolderType::WriteDataToFile(ofstream& fout)
 
 
 // Compare two folder types.
-RelationType FolderType::CompareByID(const FolderType &data)
+RelationType FolderType::CompareByName(const FolderType &data)
 {
-	if(this->id_ > data.id_)
+	if(this->name_.compare(data.name_) > 0)
 		return GREATER;
-	else if(this->id_ < data.id_)
+	else if(this->name_.compare(data.name_) < 0)
 		return LESS;
 	else
 		return EQUAL;
@@ -143,7 +132,7 @@ int FolderType::DeleteFolder() {
 	FolderType deleting_folder;
 	int is_delete_suceed = 0;
 
-	deleting_folder.SetIdFromKeyboard();
+	deleting_folder.SetNameFromKeyboard();
 	is_delete_suceed = sub_folder_list_->Delete(deleting_folder);
 
 	if (is_delete_suceed != 0)

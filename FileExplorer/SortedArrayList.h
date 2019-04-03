@@ -179,7 +179,7 @@ int SortedArrayList<T>::Add(const T* in_data)
 
 		// current_item보다 큰 원소 바로 뒤나 제일 뒤에 삽입
 		while (current_iterator_ <= length_) {
-			if (current_item.CompareByID(*in_data) == GREATER || current_iterator_ == length_) {	// 큰 원소 찾거나 끝에 도달했을 때
+			if (current_item.CompareByName(*in_data) == GREATER || current_iterator_ == length_) {	// 큰 원소 찾거나 끝에 도달했을 때
 				// 맨 뒤 요소부터 한 칸씩 뒤로
 				for (int i = length_ - 1; i >= current_iterator_; i--) {
 					data_array_[i + 1] = data_array_[i];
@@ -228,7 +228,7 @@ int SortedArrayList<T>::Get(T& data)
 	GetNextItem(CurItem);	//첫아이템 가져옴
 	while(current_iterator_<length_)	//처음부터 끝까지
 	{
-		switch(CurItem.CompareByID(data))	//입력 아이템과 현재 아이템을 비교
+		switch(CurItem.CompareByName(data))	//입력 아이템과 현재 아이템을 비교
 		{
 		case EQUAL:	//일치하면
 			data=CurItem;	//data에 현재 아이템을 반환

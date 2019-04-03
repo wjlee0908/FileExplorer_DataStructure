@@ -30,7 +30,6 @@ public:
 	*/
 	FolderType()
 	{
-		id_ = -1;
 		size_ = 0;
 		num_sub_folder_ = 0;
 		name_ = "";
@@ -45,17 +44,6 @@ public:
 		if (num_sub_folder_ != 0) {
 			delete sub_folder_list_;
 		}
-	}
-
-	/**
-	*	@brief	Get folder id.
-	*	@pre	folder id is set.
-	*	@post	none.
-	*	@return	folder id.
-	*/
-	int GetId()
-	{
-		return id_;
 	}
 
 	/**
@@ -121,17 +109,6 @@ public:
 	}
 
 	/**
-	*	@brief	Set folder id.
-	*	@pre	none.
-	*	@post	folder id is set.
-	*	@param	input_id	folder id.
-	*/
-	void SetId(int input_id)
-	{
-		id_ = input_id;
-	}
-
-	/**
 	*	@brief	Set folder name.
 	*	@pre	none.
 	*	@post	folder name is set.
@@ -170,21 +147,10 @@ public:
 	*/
 	void SetRecord(int input_id, string input_name, string input_path)
 	{
-		SetId(input_id);
 		SetName(input_name);
 		SetPath(input_path);
 		//GenerateCreatedTime()
 	}
-
-	/**
-	*	@brief	Display folder id on screen.
-	*	@pre	folder id is set.
-	*	@post	folder id is on screen.
-	*/
-	void DisplayIdOnScreen() 
-	{
-		cout << "\tID   : " << id_ << endl; 
-	};
 
 	/**
 	*	@brief	Display folder size on screen.
@@ -240,17 +206,9 @@ public:
 	*/
 	void DisplayInformationOnScreen()
 	{
-		DisplayIdOnScreen();
 		DisplayNameOnScreen();
 		DisplayPathOnScreen();
 	};
-
-	/**
-	*	@brief	Set folder id from keyboard.
-	*	@pre	none.
-	*	@post	folder id is set.
-	*/
-	void SetIdFromKeyboard();
 
 	/**
 	*	@brief	Set folder name from keyboard.
@@ -309,16 +267,16 @@ public:
 	int WriteDataToFile(ofstream& fout);
 	
 	/**
-	*	Compare two itemtypes.
-	*	@brief	Compare two item types by item id.
-	*	@pre	two item types should be initialized.
-	*	@post	the target file is included the new item record.
-	*	@param	data	target item for comparing.
+	*	Compare two folders.
+	*	@brief	Compare two folders by folder name.
+	*	@pre	two folders should be initialized.
+	*	@post	none.
+	*	@param	data	target folder for comparing.
 	*	@return	return LESS if this.id < data.id, 
 	*			return GREATER if this.id > data.id then,
 	*			otherwise return EQUAL.
 	*/
-	RelationType CompareByID(const FolderType &data);
+	RelationType CompareByName(const FolderType &data);
 
 	/**
 	*	@brief  Delete sub folder by id
@@ -344,10 +302,10 @@ public:
 	void DisplayAllSubFolders();
 
 protected:
-	int id_;			///< folder ID.
+	string name_;		///< folder name.
+
 	int size_;          ///< folder size.
 	int num_sub_folder_;    ///< number of sub folders.
-	string name_;		///< folder name.
 	string path_;       ///< folder path.
 	string created_date_;    ///< date that folder created.
 	SortedArrayList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
