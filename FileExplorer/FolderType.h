@@ -113,12 +113,12 @@ public:
 	*	@brief	Set folder name.
 	*	@pre	none.
 	*	@post	folder name is set.
+	*           name's position is sorted
 	*	@param	input_name	folder name.
+	*   @return return 1 if this function works well, otherwise 0.
 	*/
-	void SetName(string input_name)
-	{
-		name_ = input_name;
-	}
+	int SetName(string input_name);
+
 	
 	/**
 	*	@brief	Set folder path.

@@ -28,7 +28,7 @@ void Application::Run()
 			RetriveFolderByName();
 			break;
 		case 5:   // change folder name
-			// ChangeFolderName();
+			ChangeFolderName();
 			break;
 		case 6:		//display property of current folder
 			DisplayProperty();
@@ -89,11 +89,11 @@ int Application::MakeNewFolder()
 
 }
 
+// change current folder
 int Application::OpenFolder()
 {
-	FolderType* folder_open;	// address of folder to open
-
 	// current folder address = found folder address
+	FolderType* folder_open;	// address of folder to open
 
 	folder_open = current_folder_->GetSubFolder();
 
@@ -114,7 +114,25 @@ void Application::DisplayProperty() {
 //이름을 입력받은 item으로 리스트에서 item을 찾아서 출력한다.
 int Application::RetriveFolderByName()
 {
+
 	return current_folder_->RetrieveFolderByName();
+}
+
+// Change Folder name
+int Application::ChangeFolderName()
+{
+	FolderType* folder_change;	// address of folder to change name
+
+	cout << "\t input name of folder to change" << endl;
+	folder_change = current_folder_->GetSubFolder();
+
+	if (folder_change == NULL) {
+		cout << "\tfolder not found" << endl;
+		return 0;
+	}
+	
+	folder_change->SetNameFromKeyboard();
+	return 1;
 }
 
 //id로 item을 찾아서 제거한다.

@@ -117,6 +117,14 @@ public:
 	int RetriveFolderByName();
 
 	/**
+	*	@brief	Change Folder name.
+	*	@pre	folder to change name is set.
+	*	@post	selected folder name is changed.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int ChangeFolderName();
+
+	/**
 	*	@brief	Open a file as a read mode, read all data on the file, and set current folder by the data.
 	*	@pre	The file is not opened.
 	*	@post	current folder holds all records from the file.

@@ -1,5 +1,25 @@
 #include "FolderType.h"
 
+int FolderType::SetName(string input_name) {
+	FolderType folder_find;    // folder to find duplicated folder
+	string old_name = name_;
+
+	// 중복 검사
+	folder_find.SetName(input_name);
+	if (sub_folder_list_->Get(folder_find) == 0) {
+		cout << "\tExisting folder name" << endl;
+		return 0;
+	}
+
+	// 이름 재설정
+	name_ = input_name;
+	// path 재설정
+
+	// 위치 재설정
+
+
+}
+
 void FolderType::GenerateCreatedDate() {
 	// Declaring argument for time() 
 	time_t current_time;
