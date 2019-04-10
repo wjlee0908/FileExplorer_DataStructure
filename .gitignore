@@ -331,5 +331,4 @@ ASALocalRun/
 
 # language detect
 * linguist-vendored
-*.cpp linguist-vendored=false
-*.h linguist-vendored=false
+*.html linguist-vendored=false
