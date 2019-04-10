@@ -91,13 +91,20 @@ int Application::MakeNewFolder()
 
 int Application::OpenFolder()
 {
-	FolderType folder_to_find;
-	int is_found = 0;
+	FolderType* folder_open;	// address of folder to open
 
-	is_found = current_folder_->GetSubFolder(folder_to_find);
+	// current folder address = found folder address
 
+	folder_open = current_folder_->GetSubFolder();
 
-	return 0;
+	if (folder_open != NULL) {
+		current_folder_ = folder_open;
+		return 1;
+	}
+	else {
+		cout << "\tfolder not found" << endl;
+		return 0;
+	}
 }
 
 void Application::DisplayProperty() {

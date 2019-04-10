@@ -31,6 +31,7 @@ public:
 	FolderType()
 	{
 		size_ = 0;
+		sub_folder_list_ = NULL;
 		num_sub_folder_ = 0;
 		name_ = "";
 		path_ = "";
@@ -293,7 +294,7 @@ public:
 	*   @param  folder    folder reference that user tried to find.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int GetSubFolder(FolderType& folder);
+	FolderType* GetSubFolder();
 
 	/**
 	*	@brief  Retrieve folder by folder name.

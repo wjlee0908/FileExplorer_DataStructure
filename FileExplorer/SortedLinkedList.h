@@ -86,6 +86,14 @@ public:
 	int Get(T& item);
 
 	/**
+	*	@brief	Retrieve list element whose key matches item's key (if present).
+	*	@pre	Key member of item is initialized.
+	*	@post	none.
+	*	@return	address of found item. if not found, returns NULL
+	*/
+	T* GetItemAddress(const T item);
+
+	/**
 	*	@brief	Initialize current pointer for an iteration through the list.
 	*	@pre	None.
 	*	@post	current pointer is prior to list. current pointer has been initialized.
@@ -329,6 +337,23 @@ int SortedLinkedList<T>::Get(T& item)
 		return 0;	//찾으면 1, 그렇지 못하면 0을 리턴한다.
 }
 
+// Retrieve list element whose key matches item's key (if present).
+template<typename T>
+T * SortedLinkedList<T>::GetItemAddress(const T item)
+{
+	ResetIterator();
+
+	if (IsEmpty()) {
+		return NULL;
+	}
+	while (WalkIterator() != NULL) {
+		if (iterator_->data == item) {
+			return &(iterator_->data);
+		}
+	}
+
+	return NULL;
+}
 
 // Initializes iterator pointer to NULL
 template <typename T>

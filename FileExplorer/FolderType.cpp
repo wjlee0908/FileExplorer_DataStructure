@@ -161,10 +161,11 @@ int FolderType::DeleteSubFolder() {
 }
 
 // Get sub folder by name
-int FolderType::GetSubFolder(FolderType & folder)
-{
-	folder.SetNameFromKeyboard();
-	return sub_folder_list_->Get(folder);
+FolderType* FolderType::GetSubFolder() {
+	FolderType finding_folder;
+
+	finding_folder.SetNameFromKeyboard();
+	return sub_folder_list_->GetItemAddress(finding_folder);
 }
 
 // Retrieve folders containing finding name
