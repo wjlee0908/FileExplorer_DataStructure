@@ -69,18 +69,6 @@ int Application::GetCommand()
 }
 
 
-// Add new folder into current folder.
-int Application::MakeNewFolder()
-{
-	int is_add_suceed = 0;
-
-	is_add_suceed = current_folder_->AddSubFolder();
-
-	DisplayAllSubFolders();
-
-	return is_add_suceed;
-}
-
 void Application::DisplayProperty() {
 	current_folder_->DisplayInformationOnScreen();
 }

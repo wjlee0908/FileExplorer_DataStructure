@@ -17,18 +17,18 @@ struct ListNode
 *	Sorted list class for managing items.
 */
 template <typename T>
-class LinkedList
+class SortedLinkedList
 {
 public:
 	/**
 	*	default constructor.
 	*/
-	LinkedList();
+	SortedLinkedList();
 
 	/**
 	*	destructor.
 	*/
-	~LinkedList();
+	~SortedLinkedList();
 
 	/**
 	*	@brief	Initialize list to empty state.
@@ -44,6 +44,14 @@ public:
 	*	@return	Number of elements in this list.
 	*/
 	int GetLength() const;
+
+	/**
+	*	@brief	Returns whether the list is empty.
+	*	@pre	None.
+	*	@post	None.
+	*	@return	boolean that expresses whether the list is empty.
+	*/
+	bool IsEmpty() const;
 
 	/**
 	*	@brief	Add item into appropriate spot of this list.
@@ -96,8 +104,18 @@ public:
 	*	@brief	Get the next element in list.
 	*	@pre	current pointer is defined. Element at current pointer is not last in list.
 	*	@post	current pointer is updated to next position. item is a copy of element at current pointer.
+	*	@return	1 if this function works well, otherwise 0.
 	*/
-	void GetNextItem(T& item);
+	int GetNextItem(T& item);
+
+	/**
+	*	@brief	Copy parameter list and assign to this list.
+	*	@pre	copide_data is set.
+	*	@post	list record is set.
+	*   @param  copied_data    data to assign
+	*   @return retrun this after assigning parameter.
+	*/
+	SortedLinkedList<T>& operator= (const SortedLinkedList<T>& copied_data);
 
 private:
 	ListNode<T>* head_;	///< Pointer for pointing a first node.
@@ -108,7 +126,7 @@ private:
 
 // Class constructor
 template <typename T>
-LinkedList<T>::LinkedList()
+SortedLinkedList<T>::SortedLinkedList()
 {
 	length_ = 0;
 	head_ = NULL;
@@ -118,7 +136,7 @@ LinkedList<T>::LinkedList()
 
 // Class destructor
 template <typename T>
-LinkedList<T>::~LinkedList()
+SortedLinkedList<T>::~SortedLinkedList()
 {
 	// 리스트의 모든 node 메모리 해제
 	MakeEmpty();
@@ -127,7 +145,7 @@ LinkedList<T>::~LinkedList()
 
 // Initialize list to empty state.
 template <typename T>
-void LinkedList<T>::MakeEmpty()
+void SortedLinkedList<T>::MakeEmpty()
 {
 	// head를 하나씩 옮기며 head를 차례로 제거한다. 
 
@@ -145,107 +163,74 @@ void LinkedList<T>::MakeEmpty()
 
 // Get number of elements in the list.
 template <typename T>
-int LinkedList<T>::GetLength() const
+int SortedLinkedList<T>::GetLength() const
 {
 	return length_;
+}
+
+// Returns whether the list is empty
+template<typename T>
+inline bool SortedLinkedList<T>::IsEmpty() const
+{
+	return (length_ == 0);
 }
 
 
 // Add item into this list.
 template <typename T>
-int LinkedList<T>::Add(T item)
+int SortedLinkedList<T>::Add(T item)
 {
-	ResetIterator();
+	ListNode<T>* new_node = new ListNode<T>;
+	ListNode<T>* previous;	// 대상 전 노드의 next에 add하기 위해 생성
+	bool is_inserted = false;
 
-	// 리스트에 추가할 새로운 node 객체와 이전 노드를 가리킬 포인터 선언
-	ListNode<T> *node = new ListNode<T>;
-	ListNode<T> *pre;
-	T dummy;
-	bool bFound = false;
+	new_node->data = item;
+	new_node->next = NULL;
 
-	// node 객체에 입력받은 데이터 설정 및 초기화
-	node->data = item;
-	node->next = NULL;
-
-	// list 에 node 가 존재하지 않는 경우
-	if (!length_)
-	{
-		head_ = node;
+	// special case: 리스트가 비어있을 때는 new를 head로 지정
+	if (IsEmpty()) {
+		head_ = new_node;
+		is_inserted = true;
 	}
-	// list 에 node 가 하나 이상 존재하는 경우
-	else
-	{
-		// 가장 마지막 node 로 이동 후 삽입
-		while (1)
-		{
-			// 이전 노드를 가리키는 포인터 갱신
-			pre = iterator_;
 
-			// iteration 을 이용해 node 포인터 갱신.
-			GetNextItem(dummy);
+	// item보다 더 큰 노드 직전에 삽입
+	ResetIterator();
+	while (!IsEmpty()) {
+		previous = iterator_;
+		WalkIterator();
 
-			if (iterator_->data > node->data)
-			{
-				if (pre == NULL)
-				{
-					node->next = iterator_;
-					head_ = node;
-					break;
-				}	//넣을 자리 앞 원소가 존재하지 않을 때 첫번째 원소로 삽입.
-				node->next = iterator_;
-				pre->next = node;
-				break;
-			}	//지금 가리키는 원소의 data값이 node의 data값보다 클 경우 pre 뒷자리에 삽입.
-
-			// node 포인터가 마지막 node 를 가리키면 그 뒤에 새로운 node 삽입.
-			if (iterator_->next == NULL)
-			{
-				// 마지막 node 와 새로운 node 연결
-				iterator_->next = node;
-				break;
+		if (new_node->data < iterator_->data) {
+			if (previous != NULL) {
+				previous->next = new_node;
 			}
+			else {
+				// new node가 첫 노드보다 작으면 head로 지정
+				head_ = new_node;
+			}
+			new_node->next = iterator_;
+
+			is_inserted = true;
+			break;
 		}
+
+		if (iterator_->next == NULL) {	// 가장 끝 노드 도달
+			break;
+		}
+	}
+
+	// 마지막이라면 iterator next = new
+	if (is_inserted == false) {
+		iterator_->next = new_node;
 	}
 
 	length_++;
 
 	return 1;
-
-	////////////////////////////////
-
-	ListNode<T>* new_node = new ListNode<T>;
-	ListNode<T>* previous;	// 대상 전 노드의 next에 add하기 위해 생성
-
-	new_node->data = item;
-	new_node->next = NULL;
-
-	while (WalkIterator() != NULL) {
-		previous = iterator_;
-		// iteartor walk
-		WalkIterator();
-
-		// iterator 와 new node 비교
-		// iterator 더 크다면
-		if (new_node->data < iterator_->data) {
-			// prev next = new node, new node next = iterator, length ++
-			// new node가 첫 노드보다 작으면 수행 안 함
-			if (previous == NULL) {
-				head_ = new_node;
-			}
-			previous->next = new_node;
-			new_node->next = iterator_;
-
-		}
-		
-		// special case : length == 0, head = new
-		// 마지막이라면 iterator next = new
-
-	}
 }
 
 //Delete item from this list.
 template <typename T>
-int LinkedList<T>::Delete(T item)
+int SortedLinkedList<T>::Delete(T item)
 {
 	bool moreToSearch, found;
 	ListNode<T>* pre = NULL;	//변수 선언
@@ -284,7 +269,7 @@ int LinkedList<T>::Delete(T item)
 
 //Change value of item which is in this list.
 template <typename T>
-int LinkedList<T>::Replace(T item)
+int SortedLinkedList<T>::Replace(T item)
 {
 	bool moreToSearch, found;
 	ListNode<T>* location;	//변수 선언
@@ -315,7 +300,7 @@ int LinkedList<T>::Replace(T item)
 
 // Retrieve list element whose key matches item's key (if present).
 template <typename T>
-int LinkedList<T>::Get(T& item)
+int SortedLinkedList<T>::Get(T& item)
 {
 	bool moreToSearch, found;
 	ListNode<T>* location;	//변수 선언
@@ -347,13 +332,13 @@ int LinkedList<T>::Get(T& item)
 
 // Initializes iterator pointer to NULL
 template <typename T>
-void LinkedList<T>::ResetIterator()
+void SortedLinkedList<T>::ResetIterator()
 {
 	iterator_ = NULL;
 }
 
 template<typename T>
-inline ListNode<T>* LinkedList<T>::WalkIterator()
+ListNode<T>* SortedLinkedList<T>::WalkIterator()
 {
 	// current pointer가 초기화된 상태면 head 가리킴.
 	if (iterator_ == NULL) {
@@ -370,10 +355,35 @@ inline ListNode<T>* LinkedList<T>::WalkIterator()
 
 // Gets the next element in list.
 template <typename T>
-void LinkedList<T>::GetNextItem(T& item)
+int SortedLinkedList<T>::GetNextItem(T& item)
 {
-	// 하나 증가한 노드의 data를 레퍼런스로 전달
-	item = WalkIterator()->data;
+	WalkIterator();
+
+	if (iterator_ != NULL) {
+		// 하나 증가한 노드의 data를 레퍼런스로 전달
+		item = iterator_->data;
+		return 1;
+	}
+	else {
+		// 마지막 노드에서 walk 했을 경우
+		return 0;
+	}
+}
+
+// Copy parameter list and assign to this list.
+template<typename T>
+SortedLinkedList<T>& SortedLinkedList<T>::operator=(const SortedLinkedList<T>& copied_data)
+{
+	ListNode* node = copied_data.head_;
+	T copied_item;
+
+	// 빈 리스트에 복사 대상의 아이템 모두 삽입
+	MakeEmpty();
+	while (node != NULL) {
+		copied_item = node->item;
+		this->Add(copied_item);
+		node = node->next;
+	}
 }
 
 

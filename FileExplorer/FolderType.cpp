@@ -1,5 +1,4 @@
 #include "FolderType.h"
-#include "SortedArrayList.h"
 
 void FolderType::GenerateCreatedDate() {
 	// Declaring argument for time() 
@@ -61,17 +60,31 @@ FolderType & FolderType::operator=(const FolderType & copied_data)
 	return *this;
 }
 
+// Returns whether this is less than comparing data.
+bool FolderType::operator<(const FolderType & comparing_data)
+{
+	return (CompareByName(comparing_data) == LESS);
+}
+
+// Returns whether this is equal to comparing data.
+bool FolderType::operator==(const FolderType & comparing_data)
+{
+	return (CompareByName(comparing_data) == EQUAL);
+}
+
+// Returns whether this is greater than comparing data.
+bool FolderType::operator>(const FolderType & comparing_data)
+{
+	return (CompareByName(comparing_data) == GREATER);
+}
+
 // add sub folder into sub folder list.
 int FolderType::AddSubFolder() {
 	FolderType new_folder;
 	string new_folder_path;
 
 	if (num_sub_folder_ == 0) {
-		sub_folder_list_ = new SortedArrayList<FolderType>;
-	}
-	// 리스트 차면 폴더 추가 실패
-	else if(sub_folder_list_->IsFull()) {
-		return 0;
+		sub_folder_list_ = new SortedLinkedList<FolderType>;
 	}
 
 	new_folder.SetRecordFromKeyboard();
@@ -88,7 +101,7 @@ int FolderType::AddSubFolder() {
 	new_folder.SetPath(new_folder_path);    
 	new_folder.GenerateCreatedDate();
 
-	if (sub_folder_list_->Add(&new_folder)) {
+	if (sub_folder_list_->Add(new_folder)) {
 		num_sub_folder_++;
 	}
 
@@ -155,9 +168,9 @@ int FolderType::RetrieveFolderByName() {
 
 	retrieving_folder.SetNameFromKeyboard(); //name을 입력받는다.
 
-	sub_folder_list_->ResetList();
+	sub_folder_list_->ResetIterator();
 	// 리스트 순차 탐색
-	while (sub_folder_list_->GetNextItem(iterator) != -1) {
+	while (sub_folder_list_->GetNextItem(iterator) != 0) {
 		// 이름 확인
 		if (iterator.GetName().find(retrieving_folder.GetName()) != string::npos) {
 			iterator.DisplayInformationOnScreen();
@@ -179,11 +192,10 @@ void FolderType::DisplayAllSubFolders() {
 
 	cout << "\n\tSub Folder list" << endl;
 
-	// list의 모든 데이터를 화면에 출력
-	sub_folder_list_->ResetList();
-	int current_index = sub_folder_list_->GetNextItem(displayed_folder);
-	while (current_index < num_sub_folder_ && current_index != -1) {
+	sub_folder_list_->ResetIterator();
+
+	// 리스트의 끝까지 displaye_folder에 할당
+	while (sub_folder_list_->GetNextItem(displayed_folder) != 0) {
 		displayed_folder.DisplayInformationOnScreen();
-		current_index = sub_folder_list_->GetNextItem(displayed_folder);
 	}
 }

@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <time.h>
 #include <iomanip>
-#include "SortedArrayList.h"
+#include "SortedLinkedList.h"
 
 
 using namespace std;
@@ -72,7 +72,7 @@ public:
 	*	@post	none.
 	*	@return	address of sub folders list.
 	*/
-	const SortedArrayList<FolderType>* GetSubFolders() {
+	const SortedLinkedList<FolderType>* GetSubFolders() {
 		return sub_folder_list_;
 	}
 
@@ -241,6 +241,36 @@ public:
 	FolderType& operator= (const FolderType& copied_data);
 
 	/**
+	*	@brief	Returns whether this is less than comparing data.
+	*            primary key is name.
+	*	@pre	comparing_data is set.
+	*	@post	folder record is set.
+	*   @param  comparing_data    data to compare
+	*   @return retruns boolean expresses whether this is less than comparing data.
+	*/
+	bool operator< (const FolderType& comparing_data);
+
+	/**
+	*	@brief	Returns whether this is equal to comparing data
+	*			primary key is name.
+	*	@pre	comparing_data is set.
+	*	@post	folder record is set.
+	*   @param  comparing_data    data to compare
+	*   @return retruns boolean expresses whether whether this is equal to comparing data.
+	*/
+	bool operator== (const FolderType& comparing_data);
+
+	/**
+	*	@brief	Returns whether this is greater than comparing data.
+	*			primary key is name.
+	*	@pre	comparing_data is set.
+	*	@post	folder record is set.
+	*   @param  comparing_data    data to compare
+	*   @return retruns boolean expresses whether this is greater than comparing data.
+	*/
+	bool operator> (const FolderType& comparing_data);
+
+	/**
 	*	@brief	Add sub folder of this folder.
 	*	@pre	none.
 	*	@post	new sub folder is added.
@@ -265,18 +295,6 @@ public:
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
 	int WriteDataToFile(ofstream& fout);
-	
-	/**
-	*	Compare two folders.
-	*	@brief	Compare two folders by folder name.
-	*	@pre	two folders should be initialized.
-	*	@post	none.
-	*	@param	data	target folder for comparing.
-	*	@return	return LESS if this.id < data.id, 
-	*			return GREATER if this.id > data.id then,
-	*			otherwise return EQUAL.
-	*/
-	RelationType CompareByName(const FolderType &data);
 
 	/**
 	*	@brief  Delete sub folder by id
@@ -308,7 +326,20 @@ protected:
 	int num_sub_folder_;    ///< number of sub folders.
 	string path_;       ///< folder path.
 	string created_date_;    ///< date that folder created.
-	SortedArrayList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
+	SortedLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
+
+private:
+	/**
+	*	Compare two folders.
+	*	@brief	Compare two folders by folder name.
+	*	@pre	two folders should be initialized.
+	*	@post	none.
+	*	@param	data	target folder for comparing.
+	*	@return	return LESS if this.id < data.id,
+	*			return GREATER if this.id > data.id then,
+	*			otherwise return EQUAL.
+	*/
+	RelationType CompareByName(const FolderType &data);
 };
 
 #endif	// _FOLDERTYPE_H

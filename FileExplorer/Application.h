@@ -58,7 +58,17 @@ public:
 	*	@post	new folder is added into the current folder.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int MakeNewFolder();
+	// Add new folder into current folder.
+	int MakeNewFolder()
+	{
+		int is_add_suceed = 0;
+
+		is_add_suceed = current_folder_->AddSubFolder();
+
+		DisplayAllSubFolders();
+
+		return is_add_suceed;
+	}
 
 	/**
 	*	@brief	display current folder's property
