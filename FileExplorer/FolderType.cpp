@@ -141,7 +141,7 @@ RelationType FolderType::CompareByName(const FolderType &data)
 		return EQUAL;
 }
 
-int FolderType::DeleteFolder() {
+int FolderType::DeleteSubFolder() {
 	FolderType deleting_folder;
 	int is_delete_suceed = 0;
 
@@ -158,6 +158,13 @@ int FolderType::DeleteFolder() {
 	cout << "<========DELETE FAIL !=======>" << endl;
 
 	return 0;
+}
+
+// Get sub folder by name
+int FolderType::GetSubFolder(FolderType & folder)
+{
+	folder.SetNameFromKeyboard();
+	return sub_folder_list_->Get(folder);
 }
 
 // Retrieve folders containing finding name

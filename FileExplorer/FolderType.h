@@ -279,30 +279,21 @@ public:
 	int AddSubFolder();
 
 	/**
-	*	@brief	Read a record from file.
-	*	@pre	the target file is opened.
-	*	@post	folder record is set.
-	*	@param	fin	file descriptor.
-	*	@return	return 1 if this function works well, otherwise 0.
-	*/
-	int ReadDataFromFile(ifstream& fin);
-
-	/**
-	*	@brief	Write a record into file.
-	*	@pre	the target file is opened. And the list should be initialized.
-	*	@post	the target file is included the new folder record.
-	*	@param	fout	file descriptor.
-	*	@return	return 1 if this function works well, otherwise 0.
-	*/
-	int WriteDataToFile(ofstream& fout);
-
-	/**
-	*	@brief  Delete sub folder by id
+	*	@brief  Delete sub folder by name
 	*	@pre	sub folder list is set.
 	*	@post	none.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int DeleteFolder();
+	int DeleteSubFolder();
+
+	/**
+	*	@brief  Get sub folder by name
+	*	@pre	sub folder list is set.
+	*	@post	reference prameter is set.
+	*   @param  folder    folder reference that user tried to find.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int GetSubFolder(FolderType& folder);
 
 	/**
 	*	@brief  Retrieve folder by folder name.
@@ -318,6 +309,24 @@ public:
 	*	@post	sub folder list is diaplyed on screen.
 	*/
 	void DisplayAllSubFolders();
+
+	/**
+*	@brief	Read a record from file.
+*	@pre	the target file is opened.
+*	@post	folder record is set.
+*	@param	fin	file descriptor.
+*	@return	return 1 if this function works well, otherwise 0.
+*/
+	int ReadDataFromFile(ifstream& fin);
+
+	/**
+	*	@brief	Write a record into file.
+	*	@pre	the target file is opened. And the list should be initialized.
+	*	@post	the target file is included the new folder record.
+	*	@param	fout	file descriptor.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int WriteDataToFile(ofstream& fout);
 
 protected:
 	string name_;		///< folder name.
@@ -335,8 +344,8 @@ private:
 	*	@pre	two folders should be initialized.
 	*	@post	none.
 	*	@param	data	target folder for comparing.
-	*	@return	return LESS if this.id < data.id,
-	*			return GREATER if this.id > data.id then,
+	*	@return	return LESS if this.name < data.name,
+	*			return GREATER if this.name > data.name then,
 	*			otherwise return EQUAL.
 	*/
 	RelationType CompareByName(const FolderType &data);

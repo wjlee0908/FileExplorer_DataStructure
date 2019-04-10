@@ -54,21 +54,27 @@ public:
 
 	/**
 	*	@brief	make new folder.
-	*	@pre	list should be initialized.
+	*	@pre	current folder should be initialized.
 	*	@post	new folder is added into the current folder.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	// Add new folder into current folder.
-	int MakeNewFolder()
-	{
-		int is_add_suceed = 0;
+	int MakeNewFolder();
 
-		is_add_suceed = current_folder_->AddSubFolder();
+	/**
+	*	@brief	open sub folder.
+	*	@pre	sub folders should be initialized.
+	*	@post	current folder is changed to selected folder.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int OpenFolder();
 
-		DisplayAllSubFolders();
-
-		return is_add_suceed;
-	}
+	/**
+	*	@brief	delete folder that matches input id
+	*	@pre	current folder should be initialized
+	*	@post	found item is deleted from folder
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int DeleteFolder();
 
 	/**
 	*	@brief	display current folder's property
@@ -95,28 +101,12 @@ public:
 
 	/**
 	*	@brief	Open a file by file descriptor as an output file.
-	*	@pre	list should be initialized.
+	*	@pre	current folder should be initialized.
 	*	@post	open the file for writing.
 	*	@param	fileName	a filename to open for writing.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
 	int OpenOutFile(char *fileName);
-
-	/**
-	*	@brief	Open a file as a read mode, read all data on the file, and set list by the data.
-	*	@pre	The file is not opened.
-	*	@post	list holds all records from the file.
-	*	@return	return 1 if this function works well, otherwise 0.
-	*/
-	int ReadDataFromFile();
-
-	/**
-	*	@brief	Open a file as a write mode, and write all data into the file,
-	*	@pre	The file is not opened.
-	*	@post	the list is stored in the output file.
-	*	@return	return 1 if this function works well, otherwise 0.
-	*/
-	int WriteDataToFile();
 
 	/**
 	*	@brief	Retrieve folder by folder name.
@@ -127,12 +117,20 @@ public:
 	int RetriveFolderByName();
 
 	/**
-	*	@brief	delete folder that matches input id
-	*	@pre	list should be initialized
-	*	@post	found item is deleted from folder
+	*	@brief	Open a file as a read mode, read all data on the file, and set current folder by the data.
+	*	@pre	The file is not opened.
+	*	@post	current folder holds all records from the file.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int DeleteItem();
+	// int ReadDataFromFile();
+
+	/**
+	*	@brief	Open a file as a write mode, and write all data into the file,
+	*	@pre	The file is not opened.
+	*	@post	the current folder is stored in the output file.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	// int WriteDataToFile();
 
 private:
 	ifstream input_file_;		///< input file descriptor.

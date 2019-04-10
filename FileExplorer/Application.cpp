@@ -18,23 +18,29 @@ void Application::Run()
 		case 1:		// make new folder
 			MakeNewFolder();
 			break;
-		case 2:		//search sub folder by name.
-			RetriveFolderByName();
+		case 2:    // open sub folder
+			OpenFolder();
 			break;
 		case 3:		//delete sub folder
-			DeleteItem();
+			DeleteFolder();
 			break;
-		case 4:		//display property of current folder
+		case 4:    //search sub folder by name.
+			RetriveFolderByName();
+			break;
+		case 5:   // change folder name
+			// ChangeFolderName();
+			break;
+		case 6:		//display property of current folder
 			DisplayProperty();
 			break;
-		case 5:		//display properties of all folders
+		case 7:   // make new file
+			// MakeNewFile();
+			break;
+		case 8:   // open file
+			// OpenFile();
+			break;
+		case 9:		//display properties of all folders
 			DisplayAllSubFolders();
-			break;
-		case 6:		// load list data from a file.
-			ReadDataFromFile();
-			break;
-		case 7:		// save list data into a file.
-			WriteDataToFile();
 			break;
 		case 0:
 			return;
@@ -53,12 +59,14 @@ int Application::GetCommand()
 	cout << endl << endl;
 	cout << "\t---ID -- Command ----- " << endl;
 	cout << "\t   1 : Make new folder" << endl;
-	cout << "\t   2 : Retrieve folder by name" << endl;
+	cout << "\t   2 : Open folder" << endl;
 	cout << "\t   3 : Delete sub folder" << endl;
-	cout << "\t   4 : Print folder property" << endl;
-	cout << "\t   5 : Print all sub folders on screen" << endl;
-	cout << "\t   6 : Read from file" << endl; 
-	cout << "\t   7 : Write to file " << endl;
+	cout << "\t   4 : Retrieve folder by name" << endl;
+	cout << "\t   5 : Change folder name" << endl;
+	cout << "\t   6 : Print folder property" << endl;
+	cout << "\t   7 : Make new file" << endl;
+	cout << "\t   8 : Open file" << endl;
+	cout << "\t   9 : Print all sub folders on screen" << endl;
 	cout << "\t   0 : Quit" << endl; 
 
 	cout << endl << "\t Choose a Command--> ";
@@ -68,6 +76,29 @@ int Application::GetCommand()
 	return command;
 }
 
+// Add new folder into current folder.
+int Application::MakeNewFolder()
+{
+	int is_add_suceed = 0;
+
+	is_add_suceed = current_folder_->AddSubFolder();
+
+	DisplayAllSubFolders();
+
+	return is_add_suceed;
+
+}
+
+int Application::OpenFolder()
+{
+	FolderType folder_to_find;
+	int is_found = 0;
+
+	is_found = current_folder_->GetSubFolder(folder_to_find);
+
+
+	return 0;
+}
 
 void Application::DisplayProperty() {
 	current_folder_->DisplayInformationOnScreen();
@@ -80,9 +111,9 @@ int Application::RetriveFolderByName()
 }
 
 //id로 item을 찾아서 제거한다.
-int Application::DeleteItem()
+int Application::DeleteFolder()
 {
-	int result = current_folder_->DeleteFolder();
+	int result = current_folder_->DeleteSubFolder();
 	current_folder_->DisplayAllSubFolders();
 
 	return result;
@@ -116,7 +147,7 @@ int Application::OpenOutFile(char *fileName)
 	else	return 1;
 }
 
-
+/*
 // Open a file as a read mode, read all data on the file, and set list by the data.
 int Application::ReadDataFromFile()
 {
@@ -145,12 +176,13 @@ int Application::ReadDataFromFile()
 
 	return 1;
 }
+*/
 
-
+/*
 // Open a file as a write mode, and write all data into the file,
 int Application::WriteDataToFile()
 {
-	/*
+	
 	SortedArrayList* data;	// 쓰기용 임시 변수
 
 	char filename[FILENAMESIZE];
@@ -174,7 +206,7 @@ int Application::WriteDataToFile()
 	}
 
 	output_file_.close();	// file close
-	*/
-
+	
 	return 1;
 }
+*/
