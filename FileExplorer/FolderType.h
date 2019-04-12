@@ -36,6 +36,7 @@ public:
 		name_ = "";
 		path_ = "";
 		GenerateCreatedDate();
+		parent_folder_ = NULL;
 	}
 
 	/**
@@ -119,7 +120,13 @@ public:
 	*/
 	int SetName(string input_name);
 
-	
+	/**
+	*	@brief	Set folder path using folder name and parent folder
+	*	@pre	parent folder is set.
+	*	@post	folder path is set.
+	*/
+	void SetPath();
+
 	/**
 	*	@brief	Set folder path.
 	*	@pre	none.
@@ -337,6 +344,7 @@ protected:
 	string path_;       ///< folder path.
 	string created_date_;    ///< date that folder created.
 	SortedLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
+	FolderType* parent_folder_;    ///< address of parent folder
 
 private:
 	/**

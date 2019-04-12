@@ -3,6 +3,7 @@
 int FolderType::SetName(string input_name) {
 	FolderType folder_find;    // folder to find duplicated folder
 	string old_name = name_;
+	string new_path = "";
 
 	// 중복 검사
 	folder_find.SetName(input_name);
@@ -14,10 +15,32 @@ int FolderType::SetName(string input_name) {
 	// 이름 재설정
 	name_ = input_name;
 	// path 재설정
+	SetPath();
 
 	// 위치 재설정
 
+	return 1;
 
+}
+
+// Set folder path using folder name and parent folder
+void FolderType::SetPath() {
+	string parent_path = "";
+
+	// 상위 폴더 지정 안 되어있으면 실행하지 않음
+	if (parent_folder_ == NULL) {
+		return;
+	}
+
+	parent_path = parent_folder_->GetPath();
+
+	// 루트 폴더 자식이면 앞에 또 / 안붙임
+	if (parent_path.compare("/") == 0) {
+		path_ = parent_path + name_;
+	}
+	else {
+		path_ = parent_path + "/" + name_;
+	}
 }
 
 void FolderType::GenerateCreatedDate() {
@@ -109,6 +132,7 @@ int FolderType::AddSubFolder() {
 
 	new_folder.SetRecordFromKeyboard();
 
+	/*
 	// 서브 폴더 경로명 설정
 	// 루트 폴더 자식이면 앞에 또 / 안붙임
 	if (path_.compare("/") == 0) {
@@ -117,9 +141,12 @@ int FolderType::AddSubFolder() {
 	else {
 		new_folder_path = path_ + "/" + new_folder.name_;
 	}
+	*/
 
-	new_folder.SetPath(new_folder_path);    
+	new_folder.parent_folder_ = this;
+	new_folder.SetPath();    
 	new_folder.GenerateCreatedDate();
+	
 
 	if (sub_folder_list_->Add(new_folder)) {
 		num_sub_folder_++;
