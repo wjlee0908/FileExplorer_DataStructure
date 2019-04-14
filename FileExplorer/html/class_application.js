@@ -12,6 +12,7 @@ var class_application =
     [ "OpenFolder", "class_application.html#adda3af3923e9c4591b3b60df2b6c2c48", null ],
     [ "OpenInFile", "class_application.html#ad008105381d72c9753a95c4b6f8eaa48", null ],
     [ "OpenOutFile", "class_application.html#a96c9e830efe0b0f32321a1904a895b7f", null ],
+    [ "OpenParentFolder", "class_application.html#a5d75531213c00ffc415456f6673d3ea0", null ],
     [ "RetriveFolderByName", "class_application.html#acf88524645e92b850ddfce38a4e09618", null ],
     [ "Run", "class_application.html#aaf09cd6cb412086dc039e28cdb059f0d", null ],
     [ "current_folder_", "class_application.html#af25db880c18c0085aa0d913d29ab0a5b", null ],

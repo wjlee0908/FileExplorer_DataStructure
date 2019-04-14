@@ -38,6 +38,7 @@ int FolderType::SetName(string input_name) {
 	SortedLinkedList<FolderType>* current_list;   // folder list that this folder is included.
 	string new_path = "";
 
+	/*
 	// 중복 검사
 	if (parent_folder_ != NULL) {
 		current_list = parent_folder_->sub_folder_list_;
@@ -48,6 +49,14 @@ int FolderType::SetName(string input_name) {
 				return 0;
 			}
 		}
+	}
+	*/
+
+	// 중복 검사
+	folder_find.name_ = input_name;
+	if ((parent_folder_ != NULL) && (parent_folder_->IsDupliactedSubFolderExists(folder_find))) {
+		cout << "\tExisting folder name" << endl;
+		return 0;
 	}
 
 	// 이름 재설정
@@ -80,7 +89,7 @@ void FolderType::SetPath() {
 
 	// 부모 폴더 있으면 부모 폴더의 경로 복사
 	if (parent_folder_ != NULL) {
-		path_ = parent_folder_->path_;
+		*path_ = *(parent_folder_->path_);
 	}
 	// 뒤에 현재 폴더 붙이기
 	path_->Add(this);
@@ -181,17 +190,12 @@ int FolderType::AddSubFolder() {
 	}
 
 	new_folder.SetRecordFromKeyboard();
+	// 이름이 중복된 폴더면 생성 불가
+	if (IsDupliactedSubFolderExists(new_folder)) {
+		cout << "\tExisting folder name" << endl;
+		return 0;
+	}
 
-	/*
-	// 서브 폴더 경로명 설정
-	// 루트 폴더 자식이면 앞에 또 / 안붙임
-	if (path_.compare("/") == 0) {
-		new_folder_path = path_ + new_folder.name_;
-	}
-	else {
-		new_folder_path = path_ + "/" + new_folder.name_;
-	}
-	*/
 
 	new_folder.parent_folder_ = this;  
 	new_folder.GenerateCreatedDate();
@@ -229,6 +233,18 @@ int FolderType::WriteDataToFile(ofstream& fout)
 	return 1;
 }
 
+// Finds the folder that its name duplicates and return its result.
+bool FolderType::IsDupliactedSubFolderExists(FolderType folder_find)
+{
+	// 중복 검사
+	if (sub_folder_list_ != NULL) {
+		if (sub_folder_list_->Get(folder_find) == 1) {
+			return true;
+		}
+	}
+
+	return false;
+}
 
 // Compare two folder types.
 RelationType FolderType::CompareByName(const FolderType &data)

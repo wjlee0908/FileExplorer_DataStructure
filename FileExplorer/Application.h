@@ -69,6 +69,14 @@ public:
 	int OpenFolder();
 
 	/**
+	*	@brief	open parent folder of current folder.
+	*	@pre	parent folder of current folder should be initialized.
+	*	@post	current folder is changed to its parent folder,
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int OpenParentFolder();
+
+	/**
 	*	@brief	delete folder that matches input id
 	*	@pre	current folder should be initialized
 	*	@post	found item is deleted from folder

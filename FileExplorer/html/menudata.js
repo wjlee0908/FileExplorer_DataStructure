@@ -26,6 +26,7 @@ var menudata={children:[
 {text:"클래스",url:"annotated.html",children:[
 {text:"클래스 목록",url:"annotated.html"},
 {text:"클래스 색인",url:"classes.html"},
+{text:"클래스 계통도",url:"hierarchy.html"},
 {text:"클래스 멤버",url:"functions.html",children:[
 {text:"모두",url:"functions.html",children:[
 {text:"a",url:"functions.html#index_a"},
@@ -51,6 +52,7 @@ var menudata={children:[
 {text:"f",url:"functions_func.html#index_f"},
 {text:"g",url:"functions_func.html#index_g"},
 {text:"i",url:"functions_func.html#index_i"},
+{text:"l",url:"functions_func.html#index_l"},
 {text:"m",url:"functions_func.html#index_m"},
 {text:"o",url:"functions_func.html#index_o"},
 {text:"r",url:"functions_func.html#index_r"},

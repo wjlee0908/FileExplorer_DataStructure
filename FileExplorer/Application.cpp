@@ -21,28 +21,31 @@ void Application::Run()
 		case 2:    // open sub folder
 			OpenFolder();
 			break;
-		case 3:		//delete sub folder
+		case 3:		// Open parent folder
+			OpenParentFolder();
+			break;
+		case 4:		//delete sub folder
 			DeleteFolder();
 			break;
-		case 4:    //search sub folder by name.
+		case 5:    //search sub folder by name.
 			RetriveFolderByName();
 			break;
-		case 5:   // change folder name
+		case 6:   // change folder name
 			ChangeFolderName();
 			break;
-		case 6:		//display property of current folder
+		case 7:		//display property of current folder
 			DisplayProperty();
 			break;
-		case 7:   // make new file
+		case 8:   // make new file
 			// MakeNewFile();
 			break;
-		case 8:   // open file
+		case 9:   // open file
 			// OpenFile();
 			break;
-		case 9:		//display properties of all folders
+		case 10:		// display properties of all folders
 			DisplayAllSubFolders();
 			break;
-		case 0:
+		case :
 			return;
 		default:
 			cout << "\tIllegal selection...\n";
@@ -60,14 +63,15 @@ int Application::GetCommand()
 	cout << "\t---ID -- Command ----- " << endl;
 	cout << "\t   1 : Make new folder" << endl;
 	cout << "\t   2 : Open folder" << endl;
-	cout << "\t   3 : Delete sub folder" << endl;
-	cout << "\t   4 : Retrieve folder by name" << endl;
-	cout << "\t   5 : Change folder name" << endl;
-	cout << "\t   6 : Print folder property" << endl;
-	cout << "\t   7 : Make new file" << endl;
-	cout << "\t   8 : Open file" << endl;
-	cout << "\t   9 : Print all sub folders on screen" << endl;
-	cout << "\t   0 : Quit" << endl; 
+	cout << "\t   3 : Open parent folder" << endl;
+	cout << "\t   4 : Delete sub folder" << endl;
+	cout << "\t   5 : Retrieve folder by name" << endl;
+	cout << "\t   6 : Change folder name" << endl;
+	cout << "\t   7 : Print folder property" << endl;
+	cout << "\t   8 : Make new file" << endl;
+	cout << "\t   9 : Open file" << endl;
+	cout << "\t   10 : Print all sub folders on screen" << endl;
+	cout << "\t   11 : Quit" << endl; 
 
 	cout << endl << "\t Choose a Command--> ";
 	cin >> command;
@@ -107,6 +111,22 @@ int Application::OpenFolder()
 	}
 }
 
+int Application::OpenParentFolder()
+{
+	FolderType* parent_folder;
+	parent_folder = current_folder_->GetParentFolder();
+
+	if (parent_folder == NULL) {
+		cout << "\tparent folder doesn't exist" << endl;
+		return 0;
+	}
+	else {
+		current_folder_ = parent_folder;
+		return 1;
+	}
+
+}
+
 void Application::DisplayProperty() {
 	current_folder_->DisplayInformationOnScreen();
 }
@@ -121,6 +141,7 @@ int Application::RetriveFolderByName()
 // Change Folder name
 int Application::ChangeFolderName()
 {
+	
 	FolderType* folder_change;	// address of folder to change name
 
 	cout << "\t input name of folder to change" << endl;
@@ -133,6 +154,7 @@ int Application::ChangeFolderName()
 	
 	folder_change->SetNameFromKeyboard();
 	return 1;
+
 }
 
 //id로 item을 찾아서 제거한다.

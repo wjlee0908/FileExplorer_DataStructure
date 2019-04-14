@@ -71,6 +71,16 @@ public:
 	}
 
 	/**
+	*	@brief	Get parent folder.
+	*	@pre	parent folder is set.
+	*	@post	none.
+	*	@return	adderss of parent folder.
+	*/
+	FolderType* GetParentFolder() {
+		return parent_folder_;
+	}
+
+	/**
 	*	@brief	Get copy of sub folders list.
 	*	@pre	sub folders are set
 	*	@post	none.
@@ -170,23 +180,6 @@ public:
 		SetPath();
 		GenerateCreatedDate();
 	}
-
-	/**
-	*	@brief	Set folder record.
-	*	@pre	none.
-	*	@post	folder record is set.
-	*	@param	input_id	folder id.
-	*	@param	input_name	folder name.
-	*	@param	input_address	folder path.
-	*/
-	/*
-	void SetRecord(int input_id, string input_name, string input_path)
-	{
-		SetName(input_name);
-		SetPath(input_path);
-		GenerateCreatedTime()
-	}
-	*/
 
 	/**
 	*	@brief	Display folder size on screen.
@@ -348,12 +341,12 @@ public:
 	void DisplayAllSubFolders();
 
 	/**
-*	@brief	Read a record from file.
-*	@pre	the target file is opened.
-*	@post	folder record is set.
-*	@param	fin	file descriptor.
-*	@return	return 1 if this function works well, otherwise 0.
-*/
+	*	@brief	Read a record from file.
+	*	@pre	the target file is opened.
+	*	@post	folder record is set.
+	*	@param	fin	file descriptor.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
 	int ReadDataFromFile(ifstream& fin);
 
 	/**
@@ -378,7 +371,15 @@ protected:
 
 private:
 	/**
-	*	Compare two folders.
+	*	@brief	Finds the folder that its name duplicates and return its result.
+	*	@pre	sub folder name is set.
+	*	@post	none.
+	*   @param  folder_find    folder to find.
+	*   @return retruns boolean expresses whether duplicated folder is exist.
+	*/
+	bool IsDupliactedSubFolderExists(FolderType folder_find);
+
+	/**
 	*	@brief	Compare two folders by folder name.
 	*	@pre	two folders should be initialized.
 	*	@post	none.

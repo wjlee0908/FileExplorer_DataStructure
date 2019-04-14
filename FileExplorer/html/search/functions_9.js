@@ -1,11 +1,10 @@
 var searchData=
 [
-  ['setname',['SetName',['../class_folder_type.html#a353e871a7f7e486770278a544edbfb3c',1,'FolderType']]],
-  ['setnamefromkeyboard',['SetNameFromKeyboard',['../class_folder_type.html#ae76dfe15be8e0b70d5f3c7fa6dfb3b7a',1,'FolderType']]],
-  ['setpath',['SetPath',['../class_folder_type.html#a416c04153ab5d44363eeeb9246005f7b',1,'FolderType']]],
-  ['setpathfromkeyboard',['SetPathFromKeyboard',['../class_folder_type.html#a6c5607daa2bd4ad8300ce30952898020',1,'FolderType']]],
-  ['setrecord',['SetRecord',['../class_folder_type.html#a2eafb3fba29761ff0594cef5094d55b8',1,'FolderType']]],
-  ['setrecordfromkeyboard',['SetRecordFromKeyboard',['../class_folder_type.html#a370e415d5f58f6fa90e67d6fbe51f75a',1,'FolderType']]],
-  ['sortedarraylist',['SortedArrayList',['../class_sorted_array_list.html#a2df0cf2725c3acae34f2d667ba9995ec',1,'SortedArrayList']]],
-  ['sortedlinkedlist',['SortedLinkedList',['../class_sorted_linked_list.html#a11fb53a390af396e18e443f77c63105d',1,'SortedLinkedList']]]
+  ['readdatafromfile',['ReadDataFromFile',['../class_folder_type.html#a4cdaaf996bb9097b658e3cdd79c3c05b',1,'FolderType']]],
+  ['replace',['Replace',['../class_linked_list.html#a3ccbb034e269365c29362bbcdb41be23',1,'LinkedList::Replace()'],['../class_sorted_array_list.html#a5f0d7ab41c0928e1aef68f3ba6250fc9',1,'SortedArrayList::Replace()'],['../class_sorted_linked_list.html#ad8b3daa7776c4dd26ab8641d51662e59',1,'SortedLinkedList::Replace()']]],
+  ['resetiterator',['ResetIterator',['../class_linked_list.html#a0bd64162ed5ded876f1a42a346b54b4d',1,'LinkedList']]],
+  ['resetlist',['ResetList',['../class_sorted_array_list.html#a616f55b1d492448bc008a500b62c81be',1,'SortedArrayList']]],
+  ['retrievefolderbyname',['RetrieveFolderByName',['../class_folder_type.html#ac1d73f64d1a61ff443c0edfbce0c7512',1,'FolderType']]],
+  ['retrivefolderbyname',['RetriveFolderByName',['../class_application.html#acf88524645e92b850ddfce38a4e09618',1,'Application']]],
+  ['run',['Run',['../class_application.html#aaf09cd6cb412086dc039e28cdb059f0d',1,'Application']]]
 ];

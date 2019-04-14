@@ -2,7 +2,7 @@ var searchData=
 [
   ['data',['data',['../struct_list_node.html#a935e06f21b246fb3a0987dd3f9d28528',1,'ListNode']]],
   ['data_5farray_5f',['data_array_',['../class_sorted_array_list.html#a4c508ebe20eafcd41dd18055c8064036',1,'SortedArrayList']]],
-  ['delete',['Delete',['../class_sorted_array_list.html#ab7474b64c35fe0fd6b307aa7e4406d8d',1,'SortedArrayList::Delete()'],['../class_sorted_linked_list.html#a1c2d41f01596a1b72b41cef68f34c502',1,'SortedLinkedList::Delete()']]],
+  ['delete',['Delete',['../class_linked_list.html#a22efeaea2559ec8e7da046e745df7a2c',1,'LinkedList::Delete()'],['../class_sorted_array_list.html#ab7474b64c35fe0fd6b307aa7e4406d8d',1,'SortedArrayList::Delete()']]],
   ['deletefolder',['DeleteFolder',['../class_application.html#acf3b91d35ce685d6a5f3a1d4f935fb94',1,'Application']]],
   ['deletesubfolder',['DeleteSubFolder',['../class_folder_type.html#a922ec9f9e286fb8e50b16eb9f1b3c5fc',1,'FolderType']]],
   ['displayallsubfolders',['DisplayAllSubFolders',['../class_application.html#aab79c33ea43177f914ecd7680ad6ad86',1,'Application::DisplayAllSubFolders()'],['../class_folder_type.html#af5a3a35c7aac875a7bed9270b836ed5d',1,'FolderType::DisplayAllSubFolders()']]],
