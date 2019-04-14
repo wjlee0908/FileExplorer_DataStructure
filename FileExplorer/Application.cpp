@@ -2,7 +2,7 @@
 
 
 void Application::InitializeRootFolder() {
-	root_folder_.SetRecord(0, "/", "/");
+	root_folder_.SetRecord("/", NULL);
 	current_folder_ = &root_folder_;
 }
 

@@ -1,23 +1,57 @@
 #include "FolderType.h"
 
+// return path to string type
+string FolderType::GetPathString()
+{
+	string path_string = "";
+	FolderType* iterated_folder;	// while문에서 현재 탐색 중인 폴더
+
+	// path 결정되지 않으면 빈 스트링 리턴
+	if (path_.IsEmpty()) {
+		return path_string;
+	}
+
+	// path 끝까지 iterating
+	path_.ResetIterator();
+	while (path_.GetNextItem(iterated_folder)) {
+
+		// 루트 폴더는 이름만 append
+		if (iterated_folder->parent_folder_ == NULL) {
+			path_string.append(iterated_folder->name_);
+		}
+		// 루트 폴더 자식은 이름만 append. 앞에 또 / 안붙임
+		else if (iterated_folder->parent_folder_->name_.compare("/") == 0) {
+			path_string.append(iterated_folder->name_);
+		}
+		// 나머지는 '/' + 이름 append
+		else {
+			path_string.append("/");
+			path_string.append(iterated_folder->name_);
+		}
+	}
+
+	return path_string;
+}
+
 int FolderType::SetName(string input_name) {
 	FolderType folder_find;    // folder to find duplicated folder
-	string old_name = name_;
+	SortedLinkedList<FolderType>* current_list;   // folder list that this folder is included.
 	string new_path = "";
 
 	// 중복 검사
-	folder_find.SetName(input_name);
-	if (sub_folder_list_->Get(folder_find) == 0) {
-		cout << "\tExisting folder name" << endl;
-		return 0;
+	if (parent_folder_ != NULL) {
+		current_list = parent_folder_->sub_folder_list_;
+		if (current_list != NULL) {
+			folder_find.name_ = input_name;
+			if (current_list->Get(folder_find) == 0) {
+				cout << "\tExisting folder name" << endl;
+				return 0;
+			}
+		}
 	}
 
 	// 이름 재설정
 	name_ = input_name;
-	// path 재설정
-	SetPath();
-
-	// 위치 재설정
 
 	return 1;
 
@@ -25,6 +59,7 @@ int FolderType::SetName(string input_name) {
 
 // Set folder path using folder name and parent folder
 void FolderType::SetPath() {
+	/*
 	string parent_path = "";
 
 	// 상위 폴더 지정 안 되어있으면 실행하지 않음
@@ -36,11 +71,19 @@ void FolderType::SetPath() {
 
 	// 루트 폴더 자식이면 앞에 또 / 안붙임
 	if (parent_path.compare("/") == 0) {
-		path_ = parent_path + name_;
+		path_string_ = parent_path + name_;
 	}
 	else {
-		path_ = parent_path + "/" + name_;
+		path_string_ = parent_path + "/" + name_;
 	}
+	*/
+
+	// 부모 폴더 있으면 부모 폴더의 경로 복사
+	if (parent_folder_ != NULL) {
+		path_ = parent_folder_->path_;
+	}
+	// 뒤에 현재 폴더 붙이기
+	path_.Add(this);
 }
 
 void FolderType::GenerateCreatedDate() {
@@ -78,7 +121,7 @@ void FolderType::SetNameFromKeyboard()
 void FolderType::SetPathFromKeyboard()
 {
 	cout << "\tPath : ";
-	cin >> path_;
+	cin >> path_string_;
 }
 
 
@@ -92,12 +135,15 @@ void FolderType::SetRecordFromKeyboard()
 FolderType & FolderType::operator=(const FolderType & copied_data)
 {
 	this->name_ = copied_data.name_;
-	this->path_ = copied_data.path_;
+	this->path_string_ = copied_data.path_string_;
 	this->created_date_ = copied_data.created_date_;
 	this->num_sub_folder_ = copied_data.num_sub_folder_;
 
 	if (num_sub_folder_ != 0) {
 		this->sub_folder_list_ = copied_data.sub_folder_list_;
+	}
+	if (!path_.IsEmpty()) {
+		this->path_ = copied_data.path_;
 	}
 
 	return *this;
@@ -160,7 +206,8 @@ int FolderType::AddSubFolder() {
 int FolderType::ReadDataFromFile(ifstream& fin)
 {
 	fin >> name_;
-	fin >> path_;
+	// fin >> path_string_;
+	fin >> GetPathString();
 
 	return 1;
 };
@@ -171,7 +218,8 @@ int FolderType::WriteDataToFile(ofstream& fout)
 {
 	fout << endl;
 	fout << name_ << " ";
-	fout << path_;
+	// fout << path_string_;
+	fout << GetPathString();
 
 	return 1;
 }

@@ -292,6 +292,11 @@ int LinkedList<T>::Get(T& item)
 	bool moreToSearch, found;
 	ListNode<T>* location;	//변수 선언
 
+	// 빈 리스트에서는 항상 못 찾음
+	if (IsEmpty()) {
+		return 0;
+	}
+
 	location = head_;
 	found = false;
 	moreToSearch = (location != NULL);	//변수 초기화
@@ -378,16 +383,18 @@ int LinkedList<T>::GetNextItem(T& item)
 template<typename T>
 LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& copied_data)
 {
-	ListNode* node = copied_data.head_;
+	ListNode<T>* node = copied_data.head_;
 	T copied_item;
 
 	// 빈 리스트에 복사 대상의 아이템 모두 삽입
 	MakeEmpty();
 	while (node != NULL) {
-		copied_item = node->item;
+		copied_item = node->data;
 		this->Add(copied_item);
 		node = node->next;
 	}
+
+	return *this;
 }
 
 // Get last element of list
@@ -399,6 +406,9 @@ ListNode<T>* LinkedList<T>::GetTail() {
 			return iterator_;
 		}
 	}
+
+	// 혹시 몰라서 기본
+	return NULL;
 }
 
 

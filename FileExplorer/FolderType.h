@@ -34,7 +34,7 @@ public:
 		sub_folder_list_ = NULL;
 		num_sub_folder_ = 0;
 		name_ = "";
-		path_ = "";
+		path_string_ = "";;
 		GenerateCreatedDate();
 		parent_folder_ = NULL;
 	}
@@ -95,10 +95,19 @@ public:
 	*	@post	none.
 	*	@return	folder path.
 	*/
-	string GetPath()
+	LinkedList<FolderType*> GetPath()
 	{
+		// return path_string_;
 		return path_;
 	}
+
+	/**
+	*	@brief	Get folder path to string type.
+	*	@pre	folder path is set.
+	*	@post	none.
+	*	@return	folder path string.
+	*/
+	string GetPathString();
 
 	/**
 	*	@brief	Get created date.
@@ -135,7 +144,7 @@ public:
 	*/
 	void SetPath(string input_path)
 	{
-		path_ = input_path;
+		path_string_ = input_path;
 	}
 	
 	/**
@@ -149,16 +158,33 @@ public:
 	*	@brief	Set folder record.
 	*	@pre	none.
 	*	@post	folder record is set.
+	*	@param	input_name	folder name.
+	*   @param  input_parent    input parent folder
+	*/
+	void SetRecord(string input_name, FolderType* input_parent)
+	{
+		SetName(input_name);
+		parent_folder_ = input_parent;
+		SetPath();
+		GenerateCreatedDate();
+	}
+
+	/**
+	*	@brief	Set folder record.
+	*	@pre	none.
+	*	@post	folder record is set.
 	*	@param	input_id	folder id.
 	*	@param	input_name	folder name.
 	*	@param	input_address	folder path.
 	*/
+	/*
 	void SetRecord(int input_id, string input_name, string input_path)
 	{
 		SetName(input_name);
 		SetPath(input_path);
-		//GenerateCreatedTime()
+		GenerateCreatedTime()
 	}
+	*/
 
 	/**
 	*	@brief	Display folder size on screen.
@@ -195,7 +221,8 @@ public:
 	*/
 	void DisplayPathOnScreen() 
 	{
-		cout << "\tPath : " << path_ << endl; 
+		// cout << "\tPath : " << path_string_ << endl; 
+		cout << "\tPath : " << GetPathString() << endl;
 	};
 
 	/**
@@ -341,7 +368,8 @@ protected:
 
 	int size_;          ///< folder size.
 	int num_sub_folder_;    ///< number of sub folders.
-	string path_;       ///< folder path.
+	string path_string_;       ///< folder path.
+	LinkedList<FolderType*> path_;    ///< folder path list.
 	string created_date_;    ///< date that folder created.
 	SortedLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
 	FolderType* parent_folder_;    ///< address of parent folder
