@@ -7,13 +7,13 @@ string FolderType::GetPathString()
 	FolderType* iterated_folder;	// while문에서 현재 탐색 중인 폴더
 
 	// path 결정되지 않으면 빈 스트링 리턴
-	if (path_.IsEmpty()) {
+	if (path_->IsEmpty()) {
 		return path_string;
 	}
 
 	// path 끝까지 iterating
-	path_.ResetIterator();
-	while (path_.GetNextItem(iterated_folder)) {
+	path_->ResetIterator();
+	while (path_->GetNextItem(iterated_folder)) {
 
 		// 루트 폴더는 이름만 append
 		if (iterated_folder->parent_folder_ == NULL) {
@@ -83,7 +83,10 @@ void FolderType::SetPath() {
 		path_ = parent_folder_->path_;
 	}
 	// 뒤에 현재 폴더 붙이기
-	path_.Add(this);
+	path_->Add(this);
+	
+	
+	cout << endl;
 }
 
 void FolderType::GenerateCreatedDate() {
@@ -138,13 +141,13 @@ FolderType & FolderType::operator=(const FolderType & copied_data)
 	this->path_string_ = copied_data.path_string_;
 	this->created_date_ = copied_data.created_date_;
 	this->num_sub_folder_ = copied_data.num_sub_folder_;
+	this->parent_folder_ = copied_data.parent_folder_;
 
-	if (num_sub_folder_ != 0) {
+	if (copied_data.num_sub_folder_ != 0) {
 		this->sub_folder_list_ = copied_data.sub_folder_list_;
 	}
-	if (!path_.IsEmpty()) {
-		this->path_ = copied_data.path_;
-	}
+	this->path_ = copied_data.path_;	// copy
+	
 
 	return *this;
 }
@@ -170,6 +173,7 @@ bool FolderType::operator>(const FolderType & comparing_data)
 // add sub folder into sub folder list.
 int FolderType::AddSubFolder() {
 	FolderType new_folder;
+	FolderType* created_folder;
 	string new_folder_path;
 
 	if (num_sub_folder_ == 0) {
@@ -189,13 +193,14 @@ int FolderType::AddSubFolder() {
 	}
 	*/
 
-	new_folder.parent_folder_ = this;
-	new_folder.SetPath();    
+	new_folder.parent_folder_ = this;  
 	new_folder.GenerateCreatedDate();
 	
-
-	if (sub_folder_list_->Add(new_folder)) {
+	// 리스트 안에 들어있는 생성한 폴더의 원본에 Path 설정
+	created_folder = sub_folder_list_->Add(new_folder);
+	if (created_folder != NULL) {
 		num_sub_folder_++;
+		created_folder->SetPath();
 	}
 
 	return 1;
@@ -297,7 +302,7 @@ void FolderType::DisplayAllSubFolders() {
 
 	sub_folder_list_->ResetIterator();
 
-	// 리스트의 끝까지 displaye_folder에 할당
+	// 리스트의 끝까지 displayed_folder에 할당
 	while (sub_folder_list_->GetNextItem(displayed_folder) != 0) {
 		displayed_folder.DisplayInformationOnScreen();
 	}

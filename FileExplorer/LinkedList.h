@@ -57,9 +57,9 @@ public:
 	*	@brief	Add item into last of this list.
 	*	@pre	List is not full. item is not in list.
 	*	@post	Item is inserted in this list.
-	*	@return	1 if this function works well, otherwise 0.
+	*	@return	retrun address of created item if works well, oterwise return NULL;
 	*/
-	int Add(T item);
+	T* Add(T item);
 
 	/**
 	*	@brief	Delete item from this list.
@@ -125,6 +125,21 @@ public:
 	ListNode<T>* GetTail();
 
 	/**
+	*	@brief	Get address of last item of list
+	*	@pre	list elements are set.
+	*	@post	none.
+	*   @return address  of last item of this list
+	*/
+	T* GetTailItemAddress() {
+		if (GetTail() == NULL) {
+			return NULL;
+		}
+		else {
+			return &(GetTail()->data)
+		}
+	};
+
+	/**
 	*	@brief	Copy parameter list and assign to this list.
 	*	@pre	copide_data is set.
 	*	@post	list record is set.
@@ -163,11 +178,15 @@ LinkedList<T>::~LinkedList()
 template <typename T>
 void LinkedList<T>::MakeEmpty()
 {
-	// head를 하나씩 옮기며 head를 차례로 제거한다. 
-
 	ListNode<T>* deleted_node;
 
-	while (head_ != NULL) {
+	// 이미 비어있으면 수행하지 않음
+	if (IsEmpty()) {
+		return;
+	}
+
+	// head 옮겨가며 head 삭제
+	while (length_ > 0) {
 		deleted_node = head_;
 		head_ = head_->next;
 		delete deleted_node;
@@ -194,7 +213,7 @@ inline bool LinkedList<T>::IsEmpty() const
 
 // Add item into this list.
 template <typename T>
-int LinkedList<T>::Add(T item)
+T* LinkedList<T>::Add(T item)
 {
 	ListNode<T>* new_node = new ListNode<T>;
 
@@ -212,7 +231,7 @@ int LinkedList<T>::Add(T item)
 
 	length_++;
 
-	return 1;
+	return &(new_node->data);
 }
 
 //Delete item from this list.

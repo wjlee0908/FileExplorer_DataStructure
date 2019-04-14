@@ -34,7 +34,8 @@ public:
 		sub_folder_list_ = NULL;
 		num_sub_folder_ = 0;
 		name_ = "";
-		path_string_ = "";;
+		path_string_ = "";
+		path_ = new LinkedList<FolderType*>;
 		GenerateCreatedDate();
 		parent_folder_ = NULL;
 	}
@@ -46,6 +47,7 @@ public:
 		if (num_sub_folder_ != 0) {
 			delete sub_folder_list_;
 		}
+		// delete path_;
 	}
 
 	/**
@@ -95,7 +97,7 @@ public:
 	*	@post	none.
 	*	@return	folder path.
 	*/
-	LinkedList<FolderType*> GetPath()
+	LinkedList<FolderType*>* GetPath()
 	{
 		// return path_string_;
 		return path_;
@@ -369,7 +371,7 @@ protected:
 	int size_;          ///< folder size.
 	int num_sub_folder_;    ///< number of sub folders.
 	string path_string_;       ///< folder path.
-	LinkedList<FolderType*> path_;    ///< folder path list.
+	LinkedList<FolderType*>* path_;    ///< folder path list.
 	string created_date_;    ///< date that folder created.
 	SortedLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
 	FolderType* parent_folder_;    ///< address of parent folder
