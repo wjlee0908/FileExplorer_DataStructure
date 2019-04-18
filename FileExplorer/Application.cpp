@@ -45,7 +45,7 @@ void Application::Run()
 		case 10:		// display properties of all folders
 			DisplayAllSubFolders();
 			break;
-		case :
+		case 11:
 			return;
 		default:
 			cout << "\tIllegal selection...\n";
@@ -141,18 +141,8 @@ int Application::RetriveFolderByName()
 // Change Folder name
 int Application::ChangeFolderName()
 {
-	
-	FolderType* folder_change;	// address of folder to change name
-
-	cout << "\t input name of folder to change" << endl;
-	folder_change = current_folder_->GetSubFolder();
-
-	if (folder_change == NULL) {
-		cout << "\tfolder not found" << endl;
-		return 0;
-	}
-	
-	folder_change->SetNameFromKeyboard();
+	current_folder_->ChangeSubFolderName();
+	current_folder_->DisplayAllSubFolders();
 	return 1;
 
 }

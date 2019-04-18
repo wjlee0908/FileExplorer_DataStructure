@@ -19,12 +19,14 @@ class SortedLinkedList : public LinkedList<T>
 	T* Add(T item);
 
 	/**
-	*	@brief	Change value of item which is in this list.
+	*	@brief	Change key of item which is in this list.
 	*	@pre	List is not empty. the item exists in list.
-	*	@post	Item's value is changed.
+	*	@post	Item's key is changed. item is rearranged.
+	*   @param  original_item    item to change name
+	*   @param  changed_item    item that its key is changed
 	*	@return	1 if this function works well, otherwise 0.
 	*/
-	int Replace(T item_changed, T item_to_change);
+	int ChangeItemKey(T original_item, T changed_item);
 
 private:
 	/**
@@ -35,6 +37,14 @@ private:
 	*	@return	1 if this function works well, otherwise 0.
 	*/
 	int InsertNodeSorted(ListNode<T>* node);
+	/**
+	*	@brief	Finds the item that its key duplicates in the list and return its result.
+	*	@pre	items key is set.
+	*	@post	none.
+	*   @param  item_check    item to check duplication.
+	*   @return retruns boolean expresses whether duplicated item is exist.
+	*/
+	bool IsDupliactedItemExists(T item_check);
 };
 
 // Add item into this list.
@@ -57,27 +67,40 @@ T* SortedLinkedList<T>::Add(T item)
 
 // Change value of item which is in this list.
 template<typename T>
-int SortedLinkedList<T>::Replace(T item_changed, T item_to_change)
+int SortedLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
 {
 	ListNode<T>* previous = NULL;
 	ListNode<T>* replaced_node = NULL;
 
+	// 중복 검사
+	if (IsDupliactedItemExists(changed_item)) {
+		return 1;
+	}
+
 	ResetIterator();
 	while (WalkIterator() != NULL) {
-		if (iterator_ == item_changed) {
-			iterator_->data = item_to_change;
+		if (iterator_->data == original_item) {
+			iterator_->data = changed_item;
+
+			// head일 경우 head값도 조정.
+			if (iterator_ == head_) {
+				head_ = iterator_->next;
+			}
+
 			// 노드 앞뒤 연결 해제
 			if (previous != NULL) {
 				previous->next = iterator_->next;
 			}
 			iterator_->next = NULL;
 			replaced_node = iterator_;
+			// 연결 해제했으니 length 낮춤. 나중에 다시 insert 위해.
+			length_--;
 			break;
 		}
 		previous = iterator_;
 	}
 
-	// 못 찾았으면 종료
+	// 바꿀 아이템 못 찾았으면 종료
 	if (replaced_node == NULL) {
 		return 1;
 	}
@@ -95,7 +118,7 @@ int SortedLinkedList<T>::InsertNodeSorted(ListNode<T>* node)
 	ListNode<T>* previous;	// 대상 전 노드의 next에 삽입하기 위해 생성
 	bool is_inserted = false;
 
-	// special case: 리스트가 비어있을 때는 new를 head로 지정
+	// special case: 리스트가 비어있을 때는 입력받은 node를 head로 지정
 	if (IsEmpty()) {
 		head_ = node;
 		is_inserted = true;
@@ -132,6 +155,16 @@ int SortedLinkedList<T>::InsertNodeSorted(ListNode<T>* node)
 		}
 	}
 	return 1;
+}
+
+template<typename T>
+bool SortedLinkedList<T>::IsDupliactedItemExists(T item_check)
+{
+	if (Get(item_check) == 1) {
+		return true;
+	}
+
+	return false;
 }
 
 

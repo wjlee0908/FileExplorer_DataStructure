@@ -1,5 +1,11 @@
 #include "FolderType.h"
 
+// copy constructor for deep copy.
+FolderType::FolderType(const FolderType & copied_data)
+{
+	AssignCopy(copied_data);
+}
+
 // return path to string type
 string FolderType::GetPathString()
 {
@@ -33,59 +39,23 @@ string FolderType::GetPathString()
 	return path_string;
 }
 
+// initialize folder name
+// use ChangeSubFolderName() to change name. 
 int FolderType::SetName(string input_name) {
-	FolderType folder_find;    // folder to find duplicated folder
-	SortedLinkedList<FolderType>* current_list;   // folder list that this folder is included.
-	string new_path = "";
-
-	/*
-	// 중복 검사
-	if (parent_folder_ != NULL) {
-		current_list = parent_folder_->sub_folder_list_;
-		if (current_list != NULL) {
-			folder_find.name_ = input_name;
-			if (current_list->Get(folder_find) == 0) {
-				cout << "\tExisting folder name" << endl;
-				return 0;
-			}
-		}
+	
+	// 최초 1회만 이름 변경하고 끝냄
+	if (name_ == "") {
+		name_ = input_name;
+		return 1;
 	}
-	*/
-
-	// 중복 검사
-	folder_find.name_ = input_name;
-	if ((parent_folder_ != NULL) && (parent_folder_->IsDupliactedSubFolderExists(folder_find))) {
-		cout << "\tExisting folder name" << endl;
+	else {
 		return 0;
 	}
-
-	// 이름 재설정
-	name_ = input_name;
-
-	return 1;
 
 }
 
 // Set folder path using folder name and parent folder
 void FolderType::SetPath() {
-	/*
-	string parent_path = "";
-
-	// 상위 폴더 지정 안 되어있으면 실행하지 않음
-	if (parent_folder_ == NULL) {
-		return;
-	}
-
-	parent_path = parent_folder_->GetPath();
-
-	// 루트 폴더 자식이면 앞에 또 / 안붙임
-	if (parent_path.compare("/") == 0) {
-		path_string_ = parent_path + name_;
-	}
-	else {
-		path_string_ = parent_path + "/" + name_;
-	}
-	*/
 
 	// 부모 폴더 있으면 부모 폴더의 경로 복사
 	if (parent_folder_ != NULL) {
@@ -124,6 +94,8 @@ void FolderType::GenerateCreatedDate() {
 // Set folder name from keyboard.
 void FolderType::SetNameFromKeyboard()
 {
+	string input_name;
+
 	cout << "\tName : ";
 	cin >> name_;
 }
@@ -146,19 +118,28 @@ void FolderType::SetRecordFromKeyboard()
 // copy and assgin parameter to this folder
 FolderType & FolderType::operator=(const FolderType & copied_data)
 {
-	this->name_ = copied_data.name_;
-	this->path_string_ = copied_data.path_string_;
-	this->created_date_ = copied_data.created_date_;
-	this->num_sub_folder_ = copied_data.num_sub_folder_;
-	this->parent_folder_ = copied_data.parent_folder_;
-
-	if (copied_data.num_sub_folder_ != 0) {
-		this->sub_folder_list_ = copied_data.sub_folder_list_;
-	}
-	this->path_ = copied_data.path_;	// copy
-	
-
+	AssignCopy(copied_data);
 	return *this;
+}
+
+// Assign copy of parameter
+void FolderType::AssignCopy(const FolderType & copied_object)
+{
+	this->name_ = copied_object.name_;
+	this->path_string_ = copied_object.path_string_;
+	this->created_date_ = copied_object.created_date_;
+	this->num_sub_folder_ = copied_object.num_sub_folder_;
+	this->parent_folder_ = copied_object.parent_folder_;
+
+	if (copied_object.num_sub_folder_ != 0) {
+		// 공간 생성하고 데이터 deep copy.
+		this->sub_folder_list_ = new SortedLinkedList<FolderType>;
+		*(this->sub_folder_list_) = *(copied_object.sub_folder_list_);
+	}
+
+	// path list deep copy
+	this->path_ = new LinkedList<FolderType*>;
+	*(this->path_) = *(copied_object.path_);	
 }
 
 // Returns whether this is less than comparing data.
@@ -272,6 +253,31 @@ int FolderType::DeleteSubFolder() {
 	}
 
 	cout << "<========DELETE FAIL !=======>" << endl;
+
+	return 0;
+}
+
+// Change sub folder name and rearrange it in the list
+int FolderType::ChangeSubFolderName()
+{
+	FolderType* folder_change;    // folder to change name
+	FolderType changed_folder;    // folder that its name changed.
+
+	// 바꿀 폴더 찾기
+	cout << "\tinput name of folder to change" << endl;
+	folder_change = GetSubFolder();
+
+	if (folder_change == NULL) {
+		cout << "\tfolder not found" << endl;
+		return 0;
+	}
+
+	// 바꿀 폴더 이름 바꾸기
+	changed_folder = (*folder_change);
+	cout << "\tinput name to change" << endl;
+	changed_folder.SetNameFromKeyboard();
+
+	sub_folder_list_->ChangeItemKey(*folder_change, changed_folder);
 
 	return 0;
 }

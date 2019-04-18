@@ -51,6 +51,11 @@ public:
 	}
 
 	/**
+	*    copy constructor
+	*/
+	FolderType(const FolderType &copied_data);
+
+	/**
 	*	@brief	Get folder size.
 	*	@pre	folder size is set.
 	*	@post	none.
@@ -129,6 +134,16 @@ public:
 	*/
 	string GetCreatedDate() {
 		return created_date_;
+	}
+
+	/**
+	*	@brief	Returns wheter this folder is root folder.
+	*	@pre	parent folder is set.
+	*	@post	none.
+	*	@return	boolean that expresses whether this is root folder.
+	*/
+	bool IsRootFolder() {
+		return (parent_folder_ == NULL);
 	}
 
 	/**
@@ -271,6 +286,14 @@ public:
 	FolderType& operator= (const FolderType& copied_data);
 
 	/**
+	*	@brief	Copy parameter folder and assign to this folder.
+	*	@pre	copide_object is set.
+	*	@post	folder record is set.
+	*   @param  copied_object    object to assign
+	*/
+	void AssignCopy(const FolderType& copied_object);
+	
+	/**
 	*	@brief	Returns whether this is less than comparing data.
 	*            primary key is name.
 	*	@pre	comparing_data is set.
@@ -315,6 +338,14 @@ public:
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
 	int DeleteSubFolder();
+
+	/**
+	*	@brief  Change one sub folder's name
+	*	@pre	sub folder list is set.
+	*	@post	none.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int ChangeSubFolderName();
 
 	/**
 	*	@brief  Get sub folder by name

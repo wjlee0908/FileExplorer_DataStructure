@@ -31,6 +31,11 @@ public:
 	~LinkedList();
 
 	/**
+	*    copy constructor
+	*/
+	// LinkedList(const LinkedList<T>& )
+
+	/**
 	*	@brief	Initialize list to empty state.
 	*	@pre	None
 	*	@post	List is empty. All nodes are deallocated.
@@ -308,7 +313,7 @@ int LinkedList<T>::Replace(T item)
 template <typename T>
 int LinkedList<T>::Get(T& item)
 {
-	bool moreToSearch, found;
+	bool moreToSearch, is_found;
 	ListNode<T>* location;	//변수 선언
 
 	// 빈 리스트에서는 항상 못 찾음
@@ -317,14 +322,14 @@ int LinkedList<T>::Get(T& item)
 	}
 
 	location = head_;
-	found = false;
+	is_found = false;
 	moreToSearch = (location != NULL);	//변수 초기화
 
-	while (moreToSearch && !found)	//리스트의 끝이 아니면서 아직 찾지 않았으면 반복한다.
+	while (moreToSearch && !is_found)	//리스트의 끝이 아니면서 아직 찾지 않았으면 반복한다.
 	{
 		if (item == location->data)
 		{
-			found = true;
+			is_found = true;
 			item = location->data;
 		}	//일치하는 항목을 찾았을 때 found의 값을 변경해주고 item에 해당 항목을 복사해준다.
 		else
@@ -334,7 +339,7 @@ int LinkedList<T>::Get(T& item)
 		}	//찾지 못했을 때 다음 항목으로 location을 옮기고 그 값이 NULL이면 리스트의 끝이므로 moreToSearch의 값을 변경해준다.
 	}
 
-	if (found)
+	if (is_found)
 		return 1;
 	else
 		return 0;	//찾으면 1, 그렇지 못하면 0을 리턴한다.
