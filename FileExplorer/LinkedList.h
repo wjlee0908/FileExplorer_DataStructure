@@ -14,7 +14,7 @@ struct ListNode
 
 
 /**
-*	Unsorted list class for managing items.
+*	Unsorted list class template for managing T type elements.
 */
 template <typename T>
 class LinkedList
@@ -33,7 +33,10 @@ public:
 	/**
 	*    copy constructor
 	*/
-	// LinkedList(const LinkedList<T>& )
+	LinkedList(const LinkedList<T>& copied_object)
+	{
+		AssignCopy();
+	}
 
 	/**
 	*	@brief	Initialize list to empty state.
@@ -157,6 +160,15 @@ protected:
 	ListNode<T>* head_;	///< Pointer for pointing a first node.
 	ListNode<T>* iterator_;	///< Node pointer for pointing current iterating node.
 	int length_;	///< Number of node in the list.
+
+private:
+	/**
+	*	@brief	Copy parameter list and assign to this list. (deep copy)
+	*	@pre	copide_object is set.
+	*	@post	list is set.
+	*   @param  copied_object    object to assign
+	*/
+	void AssignCopy(const LinkedList<T>& copied_object);
 };
 
 
@@ -403,11 +415,20 @@ int LinkedList<T>::GetNextItem(T& item)
 	}
 }
 
-// Copy parameter list and assign to this list.
+// Copy parameter list and assign to this list when using = operator.
 template<typename T>
 LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& copied_data)
 {
-	ListNode<T>* node = copied_data.head_;
+	AssignCopy(copied_data);
+
+	return *this;
+}
+
+// Copy parameter list and assign to this list. (deep copy)
+template<typename T>
+void LinkedList<T>::AssignCopy(const LinkedList<T> & copied_object)
+{
+	ListNode<T>* node = copied_object.head_;	// node for iteration
 	T copied_item;
 
 	// 빈 리스트에 복사 대상의 아이템 모두 삽입
@@ -417,8 +438,6 @@ LinkedList<T>& LinkedList<T>::operator=(const LinkedList<T>& copied_data)
 		this->Add(copied_item);
 		node = node->next;
 	}
-
-	return *this;
 }
 
 // Get last element of list

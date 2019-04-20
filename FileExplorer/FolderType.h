@@ -43,7 +43,8 @@ public:
 	/**
 	*	destructor.
 	*/
-	~FolderType()	{
+	~FolderType()	
+	{
 		if (num_sub_folder_ != 0) {
 			delete sub_folder_list_;
 		}
@@ -61,7 +62,8 @@ public:
 	*	@post	none.
 	*	@return	folder size.
 	*/
-	int GetSize() {
+	int GetSize() 
+	{
 		return size_;
 	}
 
@@ -203,7 +205,7 @@ public:
 	*/
 	void DisplaySizeOnScreen() {
 		cout << "\tFolder Size : " << size_ << endl;
-	};
+	}
 
 	/**
 	*	@brief	Display number of sub folders on screen.
@@ -212,7 +214,7 @@ public:
 	*/
 	void DisplayNumOfSubFoldersOnScreen() {
 		cout << "\tNumber of Sub folders : " << size_ << endl;
-	};
+	}
 
 	/**
 	*	@brief	Display folder name on screen.
@@ -222,7 +224,7 @@ public:
 	void DisplayNameOnScreen() 
 	{
 		cout << "\tName : " << name_ << endl; 
-	};
+	}
 
 	/**
 	*	@brief	Display folder path on screen.
@@ -233,7 +235,7 @@ public:
 	{
 		// cout << "\tPath : " << path_string_ << endl; 
 		cout << "\tPath : " << GetPathString() << endl;
-	};
+	}
 
 	/**
 	*	@brief	Display folder's created date on screen
@@ -242,7 +244,7 @@ public:
 	*/
 	void DisplayCreatedDateOnScreen() {
 		cout << "\tCreated date : " << created_date_ << endl;
-	};
+	}
 
 	/**
 	*	@brief	Display an folder record on screen.
@@ -253,7 +255,7 @@ public:
 	{
 		DisplayNameOnScreen();
 		DisplayPathOnScreen();
-	};
+	}
 
 	/**
 	*	@brief	Set folder name from keyboard.
@@ -284,14 +286,6 @@ public:
 	*   @return retrun this after assigning parameter.
 	*/
 	FolderType& operator= (const FolderType& copied_data);
-
-	/**
-	*	@brief	Copy parameter folder and assign to this folder.
-	*	@pre	copide_object is set.
-	*	@post	folder record is set.
-	*   @param  copied_object    object to assign
-	*/
-	void AssignCopy(const FolderType& copied_object);
 	
 	/**
 	*	@brief	Returns whether this is less than comparing data.
@@ -401,6 +395,14 @@ protected:
 	FolderType* parent_folder_;    ///< address of parent folder
 
 private:
+	/**
+	*	@brief	Copy parameter folder and assign to this folder. (deep copy)
+	*	@pre	copide_object is set.
+	*	@post	folder record is set.
+	*   @param  copied_object    object to assign
+	*/
+	void AssignCopy(const FolderType& copied_object);
+
 	/**
 	*	@brief	Finds the folder that its name duplicates and return its result.
 	*	@pre	sub folder name is set.

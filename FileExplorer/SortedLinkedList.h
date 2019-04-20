@@ -52,12 +52,11 @@ template <typename T>
 T* SortedLinkedList<T>::Add(T item)
 {
 	ListNode<T>* new_node = new ListNode<T>;
-	ListNode<T>* previous;	// 대상 전 노드의 next에 add하기 위해 생성
-	bool is_inserted = false;
 
 	new_node->data = item;
 	new_node->next = NULL;
-
+	
+	// 노드 순서 맞는 위치에 삽입
 	if (InsertNodeSorted(new_node) == 1) {
 		length_++;
 	}

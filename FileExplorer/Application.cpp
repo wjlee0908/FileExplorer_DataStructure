@@ -96,11 +96,12 @@ int Application::MakeNewFolder()
 // change current folder
 int Application::OpenFolder()
 {
-	// current folder address = found folder address
 	FolderType* folder_open;	// address of folder to open
 
+	// 1. find folder to open
 	folder_open = current_folder_->GetSubFolder();
 
+	// 2. current folder <- found folder
 	if (folder_open != NULL) {
 		current_folder_ = folder_open;
 		return 1;
@@ -134,7 +135,6 @@ void Application::DisplayProperty() {
 //이름을 입력받은 item으로 리스트에서 item을 찾아서 출력한다.
 int Application::RetriveFolderByName()
 {
-
 	return current_folder_->RetrieveFolderByName();
 }
 

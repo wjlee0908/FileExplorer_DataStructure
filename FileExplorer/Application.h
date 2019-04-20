@@ -7,6 +7,7 @@
 using namespace std;
 
 #include "FolderType.h"
+#include "CircularQueue.h"
 
 #define FILENAMESIZE 1024
 
