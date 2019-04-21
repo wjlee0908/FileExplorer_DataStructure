@@ -2,7 +2,10 @@ var class_folder_type =
 [
     [ "FolderType", "class_folder_type.html#a9457822214767c554c9ad1045267911d", null ],
     [ "~FolderType", "class_folder_type.html#a225db47a63ea92e0d1ca88e032e5d7d8", null ],
+    [ "FolderType", "class_folder_type.html#a0cf475e7859ceb006fb0e15f47b94f97", null ],
     [ "AddSubFolder", "class_folder_type.html#a1eebb745214dcae7082f5733a1cf7be4", null ],
+    [ "AssignCopy", "class_folder_type.html#a951365abbf837198a9a49d08cb75c31c", null ],
+    [ "ChangeSubFolderName", "class_folder_type.html#ae556c8f5b8f30d4c420a5e0292c7b759", null ],
     [ "CompareByName", "class_folder_type.html#aab56726074cad51d17c3fe415b285b6a", null ],
     [ "DeleteSubFolder", "class_folder_type.html#a922ec9f9e286fb8e50b16eb9f1b3c5fc", null ],
     [ "DisplayAllSubFolders", "class_folder_type.html#af5a3a35c7aac875a7bed9270b836ed5d", null ],
@@ -23,6 +26,7 @@ var class_folder_type =
     [ "GetSubFolder", "class_folder_type.html#a55fc34cce5082ede5b9f009a38968381", null ],
     [ "GetSubFolders", "class_folder_type.html#a06ab5fdccbe0fc249d2a1ad6617f61db", null ],
     [ "IsDupliactedSubFolderExists", "class_folder_type.html#aa08bdfb45c655670eb888b96b1cf1be9", null ],
+    [ "IsRootFolder", "class_folder_type.html#a1c5eb95d123c4ed7c3b9538010f682ce", null ],
     [ "operator<", "class_folder_type.html#aa3a55716f115d1b7b4ed0ea9e2c810e2", null ],
     [ "operator=", "class_folder_type.html#ae7a1c6ad9abc9e7cbd8d37dee1ba512f", null ],
     [ "operator==", "class_folder_type.html#a04954ee94b5856cd6f606398ddce4970", null ],

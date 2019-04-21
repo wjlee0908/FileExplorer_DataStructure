@@ -18,5 +18,7 @@ var searchData=
   ['getsubfolders',['GetSubFolders',['../class_folder_type.html#a06ab5fdccbe0fc249d2a1ad6617f61db',1,'FolderType']]],
   ['gettail',['GetTail',['../class_linked_list.html#a24b16b901f0341668a2e7a732c496918',1,'LinkedList']]],
   ['gettailitemaddress',['GetTailItemAddress',['../class_linked_list.html#a8f2cf56e012749503b334458251b9f36',1,'LinkedList']]],
+  ['gettopelement',['GetTopElement',['../class_stack.html#a3ccaf651607d670680f5b3425aad43ea',1,'Stack']]],
+  ['gotopreviousfolder',['GoToPreviousFolder',['../class_application.html#ae80009da13c406497b0e85fb69c9f0e6',1,'Application']]],
   ['greater',['GREATER',['../_folder_type_8h.html#afe9640666d0d789fef4ba0b6a02f6b4aa25b5ca2f56d99ba6ffcb5316adac34c1',1,'FolderType.h']]]
 ];

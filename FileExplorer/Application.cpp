@@ -11,6 +11,8 @@ void Application::Run()
 {
 	while(1)
 	{
+		cout << endl << endl;
+		DisplayWoringDirectory();
 		menu_command_ = GetCommand();
 
 		switch(menu_command_)
@@ -19,33 +21,42 @@ void Application::Run()
 			MakeNewFolder();
 			break;
 		case 2:    // open sub folder
-			OpenFolder();
+			OpenSubFolder();
 			break;
 		case 3:		// Open parent folder
 			OpenParentFolder();
 			break;
-		case 4:		//delete sub folder
+		case 4:    // Go to previous folder in history
+			GoToPreviousFolder();
+			break;
+		case 5:    // Go to next folder in history
+			// GoToNextFolder();
+			break;
+		case 6:		//delete sub folder
 			DeleteFolder();
 			break;
-		case 5:    //search sub folder by name.
-			RetriveFolderByName();
-			break;
-		case 6:   // change folder name
+		case 7:   // change folder name
 			ChangeFolderName();
 			break;
-		case 7:		//display property of current folder
+		case 8:		//display property of current folder
 			DisplayProperty();
 			break;
-		case 8:   // make new file
+		case 9:    //search sub folder by name.
+			RetriveFolderByName();
+			break;
+		case 10:   // make new file
 			// MakeNewFile();
 			break;
-		case 9:   // open file
+		case 11:   // open file
 			// OpenFile();
 			break;
-		case 10:		// display properties of all folders
+		case 12:		// display properties of all folders
 			DisplayAllSubFolders();
 			break;
-		case 11:
+		case 13:    // display name of all recent folders.
+			DisplayRecentFolders();
+			break;
+		case 0:
 			return;
 		default:
 			cout << "\tIllegal selection...\n";
@@ -59,19 +70,21 @@ void Application::Run()
 int Application::GetCommand()
 {
 	int command;
-	cout << endl << endl;
 	cout << "\t---ID -- Command ----- " << endl;
 	cout << "\t   1 : Make new folder" << endl;
 	cout << "\t   2 : Open folder" << endl;
 	cout << "\t   3 : Open parent folder" << endl;
-	cout << "\t   4 : Delete sub folder" << endl;
-	cout << "\t   5 : Retrieve folder by name" << endl;
-	cout << "\t   6 : Change folder name" << endl;
-	cout << "\t   7 : Print folder property" << endl;
-	cout << "\t   8 : Make new file" << endl;
-	cout << "\t   9 : Open file" << endl;
-	cout << "\t   10 : Print all sub folders on screen" << endl;
-	cout << "\t   11 : Quit" << endl; 
+	cout << "\t   4 : Go to previous folder" << endl;
+	cout << "\t   5 : Go to next folder" << endl;
+	cout << "\t   6 : Delete sub folder" << endl;
+	cout << "\t   7 : Change folder name" << endl;
+	cout << "\t   8 : Print folder property" << endl;
+	cout << "\t   9 : Retrieve folder by name" << endl;
+	cout << "\t   10 : Make new file" << endl;
+	cout << "\t   11 : Open file" << endl;
+	cout << "\t   12 : Print all sub folders on screen" << endl;
+	cout << "\t   13 : Print recent folders" << endl;
+	cout << "\t   0 : Quit" << endl; 
 
 	cout << endl << "\t Choose a Command--> ";
 	cin >> command;
@@ -94,7 +107,7 @@ int Application::MakeNewFolder()
 }
 
 // change current folder
-int Application::OpenFolder()
+int Application::OpenSubFolder()
 {
 	FolderType* folder_open;	// address of folder to open
 
@@ -103,7 +116,7 @@ int Application::OpenFolder()
 
 	// 2. current folder <- found folder
 	if (folder_open != NULL) {
-		current_folder_ = folder_open;
+		OpenFolder(folder_open);
 		return 1;
 	}
 	else {
@@ -117,19 +130,41 @@ int Application::OpenParentFolder()
 	FolderType* parent_folder;
 	parent_folder = current_folder_->GetParentFolder();
 
-	if (parent_folder == NULL) {
-		cout << "\tparent folder doesn't exist" << endl;
-		return 0;
+	if (parent_folder != NULL) {
+		current_folder_ = parent_folder;	// change current folder to parent folder.
+		return 1;
 	}
 	else {
-		current_folder_ = parent_folder;
-		return 1;
+		cout << "\tparent folder doesn't exist" << endl;
+		return 0;
 	}
 
 }
 
+// open previous folder in folder history.
+int Application::GoToPreviousFolder()
+{
+	try {
+		// 연속 뒤로 가기를 위해 뒤로 간 folder는 history에 저장하지 않음.
+		// 따라서 open folder 메소드 사용 안 함.
+		current_folder_ = folder_history_.Pop();
+	}
+	catch(ExceptionEmptyStack exception) {
+		cout << "\terror: no folders in history" << endl;
+		return 0;
+	}
+	return 1;
+}
+
 void Application::DisplayProperty() {
 	current_folder_->DisplayInformationOnScreen();
+}
+
+// displays current working directory.
+void Application::DisplayWoringDirectory()
+{
+	cout << "\tWorking Directory" << endl;
+	current_folder_->DisplayPathOnScreen();
 }
 
 //이름을 입력받은 item으로 리스트에서 item을 찾아서 출력한다.
@@ -147,6 +182,24 @@ int Application::ChangeFolderName()
 
 }
 
+// Open folder
+void Application::OpenFolder(FolderType * folder_to_open)
+{
+	folder_history_.Push(current_folder_);	// 현재 열려 있는 폴더는 히스토리에 저장
+	current_folder_ = folder_to_open;
+	AddToRecentFolders(current_folder_);   // 연 폴더는 최근 열어본 폴더에 추가
+}
+
+// Add folder to Recent folder queue
+void Application::AddToRecentFolders(FolderType * folder)
+{
+	// 꽉 찼으면 가장 오래된 폴더부터 dequeue.
+	if (recent_folders_.IsFull()) {
+		recent_folders_.DeQueue();
+	}
+	recent_folders_.EnQueue(folder);
+}
+
 //id로 item을 찾아서 제거한다.
 int Application::DeleteFolder()
 {
@@ -160,6 +213,23 @@ int Application::DeleteFolder()
 void Application::DisplayAllSubFolders()
 {
 	current_folder_->DisplayAllSubFolders();
+}
+
+// Display all recent folders on screen.
+void Application::DisplayRecentFolders()
+{
+	CircularQueue<FolderType*> folders;    // folders to display
+	string folder_name;    // folder name to display.
+	
+	folders = recent_folders_;    // dequeue하면서 print하기 위해 복사
+	
+	cout << "\t";
+	while (!folders.IsEmpty()) {
+		folder_name = folders.DeQueue()->GetName();
+		cout << folder_name << " ";
+	}
+	cout << endl;
+
 }
 
 

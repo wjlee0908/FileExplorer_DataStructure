@@ -2,7 +2,9 @@ var class_linked_list =
 [
     [ "LinkedList", "class_linked_list.html#a3c20fcfec867e867f541061a09fc640c", null ],
     [ "~LinkedList", "class_linked_list.html#a7c37609df3b83bc4eb0281b852f93fd7", null ],
+    [ "LinkedList", "class_linked_list.html#aa90851342ef75d28172ddc546aaabd8b", null ],
     [ "Add", "class_linked_list.html#a222e6b85bb5fd5859363af9bc00a6c81", null ],
+    [ "AssignCopy", "class_linked_list.html#aa5e764c6fb9b27b64232b333dadd21e9", null ],
     [ "Delete", "class_linked_list.html#a22efeaea2559ec8e7da046e745df7a2c", null ],
     [ "Get", "class_linked_list.html#a77d17b5bab5153da2da6323436f63212", null ],
     [ "GetItemAddress", "class_linked_list.html#aef277df31aa0514b9de0a84b089a89a7", null ],

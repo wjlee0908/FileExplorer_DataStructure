@@ -326,6 +326,6 @@ void FolderType::DisplayAllSubFolders() {
 
 	// 리스트의 끝까지 displayed_folder에 할당
 	while (sub_folder_list_->GetNextItem(displayed_folder) != 0) {
-		displayed_folder.DisplayInformationOnScreen();
+		displayed_folder.DisplayNameOnScreen();
 	}
 }

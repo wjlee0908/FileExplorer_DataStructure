@@ -255,6 +255,7 @@ public:
 	{
 		DisplayNameOnScreen();
 		DisplayPathOnScreen();
+		DisplayCreatedDateOnScreen();
 	}
 
 	/**
@@ -280,7 +281,7 @@ public:
 
 	/**
 	*	@brief	Copy parameter folder and assign to this folder.
-	*	@pre	copide_data is set.
+	*	@pre	copied_data is set.
 	*	@post	folder record is set.
 	*   @param  copied_data    data to assign
 	*   @return retrun this after assigning parameter.

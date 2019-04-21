@@ -31,7 +31,8 @@ var NAVTREE =
       [ "클래스 멤버", "functions.html", [
         [ "모두", "functions.html", null ],
         [ "함수", "functions_func.html", null ],
-        [ "변수", "functions_vars.html", null ]
+        [ "변수", "functions_vars.html", null ],
+        [ "관련된 함수들", "functions_rela.html", null ]
       ] ]
     ] ],
     [ "파일들", "files.html", [

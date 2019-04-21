@@ -8,8 +8,11 @@ using namespace std;
 
 #include "FolderType.h"
 #include "CircularQueue.h"
+#include "Stack.h"
 
 #define FILENAMESIZE 1024
+#define HISTORY_SIZE 10
+#define RECENT_SIZE 10
 
 /**
 *	application class for item management simply.
@@ -67,7 +70,7 @@ public:
 	*	@post	current folder is changed to selected folder.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int OpenFolder();
+	int OpenSubFolder();
 
 	/**
 	*	@brief	open parent folder of current folder.
@@ -78,6 +81,14 @@ public:
 	int OpenParentFolder();
 
 	/**
+	*	@brief	open previous folder in folder history.
+	*	@pre	folder history should be initialized.
+	*	@post	current folder is changed to its previous folder.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int GoToPreviousFolder();
+
+	/**
 	*	@brief	delete folder that matches input id
 	*	@pre	current folder should be initialized
 	*	@post	found item is deleted from folder
@@ -86,11 +97,18 @@ public:
 	int DeleteFolder();
 
 	/**
-	*	@brief	display current folder's property
+	*	@brief	displays current folder's property
 	*	@pre	folder should be initialized.
 	*	@post	folder property is displayed on screen.
 	*/
 	void DisplayProperty();
+
+	/**
+	*	@brief	displays current working directory.
+	*	@pre	folder should be initialized.
+	*	@post	folder directory is displayed on screen.
+	*/
+	void DisplayWoringDirectory();
 
 	/**
 	*	@brief	Display all sub folders of current folder on screen.
@@ -98,6 +116,13 @@ public:
 	*	@post	none.
 	*/
 	void DisplayAllSubFolders();
+
+	/**
+	*	@brief	Display all recent folders on screen.
+	*	@pre	none.
+	*	@post	none.
+	*/
+	void DisplayRecentFolders();
 
 	/**
 	*	@brief	Open a file by file descriptor as an input file.
@@ -150,10 +175,31 @@ public:
 	// int WriteDataToFile();
 
 private:
-	ifstream input_file_;		///< input file descriptor.
-	ofstream output_file_;		///< output file descriptor.
+	/**
+	*	@brief	Open folder.
+	*	@pre	none.
+	*	@post	current folder is changed.
+	*   @param  folder_to_open pointer of folder to open.
+	*/
+	void OpenFolder(FolderType* folder_to_open);
+
+	/**
+	*	@brief	Add folder to Recent folder queue
+	*	@pre	none.
+	*	@post	one element is added to recent folders.
+	*   @param  folder    folder to add recent queue.
+	*/
+	void AddToRecentFolders(FolderType* folder);
+
 	FolderType root_folder_;    ///< default root folder
 	FolderType* current_folder_;   ///< current working folder.
+
+	CircularQueue<FolderType*> recent_folders_;  ///< queue of recently opened folders.
+	Stack<FolderType*> folder_history_;  ///< stack of history of opened folders.
+
+	ifstream input_file_;		///< input file descriptor.
+	ofstream output_file_;		///< output file descriptor.
+
 	int menu_command_;			///< current command number.
 };
 
