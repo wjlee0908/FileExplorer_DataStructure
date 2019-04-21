@@ -62,7 +62,7 @@ public:
 	/**
     *    copy constructor.
 	*/
-	//CircularQueue(const CircularQueue<T>& copied_object);
+	CircularQueue(const CircularQueue<T>& copied_object);
 
 	/**
 	*	destructor
@@ -150,6 +150,34 @@ template <typename T>
 CircularQueue<T>::CircularQueue(int size)
 {
 	InitializeQueue(size);
+}
+
+// copy constructor. (deep copy)
+template<typename T>
+CircularQueue<T>::CircularQueue(const CircularQueue<T>& copied_object)
+{
+	delete[] this->items_;	// 기존 데이터 삭제
+
+	// 복사 대상 queue와 같은 사이즈로 초기화
+	this->InitializeQueue(copied_object.size_);
+	this->front_ = copied_object.front_;
+	this->rear_ = copied_object.rear_;
+	
+	// 데이터 array 내용 복사
+	if (front_ > rear_) {   // front+1 ~ 0 ~ rear 순으로 데이터 저장된 경우
+		for (int i = queue_object.front_ + 1; i < queue_object.size_; i++) {
+			this->items_[i] = copied_object.items_[i];
+		}
+		for (int i = 0; i <= queue_object.rear_; i++) {
+			this->items_[i] = copied_object.items_[i];
+		}
+	}
+	else	// 선형처럼 front가 rear보다 작은 경우
+	{
+		for (int i = queue_object.front_ + 1; i <= queue_object.rear_; i++) {
+			this->items_[i] = copied_object.items_[i];
+		}
+	}
 }
 
 // destructor.
@@ -245,6 +273,7 @@ ostream& operator<<(ostream& output_stream, const CircularQueue<T>& queue_object
 	return output_stream;
 }
 
+// Initialize queue to size parameter.
 template<typename T>
 void CircularQueue<T>::InitializeQueue(int size)
 {
@@ -254,6 +283,7 @@ void CircularQueue<T>::InitializeQueue(int size)
 	rear_ = size_ - 1;
 }
 
+// Circulate circular queue index.
 template<typename T>
 int CircularQueue<T>::CirculateIndex(int & index)
 {
