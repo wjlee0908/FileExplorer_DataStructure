@@ -100,15 +100,6 @@ void FolderType::SetNameFromKeyboard()
 	cin >> name_;
 }
 
-
-// Set folder path from keyboard.
-void FolderType::SetPathFromKeyboard()
-{
-	cout << "\tPath : ";
-	cin >> path_string_;
-}
-
-
 // Set folder record from keyboard.
 void FolderType::SetRecordFromKeyboard()
 {
@@ -126,7 +117,6 @@ FolderType & FolderType::operator=(const FolderType & copied_data)
 void FolderType::AssignCopy(const FolderType & copied_object)
 {
 	this->name_ = copied_object.name_;
-	this->path_string_ = copied_object.path_string_;
 	this->created_date_ = copied_object.created_date_;
 	this->num_sub_folder_ = copied_object.num_sub_folder_;
 	this->parent_folder_ = copied_object.parent_folder_;

@@ -84,9 +84,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="CircularQueue.h" />
+    <ClInclude Include="LinkedList.h" />
     <ClInclude Include="SortedArrayList.h" />
     <ClInclude Include="FolderType.h" />
     <ClInclude Include="SortedLinkedList.h" />
+    <ClInclude Include="DoublyLinkedList.h" />
+    <ClInclude Include="DoublyPointingIterator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

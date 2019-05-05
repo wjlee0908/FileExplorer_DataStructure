@@ -34,7 +34,6 @@ public:
 		sub_folder_list_ = NULL;
 		num_sub_folder_ = 0;
 		name_ = "";
-		path_string_ = "";
 		path_ = new LinkedList<FolderType*>;
 		GenerateCreatedDate();
 		parent_folder_ = NULL;
@@ -164,17 +163,6 @@ public:
 	*	@post	folder path is set.
 	*/
 	void SetPath();
-
-	/**
-	*	@brief	Set folder path.
-	*	@pre	none.
-	*	@post	folder path is set.
-	*	@param	input_path	folder path.
-	*/
-	void SetPath(string input_path)
-	{
-		path_string_ = input_path;
-	}
 	
 	/**
 	*	@brief	Generate folder's created date.
@@ -389,7 +377,6 @@ protected:
 
 	int size_;          ///< folder size.
 	int num_sub_folder_;    ///< number of sub folders.
-	string path_string_;       ///< folder path.
 	LinkedList<FolderType*>* path_;    ///< folder path list.
 	string created_date_;    ///< date that folder created.
 	SortedLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
