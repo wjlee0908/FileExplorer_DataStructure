@@ -82,7 +82,7 @@ public:
 	*	@post	Item is inserted in this list.
 	*	@return	retrun address of created item if works well, oterwise return NULL;
 	*/
-	T* Add(T item);
+	virtual T* Add(T item);
 
 	/**
 	*	@brief	Delete item from this list.
@@ -351,7 +351,7 @@ bool DoublyLinkedList<T>::GetNode(T & item, DoublyPointingNode<T> & found_node)
 
 	// 리스트 끝까지 탐색
 	while (!iterator.IsNull()) {
-		current_node = iterator.GetCurrentNode();
+		iterator.GetCurrentNode(current_node);
 		// item과 일치하는 노드 찾음
 		if (current_node.data == item) {
 			// returns current node reference

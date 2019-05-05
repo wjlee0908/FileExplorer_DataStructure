@@ -88,6 +88,7 @@
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="SortedArrayList.h" />
     <ClInclude Include="FolderType.h" />
+    <ClInclude Include="SortedDoublyLinkedList.h" />
     <ClInclude Include="SortedLinkedList.h" />
     <ClInclude Include="DoublyLinkedList.h" />
     <ClInclude Include="DoublyPointingIterator.h" />

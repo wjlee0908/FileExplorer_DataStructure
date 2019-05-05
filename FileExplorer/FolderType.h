@@ -9,7 +9,7 @@
 #include <time.h>
 #include <iomanip>
 #include "SortedLinkedList.h"
-#include "DoublyLinkedList.h"
+#include "SortedDoublyLinkedList.h"
 
 
 using namespace std;
@@ -253,13 +253,6 @@ public:
 	*	@post	folder name is set.
 	*/
 	void SetNameFromKeyboard();
-
-	/**
-	*	@brief	Set folder path from keyboard.
-	*	@pre	none.
-	*	@post	folder path is set.
-	*/
-	void SetPathFromKeyboard();
 	
 	/**
 	*	@brief	Set folder record from keyboard.
