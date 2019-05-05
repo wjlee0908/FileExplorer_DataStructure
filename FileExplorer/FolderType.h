@@ -9,6 +9,7 @@
 #include <time.h>
 #include <iomanip>
 #include "SortedLinkedList.h"
+#include "DoublyLinkedList.h"
 
 
 using namespace std;

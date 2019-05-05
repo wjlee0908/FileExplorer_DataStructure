@@ -12,8 +12,8 @@ class DoublyPointingIterator;
 template <typename T>
 struct DoublyPointingNode
 {
-	T data;	///< A data for each node.
-	DoublyPointingNode* prev;	///< A node pointer of previous node.
+	T data;    ///< A data for each node.
+	DoublyPointingNode* previous;	///< A node pointer of previous node.
 	DoublyPointingNode* next;	///< A node pointer of next node.
 };
 
@@ -101,12 +101,20 @@ public:
 	int Replace(T item);
 
 	/**
-	*	@brief	Retrieve list element whose key matches item's key (if present).
+	*	@brief	Returns list element whose key matches item's key (if present).
 	*	@pre	Key member of item is initialized.
-	*	@post	If there is an element whose key matches with item's key then the element's record is copied to the item.
+	*	@post	If there is an element whose key matches with item's key then the element's record is assigned to the item.
 	*	@return	1 if any element's primary key matches with item's, otherwise 0.
 	*/
-	int Get(T& item);
+	bool Get(T& item);
+
+	/**
+	*	@brief	Returns list node whose key matches item's key (if present).
+	*	@pre	Key member of item is initialized.
+	*	@post	If there is an element whose key matches with item's key then found node is assgined to found_node.
+	*	@return	true if any element's primary key matches with item's, otherwise false.
+	*/
+	bool GetNode(T& item, DoublyPointingNode<T>& found_node);
 
 	/**
 	*	@brief	Retrieve list element whose key matches item's key (if present).
@@ -115,29 +123,6 @@ public:
 	*	@return	address of found item. if not found, returns NULL
 	*/
 	T* GetItemAddress(const T item);
-
-	/**
-	*	@brief	Initialize current pointer for an iteration through the list.
-	*	@pre	None.
-	*	@post	current pointer is prior to list. current pointer has been initialized.
-	*/
-	void ResetIterator();
-
-	/**
-	*	@brief	Move iterator to next list node.
-	*	@pre	element at current pointer is not last in list.
-	*	@post	iterator is updated to next position.
-	*   @return current iterating node pointer.
-	*/
-	DoublyPointingNode<T>* WalkIterator();
-
-	/**
-	*	@brief	Get the next element in list.
-	*	@pre	current pointer is defined. Element at current pointer is not last in list.
-	*	@post	current pointer is updated to next position. item is a copy of element at current pointer.
-	*	@return	1 if this function works well, otherwise 0.
-	*/
-	int GetNextItem(T& item);
 
 	/**
 	*	@brief	Get last element of list
@@ -154,11 +139,11 @@ public:
 	*   @return address  of last item of this list
 	*/
 	T* GetTailItemAddress() {
-		if (GetTail() == NULL) {
+		if (tail_ == NULL) {
 			return NULL;
 		}
 		else {
-			return &(GetTail()->data)
+			return &(tail_->data)
 		}
 	};
 
@@ -174,7 +159,6 @@ public:
 protected:
 	DoublyPointingNode<T>* head_;	///< Pointer for pointing a first node.
 	DoublyPointingNode<T>* tail_;   ///< Pointer for pointing a last node.
-	DoublyPointingNode<T>* iterator_;	///< Node pointer for pointing current iterating node.
 	int length_;	///< Number of node in the list.
 
 private:
@@ -194,9 +178,8 @@ template <typename T>
 DoublyLinkedList<T>::DoublyLinkedList()
 {
 	length_ = 0;
-	head_ = NULL;
-	tail_ = NULL;
-	iterator_ = NULL;
+	head_ = nullptr;
+	tail_ = nullptr;
 }
 
 
@@ -213,6 +196,7 @@ DoublyLinkedList<T>::~DoublyLinkedList()
 template <typename T>
 void DoublyLinkedList<T>::MakeEmpty()
 {
+	DoublyPointingIterator<T> iterator(*this);
 	DoublyPointingNode<T>* deleted_node;
 
 	// 이미 비어있으면 수행하지 않음
@@ -222,8 +206,8 @@ void DoublyLinkedList<T>::MakeEmpty()
 
 	// head 옮겨가며 head 삭제
 	while (length_ > 0) {
-		deleted_node = head_;
-		head_ = head_->next;
+		deleted_node = iterator.current_node_;
+		iterator.Next();
 		delete deleted_node;
 
 		length_--;
@@ -267,17 +251,22 @@ template <typename T>
 T* DoublyLinkedList<T>::Add(T item)
 {
 	DoublyPointingNode<T>* new_node = new DoublyPointingNode<T>;
+	DoublyPointingIterator iterator(*this);
 
 	new_node->data = item;
+	new_node->previous = NULL:
 	new_node->next = NULL;
 
-	// special case: 리스트가 비어있을 때는 new를 head로 지정
+	// special case: 리스트가 비어있을 때는 new를 head, tail로 지정
 	if (IsEmpty()) {
 		head_ = new_node;
+		tail_ = new_node;
 	}
 	else {
 		// 맨 마지막 노드 뒤에 새 노드 붙임
-		GetTail()->next = new_node;
+		tail_->next = new_node;
+		new_node->previous = tail_;
+		tail_ = new_node;
 	}
 
 	length_++;
@@ -285,168 +274,108 @@ T* DoublyLinkedList<T>::Add(T item)
 	return &(new_node->data);
 }
 
-//Delete item from this list.
+// Delete item from this list.
 template <typename T>
 int DoublyLinkedList<T>::Delete(T item)
 {
-	bool moreToSearch, found;
-	DoublyPointingNode<T>* pre = NULL;	//변수 선언
+	DoublyPointingNode<T> deleted_node;
+	bool is_found = false;
 
-	iterator_ = head_;
-	found = false;
-	moreToSearch = (iterator_ != NULL);	//변수 초기화
+	// item과 일치하는 노드 탐색해서 일치하는 노드 deleted_node에 할당
+	is_found = GetNode(item, deleted_node);
 
-	while (moreToSearch && !found)	//리스트의 끝이 아니면서 아직 찾지 않았으면 반복한다.
-	{
-		if (item == iterator_->data)	//현재 가리키는 원소의 값과 item의 값이 일치할 때
-		{
-			found = true;	//찾았으므로 found 값 변경
-			if (pre == NULL)
-				head_ = iterator_->next;	//항목 이전에 다른 원소가 없을 때 항목의 다음 원소를 첫번째 원소로 한다.
-			else
-			{
-				pre->next = iterator_->next;
-				delete iterator_;
-			}	//이전의 원소의 다음 원소를 '가리키는 항목의 다음 원소'로 바꾼다.
-			length_--;	//리스트의 길이를 1 줄여준다.
+	// item과 일치하는 노드 찾으면
+	if (is_found) {
+		// 현재 노드 앞뒤 노드의 next, previous가 현재 노드 건너뛰고 가리키게
+		if (deleted_node.previous != nullptr) {
+			deleted_node.previous->next = deleted_node.next;
 		}
-		else
-		{
-			pre = iterator_;
-			iterator_ = iterator_->next;
-			moreToSearch = (iterator_ != NULL);
-		}	//일치하지 않을 때 다음 원소를 가리킨다. 단, pre는 지금의 원소를 가리킨다.
+		if (deleted_node.next != nullptr) {
+			deleted_node.next->previous = deleted_node.previous;
+		}
+		// 노드 메모리 해제
+		delete deleted_node;
+		length_--;
 	}
 
-	if (found)
-		return 1;
-	else
-		return 0;	//삭제가 성공하면 1, 아니면 0을 리턴한다.
-}
-
-//Change value of item which is in this list.
-template <typename T>
-int DoublyLinkedList<T>::Replace(T item)
-{
-	bool moreToSearch, found;
-	DoublyPointingNode<T>* location;	//변수 선언
-
-	location = head_;
-	found = false;
-	moreToSearch = (location != NULL);	//변수 초기화
-
-	while (moreToSearch && !found)	//리스트의 끝이 아니면서 아직 찾지 않았으면 반복한다.
-	{
-		if (item == location->data)
-		{
-			found = true;
-			location->data = item;
-		}	//일치하는 항목을 찾았을 때 found의 값을 변경해주고 리스트의 항목에 item을 복사해준다.
-		else
-		{
-			location = location->next;
-			moreToSearch = (location != NULL);
-		}	//찾지 못했을 때 다음 항목으로 location을 옮기고 그 값이 NULL이면 리스트의 끝이므로 moreToSearch의 값을 변경해준다.
-	}
-
-	if (found)
-		return 1;
-	else
-		return 0;	//수정에 성공하면 1, 그렇지 못하면 0을 리턴한다.
-}
-
-// Retrieve list element whose key matches item's key (if present).
-template <typename T>
-int DoublyLinkedList<T>::Get(T& item)
-{
-	bool moreToSearch, is_found;
-	DoublyPointingNode<T>* location;	//변수 선언
-
-	// 빈 리스트에서는 항상 못 찾음
-	if (IsEmpty()) {
-		return 0;
-	}
-
-	location = head_;
-	is_found = false;
-	moreToSearch = (location != NULL);	//변수 초기화
-
-	while (moreToSearch && !is_found)	//리스트의 끝이 아니면서 아직 찾지 않았으면 반복한다.
-	{
-		if (item == location->data)
-		{
-			is_found = true;
-			item = location->data;
-		}	//일치하는 항목을 찾았을 때 found의 값을 변경해주고 item에 해당 항목을 복사해준다.
-		else
-		{
-			location = location->next;
-			moreToSearch = (location != NULL);
-		}	//찾지 못했을 때 다음 항목으로 location을 옮기고 그 값이 NULL이면 리스트의 끝이므로 moreToSearch의 값을 변경해준다.
-	}
-
+	// 삭제가 성공하면 1, 아니면 0을 리턴한다.
 	if (is_found)
 		return 1;
 	else
-		return 0;	//찾으면 1, 그렇지 못하면 0을 리턴한다.
+		return 0;	
 }
 
-// Retrieve list element whose key matches item's key (if present).
-template<typename T>
-T * DoublyLinkedList<T>::GetItemAddress(const T item)
-{
-	ResetIterator();
-
-	if (IsEmpty()) {
-		return NULL;
-	}
-	while (WalkIterator() != NULL) {
-		if (iterator_->data == item) {
-			return &(iterator_->data);
-		}
-	}
-
-	return NULL;
-}
-
-// Initializes iterator pointer to NULL
+// Change value of item which is in this list.
 template <typename T>
-void DoublyLinkedList<T>::ResetIterator()
+int DoublyLinkedList<T>::Replace(T item)
 {
-	iterator_ = NULL;
-}
+	bool is_found;
+	DoublyPointingNode<T> target_node;
 
-template<typename T>
-DoublyPointingNode<T>* DoublyLinkedList<T>::WalkIterator()
-{
-	// current pointer가 초기화된 상태면 head 가리킴.
-	if (iterator_ == NULL) {
-		iterator_ = head_;
-	}
-	else {
-		// iterator를 다음 노드로 이동
-		iterator_ = iterator_->next;
-	}
+	is_found = GetNode(item, target_node);
 
-	return iterator_;
-}
-
-
-// Gets the next element in list.
-template <typename T>
-int DoublyLinkedList<T>::GetNextItem(T& item)
-{
-	WalkIterator();
-
-	if (iterator_ != NULL) {
-		// 하나 증가한 노드의 data를 레퍼런스로 전달
-		item = iterator_->data;
+	if (is_found) {
+		// 찾은 노드의 데이터를 대상 아이템으로 바꿈
+		target_node.data = item;
 		return 1;
 	}
 	else {
-		// 마지막 노드에서 walk 했을 경우
 		return 0;
 	}
+}
+
+// Retrieve list element whose key matches item's key (if present).
+template <typename T>
+bool DoublyLinkedList<T>::Get(T& item)
+{
+	DoublyPointingNode<T> found_node;    // 일치하는 아이템을 찾은 노드
+	bool is_found;
+
+	is_found = GetNode(item, found_node);
+
+	if (is_found) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+// Returns list node whose key matches item's key (if present).
+template<typename T>
+bool DoublyLinkedList<T>::GetNode(T & item, DoublyPointingNode<T> & found_node)
+{
+	DoublyPointingIterator<T> iterator(this*);
+	DoublyPointingNode<T> current_node;
+	bool is_found = false;
+
+	// 리스트 끝까지 탐색
+	while (!iterator.IsNull()) {
+		current_node = iterator.GetCurrentNode();
+		// item과 일치하는 노드 찾음
+		if (current_node.data == item) {
+			// returns current node reference
+			iterator.GetCurrentNode(found_node);
+			is_found = true;
+		}
+		else {
+			// 다음 노드 탐색
+			iterator.Next();
+		}
+	}
+
+	return is_found;
+}
+
+// Retrieve list element whose key matches item's key (if present).
+// TODO: Get으로 대체
+template<typename T>
+T * DoublyLinkedList<T>::GetItemAddress(const T item)
+{
+	T found_item;
+	Get(found_item);
+	
+	return &found_item;
 }
 
 // Copy parameter list and assign to this list when using = operator.
@@ -477,15 +406,7 @@ void DoublyLinkedList<T>::AssignCopy(const DoublyLinkedList<T> & copied_object)
 // Get last element of list
 template<typename T>
 DoublyPointingNode<T>* DoublyLinkedList<T>::GetTail() {
-	ResetIterator();
-	while (WalkIterator()) {
-		if (iterator_->next == NULL) {
-			return iterator_;
-		}
-	}
-
-	// 혹시 몰라서 기본
-	return NULL;
+	return tail_;
 }
 
 #endif	// DOUBLY_LINKED_LIST

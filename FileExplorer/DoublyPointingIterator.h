@@ -2,6 +2,7 @@
 #define _DOUBLY_POINTING_ITERATOR_H
 
 #include "DoublyLinkedList.h"
+#include <stdexcept>
 
 /**
 *	template 참조 에러 방지
@@ -13,19 +14,19 @@ class DoublySortedLinkedList;
 *	template 참조 에러 방지
 */
 template <typename T>
-struct DoublyNodeType;
+struct DoublyPointingNode;
 
 /**
 *	Iterator class for DoublySortedLinkedList.  (not using header and trailer nodes).
 */
 template <typename T>
-class DoublyIterator {
+class DoublyPointingIterator {
 	friend class DoublySortedLinkedList<T>;
 public:
 	/**
 	*	Initialize list_ and current_node_. (constructor overloading)
 	*/
-	DoublyIterator(const DoublySortedLinkedList<T>& list) : list_(list), current_node_(list.head_) {}
+	DoublyPointingIterator(const DoublySortedLinkedList<T>& list) : list_(list), current_node_(list.head_) {}
 
 	/**
 	*	@brief	Returns whether pointer of current node is null.
@@ -60,25 +61,22 @@ public:
 	T Next();
 
 	/**
-	*	@brief	Get current data of the list and go to the next node. 
+	*	@brief	Get current node of the list
 	*	@pre	Iterator has been initialized.
-	*	@post	Current pointer is moved to next node.
-	*	@return	Return current data of the list.
+	*	@post	out_node is assigned to current_node reference.
+	*	@return	true if current node exist, otherwise false.
 	*/
-	DoublyNodeType<T> GetCurrentNode();
-
-
-
+	bool GetCurrentNode(DoublyPointingNode<T>& out_node);
 
 private:
 	const DoublySortedLinkedList<T>& list_;	///< list for iterating
-	DoublyNodeType<T>* current_node_;	///< Node pointer for pointing current node to iterate.
+	DoublyPointingNode<T>* current_node_;	///< Node pointer for pointing current node to iterate.
 };
 
 
 // Returns whether pointer of current node is null.
 template <typename T>
-bool DoublyIterator<T>::IsNull() {
+bool DoublyPointingIterator<T>::IsNull() {
 	if (current_node_ == nullptr) {
 		return true;
 	}
@@ -89,8 +87,8 @@ bool DoublyIterator<T>::IsNull() {
 
 // Returns whether pointer of next node is null.
 template <typename T>
-bool DoublyIterator<T>::IsNextNull() {
-	if (current_node_->next == nullptr) {
+bool DoublyPointingIterator<T>::IsNextNull() {
+	if (current_node_ == nullptr || current_node_->next == nullptr) {
 		return true;
 	}
 	else {
@@ -100,32 +98,36 @@ bool DoublyIterator<T>::IsNextNull() {
 
 // Get first data of the list.
 template <typename T>
-T DoublyIterator<T>::Head() {
-	if (!(list_.IsEmpty())) {
+T DoublyPointingIterator<T>::Head() {
+	if (list_.IsEmpty()) {
+		throw std::out_of_range("Head(): list is empty");
+	}
+	else {
 		current_node_ = list_.head_;
 		return current_node_->data;
 	}
 }
 
-// 다음 node로 이동 후 item을 return.
+// Get next data of the current pointer.
 template <typename T>
-T DoublyIterator<T>::Next() {
-	T output = current_node_->data;
-	if (!IsNull()) {
+T DoublyPointingIterator<T>::Next() {
+	if (!IsNextNull()) {
 		current_node_ = current_node_->next;
 	}
-	return output;
+	return current_node_->data;
 }
 
-// 현재 node를 return
+// Get current node of the list
 template <typename T>
-DoublyNodeType<T> DoublyIterator<T>::GetCurrentNode() {
-	if (current_node_ != nullptr) {
-		return *current_node_;
+bool DoublyPointingIterator<T>::GetCurrentNode(DoublyPointingNode<T>& out_node) {
+	if (IsNull()) {
+		throw std::invalid_argument("GetCurrentNode(): current node is null");
+		return false;
+	}
+	else {
+		out_node = *current_node_;
+		return true;
 	}
 }
-
-
-
 
 #endif // !_DOUBLY_POINTING_ITERATOR_H
