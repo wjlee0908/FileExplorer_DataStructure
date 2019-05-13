@@ -8,7 +8,7 @@
 *	template 참조 에러 방지
 */
 template <typename T>
-class DoublySortedLinkedList;
+class DoublyLinkedList;
 
 /**
 *	template 참조 에러 방지
@@ -17,16 +17,16 @@ template <typename T>
 struct DoublyPointingNode;
 
 /**
-*	Iterator class for DoublySortedLinkedList.  (not using header and trailer nodes).
+*	Iterator class for DoublyLinkedList.  (not using header and trailer nodes).
 */
 template <typename T>
 class DoublyPointingIterator {
-	friend class DoublySortedLinkedList<T>;
+	friend class DoublyLinkedList<T>;
 public:
 	/**
 	*	Initialize list_ and current_node_. (constructor overloading)
 	*/
-	DoublyPointingIterator(const DoublySortedLinkedList<T>& list) : list_(list), current_node_(list.head_) {}
+	DoublyPointingIterator(const DoublyLinkedList<T>& list) : list_(list), current_node_(list.head_) {}
 
 	/**
 	*	@brief	Returns whether pointer of current node is null.
@@ -69,7 +69,7 @@ public:
 	bool GetCurrentNode(DoublyPointingNode<T>& out_node);
 
 private:
-	const DoublySortedLinkedList<T>& list_;	///< list for iterating
+	const DoublyLinkedList<T>& list_;	///< list for iterating
 	DoublyPointingNode<T>* current_node_;	///< Node pointer for pointing current node to iterate.
 };
 

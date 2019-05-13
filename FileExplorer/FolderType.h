@@ -93,7 +93,7 @@ public:
 	*	@post	none.
 	*	@return	address of sub folders list.
 	*/
-	const SortedLinkedList<FolderType>* GetSubFolders() {
+	const SortedDoublyLinkedList<FolderType>* GetSubFolders() {
 		return sub_folder_list_;
 	}
 
@@ -373,7 +373,7 @@ protected:
 	int num_sub_folder_;    ///< number of sub folders.
 	LinkedList<FolderType*>* path_;    ///< folder path list.
 	string created_date_;    ///< date that folder created.
-	SortedLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
+	SortedDoublyLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
 	FolderType* parent_folder_;    ///< address of parent folder
 
 private:

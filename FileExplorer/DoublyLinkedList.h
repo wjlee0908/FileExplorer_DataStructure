@@ -2,6 +2,8 @@
 #ifndef _DOUBLY_LINKED_LIST_H
 #define _DOUBLY_LINKED_LIST_H
 
+#include "DoublyPointingIterator.h"
+
 /**
 *	Structure for NodeType to use in Linked structure.
 */
@@ -19,7 +21,7 @@ struct DoublyPointingNode
 
 
 /**
-*	Single sorted list class for managing items.
+*	Doubly Linked list class for managing items.
 */
 template <typename T>
 class DoublyLinkedList
@@ -251,10 +253,10 @@ template <typename T>
 T* DoublyLinkedList<T>::Add(T item)
 {
 	DoublyPointingNode<T>* new_node = new DoublyPointingNode<T>;
-	DoublyPointingIterator iterator(*this);
+	DoublyPointingIterator<T> iterator(*this);
 
 	new_node->data = item;
-	new_node->previous = NULL:
+	new_node->previous = NULL;
 	new_node->next = NULL;
 
 	// special case: 리스트가 비어있을 때는 new를 head, tail로 지정

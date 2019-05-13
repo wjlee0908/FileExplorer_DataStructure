@@ -123,7 +123,7 @@ void FolderType::AssignCopy(const FolderType & copied_object)
 
 	if (copied_object.num_sub_folder_ != 0) {
 		// 공간 생성하고 데이터 deep copy.
-		this->sub_folder_list_ = new SortedLinkedList<FolderType>;
+		this->sub_folder_list_ = new SortedDoublyLinkedList<FolderType>;
 		*(this->sub_folder_list_) = *(copied_object.sub_folder_list_);
 	}
 
@@ -157,7 +157,7 @@ int FolderType::AddSubFolder() {
 	string new_folder_path;
 
 	if (num_sub_folder_ == 0) {
-		sub_folder_list_ = new SortedLinkedList<FolderType>;
+		sub_folder_list_ = new SortedDoublyLinkedList<FolderType>;
 	}
 
 	new_folder.SetRecordFromKeyboard();

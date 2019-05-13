@@ -58,7 +58,7 @@ T* SortedDoublyLinkedList<T>::Add(T item)
 	new_node->next = nullptr;
 
 	// 노드 순서 맞는 위치에 삽입
-	InsertNodeSorted(new_node)
+	InsertNodeSorted(new_node);
 
 	return &(new_node->data);
 }
@@ -102,7 +102,7 @@ bool SortedDoublyLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
 template<typename T>
 bool SortedDoublyLinkedList<T>::InsertNodeSorted(DoublyPointingNode<T>* node)
 {
-	DoublyPointingIterator<T> iterator(this*);
+	DoublyPointingIterator<T> iterator(*this);
 	DoublyPointingNode<T> current_node;
 	bool is_inserted = false;
 
@@ -130,7 +130,7 @@ bool SortedDoublyLinkedList<T>::InsertNodeSorted(DoublyPointingNode<T>* node)
 				current_node.previous->next = node;
 				node->previous = current_node.previous;
 			}
-			node->next = current_node;
+			node->next = &current_node;
 			current_node.previous = node;
 			break;
 		}
