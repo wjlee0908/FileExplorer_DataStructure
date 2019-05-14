@@ -34,6 +34,8 @@ string FolderType::GetPathString()
 		}
 	}
 
+	//while(!iter.IsNull())
+
 	return path_string;
 }
 
@@ -288,18 +290,16 @@ FolderType* FolderType::GetSubFolder() {
 // Retrieve folders containing finding name
 int FolderType::RetrieveFolderByName() {
 	FolderType retrieving_folder;
-	DoublyPointingIterator<FolderType> iter(*sub_folder_list_);    // 서브 폴더들 탐색할 iterator
-	FolderType iterated_folder;    // 리스트 탐색할 item
 	bool is_found = false;
 
 	retrieving_folder.SetNameFromKeyboard(); //name을 입력받는다.
 
 	// 리스트 순차 탐색
-	while (!iter.IsNextNull()) {
-		iterated_folder = iter.Next();
+	DoublyPointingIterator<FolderType> iter(*sub_folder_list_);    // 서브 폴더들 탐색할 iterator
+	for (iter.First(); !iter.IsNull(); iter.Next()) {
 		// 이름 확인
-		if (iterated_folder.GetName().find(retrieving_folder.GetName()) != string::npos) {
-			iterated_folder.DisplayNameOnScreen();
+		if ((*iter).GetName().find(retrieving_folder.GetName()) != string::npos) {
+			(*iter).DisplayNameOnScreen();
 			is_found = true;
 		}
 	}
@@ -314,15 +314,13 @@ int FolderType::RetrieveFolderByName() {
 
 // Display all sub folders of this folder
 void FolderType::DisplayAllSubFolders() {
-	DoublyPointingIterator<FolderType> iter(*sub_folder_list_);
 	FolderType displayed_folder;
 
 	cout << "\n\tSub Folder list" << endl;
 	// 리스트의 끝까지 displayed_folder에 할당
-	while (!iter.IsNull()) {
-		displayed_folder = iter.Next();
-		displayed_folder.DisplayNameOnScreen();
+	DoublyPointingIterator<FolderType> iter(*sub_folder_list_);
+	for (iter.First(); !iter.IsNull(); iter.Next()) {
+		(*iter).DisplayNameOnScreen();
 	}
-
 
 }

@@ -34,7 +34,7 @@ public:
 	*	@post	None.
 	*	@return	nullptr true, otherwise false.
 	*/
-	bool IsNull();
+	bool IsNull() const;
 
 	/**
 	*	@brief	Returns whether pointer of next node is null.
@@ -66,7 +66,7 @@ public:
 	*	@post	out_node is assigned to current_node reference.
 	*	@return	true if current node exist, otherwise false.
 	*/
-	bool GetCurrentNode(DoublyPointingNode<T>& out_node);
+	DoublyPointingNode<T>* GetCurrentNode();
 
 	/**
 	*	@brief	Get current item of the list
@@ -92,7 +92,7 @@ private:
 
 // Returns whether pointer of current node is null.
 template <typename T>
-bool DoublyPointingIterator<T>::IsNull() {
+bool DoublyPointingIterator<T>::IsNull() const{
 	if (current_node_ == nullptr) {
 		return true;
 	}
@@ -115,35 +115,39 @@ bool DoublyPointingIterator<T>::IsNextNull() {
 // Get first data of the list.
 template <typename T>
 T DoublyPointingIterator<T>::First() {
+	current_node_ = list_.head_;
 	if (list_.IsEmpty()) {
-		throw std::out_of_range("Head(): list is empty");
+		// throw std::out_of_range("Head(): list is empty");
+		return T(); // return dummy
 	}
-	else {
-		current_node_ = list_.head_;
-		return current_node_->data;
-	}
+
+	return current_node_->data;
 }
 
 // Get next data of the current pointer.
 template <typename T>
 T DoublyPointingIterator<T>::Next() {
-	if (!IsNextNull()) {
-		current_node_ = current_node_->next;
+	if (IsNull()) {
+		throw std::out_of_range("Next() : current node is NULL");
+		return T();
 	}
-	cout << "next" << endl;
+
+	current_node_ = current_node_->next;
+	if (IsNull()) {
+		return T();    // return dummy
+	}
 	return current_node_->data;
 }
 
 // Get current node of the list
 template <typename T>
-bool DoublyPointingIterator<T>::GetCurrentNode(DoublyPointingNode<T>& out_node) {
+DoublyPointingNode<T>* DoublyPointingIterator<T>::GetCurrentNode() {
 	if (IsNull()) {
 		throw std::invalid_argument("GetCurrentNode(): current node is null");
-		return false;
+		return nullptr;
 	}
 	else {
-		out_node = *current_node_;
-		return true;
+		return current_node_;
 	}
 }
 
@@ -159,11 +163,9 @@ T & DoublyPointingIterator<T>::operator*() const
 template<typename T>
 T & DoublyPointingIterator<T>::operator->() const
 {
-	/*
 	if (IsNull()) {
 		throw invalid_argument("iterating item is null");
 	}
-	*/
 	return current_node_->data;
 }
 

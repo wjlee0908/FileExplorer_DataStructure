@@ -116,7 +116,7 @@ public:
 	*	@post	If there is an element whose key matches with item's key then found node is assgined to found_node.
 	*	@return	true if any element's primary key matches with item's, otherwise false.
 	*/
-	bool GetNode(T& item, DoublyPointingNode<T>& found_node);
+	DoublyPointingNode<T>* GetNode(T& item);
 
 	/**
 	*	@brief	Get last element of list
@@ -245,7 +245,6 @@ template <typename T>
 T* DoublyLinkedList<T>::Add(T item)
 {
 	DoublyPointingNode<T>* new_node = new DoublyPointingNode<T>;
-	DoublyPointingIterator<T> iterator(*this);
 
 	new_node->data = item;
 	new_node->previous = NULL;
@@ -272,23 +271,35 @@ T* DoublyLinkedList<T>::Add(T item)
 template <typename T>
 int DoublyLinkedList<T>::Delete(T item)
 {
-	DoublyPointingNode<T> deleted_node;
-	bool is_found = false;
+	DoublyPointingNode<T>* deleted_node;
+	bool is_found;
 
 	// item과 일치하는 노드 탐색해서 일치하는 노드 deleted_node에 할당
-	is_found = GetNode(item, deleted_node);
+	deleted_node = GetNode(item);
+	is_found = (deleted_node != nullptr);
 
 	// item과 일치하는 노드 찾으면
 	if (is_found) {
-		// 현재 노드 앞뒤 노드의 next, previous가 현재 노드 건너뛰고 가리키게
-		if (deleted_node.previous != nullptr) {
-			deleted_node.previous->next = deleted_node.next;
+		if(length_ == 1) {	// 하나 남은 노드일 경우 head tail 초기화
+			head_ = nullptr;
+			tail_ = nullptr;
 		}
-		if (deleted_node.next != nullptr) {
-			deleted_node.next->previous = deleted_node.previous;
+		else if (deleted_node == head_) {    // head일 경우 head 재설정
+			deleted_node->next->previous = nullptr;
+			head_ = head_->next;
 		}
+		else if(deleted_node == tail_){    // tail일 경우 tail 재설정
+			deleted_node->previous->next = nullptr;
+			tail_ = tail_->previous;
+		}
+		else {
+			// 현재 노드 앞뒤 노드의 next, previous가 현재 노드 건너뛰고 가리키게
+			deleted_node->previous->next = deleted_node->next;
+			deleted_node->next->previous = deleted_node->previous;
+		}
+		
 		// 노드 메모리 해제
-		delete &deleted_node;
+		delete deleted_node;
 		length_--;
 	}
 
@@ -304,13 +315,13 @@ template <typename T>
 int DoublyLinkedList<T>::Replace(T item)
 {
 	bool is_found;
-	DoublyPointingNode<T> target_node;
+	DoublyPointingNode<T>* target_node;
 
-	is_found = GetNode(item, target_node);
+	target_node = GetNode(item);
 
-	if (is_found) {
+	if (target_node != nullptr) {
 		// 찾은 노드의 데이터를 대상 아이템으로 바꿈
-		target_node.data = item;
+		target_node->data = item;
 		return 1;
 	}
 	else {
@@ -322,12 +333,11 @@ int DoublyLinkedList<T>::Replace(T item)
 template <typename T>
 bool DoublyLinkedList<T>::Get(T& item)
 {
-	DoublyPointingNode<T> found_node;    // 일치하는 아이템을 찾은 노드
-	bool is_found;
+	DoublyPointingNode<T>* found_node;    // 일치하는 아이템을 찾은 노드
 
-	is_found = GetNode(item, found_node);
+	found_node = GetNode(item);
 
-	if (is_found) {
+	if (found_node != nullptr) {
 		return true;
 	}
 	else {
@@ -337,20 +347,23 @@ bool DoublyLinkedList<T>::Get(T& item)
 
 // Returns list node whose key matches item's key (if present).
 template<typename T>
-bool DoublyLinkedList<T>::GetNode(T & item, DoublyPointingNode<T> & found_node)
+DoublyPointingNode<T>* DoublyLinkedList<T>::GetNode(T& item)
 {
 	DoublyPointingIterator<T> iterator(*this);
-	DoublyPointingNode<T> current_node;
+	DoublyPointingNode<T>* current_node;
+	DoublyPointingNode<T>* found_node = nullptr;
 	bool is_found = false;
 
 	// 리스트 끝까지 탐색
 	while (!iterator.IsNull()) {
-		iterator.GetCurrentNode(current_node);
+		current_node = iterator.GetCurrentNode();
 		// item과 일치하는 노드 찾음
-		if (current_node.data == item) {
+		if (current_node->data == item) {
 			// returns current node reference
-			iterator.GetCurrentNode(found_node);
+			//iterator.GetCurrentNode(found_node);
+			found_node = current_node;
 			is_found = true;
+			break;
 		}
 		else {
 			// 다음 노드 탐색
@@ -358,7 +371,7 @@ bool DoublyLinkedList<T>::GetNode(T & item, DoublyPointingNode<T> & found_node)
 		}
 	}
 
-	return is_found;
+	return found_node;
 }
 
 // Copy parameter list and assign to this list when using = operator.

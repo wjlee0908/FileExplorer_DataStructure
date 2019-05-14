@@ -68,7 +68,7 @@ template<typename T>
 bool SortedDoublyLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
 {
 	// DoublyPointingIterator<T> iter(this*);
-	DoublyPointingNode<T> replaced_node;
+	DoublyPointingNode<T>* replaced_node;
 	bool is_found = false;
 
 	// 중복 검사
@@ -77,23 +77,23 @@ bool SortedDoublyLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
 	}
 
 	// original이랑 같은 노드를 찾음
-	is_found = GetNode(original_item, replaced_node);
+	replaced_node = GetNode(original_item);
 
 	// 실패하면 종료
-	if (!is_found) {
+	if (replaced_node == nullptr) {
 		return false;
 	}
 
 	// 그 노드의 데이터를 changed_item으로 바꿈
-	replaced_node.data = changed_item;
+	replaced_node->data = changed_item;
 
 	// 리스트 연결 해제
-	replaced_node.previous->next = replaced_node.next;
-	replaced_node.next->previous = replaced_node.previous;
+	replaced_node->previous->next = replaced_node->next;
+	replaced_node->next->previous = replaced_node->previous;
 	length_--;
 
 	// 재정렬
-	InsertNodeSorted(&replaced_node);
+	InsertNodeSorted(replaced_node);
 
 	return true;
 }
@@ -103,7 +103,7 @@ template<typename T>
 bool SortedDoublyLinkedList<T>::InsertNodeSorted(DoublyPointingNode<T>* node)
 {
 	DoublyPointingIterator<T> iterator(*this);
-	DoublyPointingNode<T> current_node;
+	DoublyPointingNode<T>* current_node;
 	bool is_inserted = false;
 
 	// special case: 리스트가 비어있을 때는 입력받은 node를 head로 지정
@@ -114,39 +114,43 @@ bool SortedDoublyLinkedList<T>::InsertNodeSorted(DoublyPointingNode<T>* node)
 		node->next = nullptr;
 		is_inserted = true;
 	}
+	else {
+		// 리스트 끝까지 탐색
+		while (!iterator.IsNull()) {
+			current_node = iterator.GetCurrentNode();
+			// item보다 더 큰 노드 직전에 삽입
+			if (node->data < current_node->data) {
+				if (current_node == head_) {
+					// new node가 첫 노드보다 작으면 head로 지정
+					head_ = node;
+					node->previous = nullptr;
+				}
+				else {
+					current_node->previous->next = node;
+					node->previous = current_node->previous;
+				}
+				node->next = current_node;
+				current_node->previous = node;
 
-	// 리스트 끝까지 탐색
-	while (!iterator.IsNull()) {
-		iterator.GetCurrentNode(current_node);
-		// item보다 더 큰 노드 직전에 삽입
-		if (node->data < current_node.data) {
-			if (current_node.previous == nullptr) {
-				// new node가 첫 노드보다 작으면 head로 지정
-				head_ = node;
-				tail_ = node;
-				node->previous = nullptr;
+				is_inserted = true;
+				break;
 			}
 			else {
-				current_node.previous->next = node;
-				node->previous = current_node.previous;
+				// 다음 노드 탐색
+				iterator.Next();
 			}
-			node->next = &current_node;
-			current_node.previous = node;
-			break;
 		}
-		else {
-			// 다음 노드 탐색
-			iterator.Next();
+
+		// 마지막이라면 tail next = new
+		if (is_inserted == false) {
+			tail_->next = node;
+			node->previous = tail_;
+			node->next = nullptr;
+			tail_ = node;
 		}
 	}
 
-	// 마지막이라면 tail next = new
-	if (is_inserted == false) {
-		tail_->next = node;
-		node->previous = tail_;
-		node->next = nullptr;
-		tail_ = node;
-	}
+	length_++;
 
 	return true;
 }
