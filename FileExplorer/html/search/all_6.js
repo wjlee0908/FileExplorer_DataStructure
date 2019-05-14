@@ -1,5 +1,26 @@
 var searchData=
 [
-  ['head_5f',['head_',['../class_linked_list.html#a202935cef48266011aea2fad522d2b05',1,'LinkedList']]],
-  ['history_5fsize',['HISTORY_SIZE',['../_application_8h.html#a43034bdd0ae7c6267b05ff35ae97cddf',1,'Application.h']]]
+  ['generatecreateddate',['GenerateCreatedDate',['../class_folder_type.html#a622a242514370e5c3638c18e5aa62165',1,'FolderType']]],
+  ['get',['Get',['../class_doubly_linked_list.html#ac88f5470e825d34e7c5462ee32cacf95',1,'DoublyLinkedList::Get()'],['../class_linked_list.html#a77d17b5bab5153da2da6323436f63212',1,'LinkedList::Get()'],['../class_sorted_array_list.html#acc46d4957234426696edff51b16bf910',1,'SortedArrayList::Get()']]],
+  ['getbinarysearch',['GetBinarySearch',['../class_sorted_array_list.html#a31b5d7b53d2f5737c09517275f31a389',1,'SortedArrayList']]],
+  ['getcommand',['GetCommand',['../class_application.html#ad7ed13b1ba24c7906b13aee715396921',1,'Application']]],
+  ['getcreateddate',['GetCreatedDate',['../class_folder_type.html#ab6d335979b8488fa5bde2f54a424e883',1,'FolderType']]],
+  ['getcurrentnode',['GetCurrentNode',['../class_doubly_pointing_iterator.html#a09575f0ed24ad776cac96ca719bb3456',1,'DoublyPointingIterator']]],
+  ['getitemaddress',['GetItemAddress',['../class_doubly_linked_list.html#a1ee330d8a9934c00d6b86972fcf38526',1,'DoublyLinkedList::GetItemAddress()'],['../class_linked_list.html#aef277df31aa0514b9de0a84b089a89a7',1,'LinkedList::GetItemAddress()']]],
+  ['getlength',['GetLength',['../class_doubly_linked_list.html#ab66e6189f37505ee1f7b143ee732ee02',1,'DoublyLinkedList::GetLength()'],['../class_linked_list.html#ab1069cfd6ddba057bdc84d7e69e66309',1,'LinkedList::GetLength()'],['../class_sorted_array_list.html#afaab01111146def6b59cbef75f0c6295',1,'SortedArrayList::GetLength()']]],
+  ['getname',['GetName',['../class_folder_type.html#ac78195e5cb283831a25e62b123e74a14',1,'FolderType']]],
+  ['getnextitem',['GetNextItem',['../class_linked_list.html#a0178d21e5e6aa19bac6bd61d56ebb8d8',1,'LinkedList::GetNextItem()'],['../class_sorted_array_list.html#ac32740700925f4ae87f421f22dbbf976',1,'SortedArrayList::GetNextItem()']]],
+  ['getnode',['GetNode',['../class_doubly_linked_list.html#a86870b170dfb1559e188c30c7e623873',1,'DoublyLinkedList']]],
+  ['getnumsubfolder',['GetNumSubFolder',['../class_folder_type.html#a954677fbf19b3792f27c538da87262df',1,'FolderType']]],
+  ['getparentfolder',['GetParentFolder',['../class_folder_type.html#a3c34c207d94593ae2f93f3b5e91d9d45',1,'FolderType']]],
+  ['getpath',['GetPath',['../class_folder_type.html#a1c866cd4dfeda7d8cd1223049d069d6b',1,'FolderType']]],
+  ['getpathstring',['GetPathString',['../class_folder_type.html#accd9e2e38e8c33bad9343a1224601c4a',1,'FolderType']]],
+  ['getsize',['GetSize',['../class_folder_type.html#a5b60a90a99db9bf0b51c42179b541be5',1,'FolderType']]],
+  ['getsubfolder',['GetSubFolder',['../class_folder_type.html#a55fc34cce5082ede5b9f009a38968381',1,'FolderType']]],
+  ['getsubfolders',['GetSubFolders',['../class_folder_type.html#a388b79b0ce0c3d119f41b2a681dca794',1,'FolderType']]],
+  ['gettail',['GetTail',['../class_doubly_linked_list.html#a3f95000538e281280e639fbd39ea238d',1,'DoublyLinkedList::GetTail()'],['../class_linked_list.html#a24b16b901f0341668a2e7a732c496918',1,'LinkedList::GetTail()']]],
+  ['gettailitemaddress',['GetTailItemAddress',['../class_doubly_linked_list.html#a46415172181795297133e3b4ebbdbeb8',1,'DoublyLinkedList::GetTailItemAddress()'],['../class_linked_list.html#a8f2cf56e012749503b334458251b9f36',1,'LinkedList::GetTailItemAddress()']]],
+  ['gettopelement',['GetTopElement',['../class_stack.html#a3ccaf651607d670680f5b3425aad43ea',1,'Stack']]],
+  ['gotopreviousfolder',['GoToPreviousFolder',['../class_application.html#ae80009da13c406497b0e85fb69c9f0e6',1,'Application']]],
+  ['greater',['GREATER',['../_folder_type_8h.html#afe9640666d0d789fef4ba0b6a02f6b4aa25b5ca2f56d99ba6ffcb5316adac34c1',1,'FolderType.h']]]
 ];

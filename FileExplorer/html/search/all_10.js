@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['walkiterator',['WalkIterator',['../class_linked_list.html#ae4365645fcdf40ed28602baa5d25d4f4',1,'LinkedList']]],
-  ['writedatatofile',['WriteDataToFile',['../class_folder_type.html#acfd7175858f5d529a722012e53903821',1,'FolderType']]]
+  ['tail_5f',['tail_',['../class_doubly_linked_list.html#a986ed6fd309b08baa7ab1d04d56085f1',1,'DoublyLinkedList']]],
+  ['top_5f',['top_',['../class_stack.html#a43f310171381626f395f79cb811f5977',1,'Stack']]]
 ];

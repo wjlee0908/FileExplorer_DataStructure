@@ -1,19 +1,15 @@
 var searchData=
 [
-  ['data',['data',['../struct_list_node.html#a935e06f21b246fb3a0987dd3f9d28528',1,'ListNode']]],
-  ['data_5farray_5f',['data_array_',['../class_sorted_array_list.html#a4c508ebe20eafcd41dd18055c8064036',1,'SortedArrayList']]],
-  ['delete',['Delete',['../class_linked_list.html#a22efeaea2559ec8e7da046e745df7a2c',1,'LinkedList::Delete()'],['../class_sorted_array_list.html#ab7474b64c35fe0fd6b307aa7e4406d8d',1,'SortedArrayList::Delete()']]],
-  ['deletefolder',['DeleteFolder',['../class_application.html#acf3b91d35ce685d6a5f3a1d4f935fb94',1,'Application']]],
-  ['deletesubfolder',['DeleteSubFolder',['../class_folder_type.html#a922ec9f9e286fb8e50b16eb9f1b3c5fc',1,'FolderType']]],
-  ['dequeue',['DeQueue',['../class_circular_queue.html#af8d05b34cda7bd945415fb7261d8ce30',1,'CircularQueue']]],
-  ['displayallsubfolders',['DisplayAllSubFolders',['../class_application.html#aab79c33ea43177f914ecd7680ad6ad86',1,'Application::DisplayAllSubFolders()'],['../class_folder_type.html#af5a3a35c7aac875a7bed9270b836ed5d',1,'FolderType::DisplayAllSubFolders()']]],
-  ['displaycreateddateonscreen',['DisplayCreatedDateOnScreen',['../class_folder_type.html#a04a7e6df2e883b5fdb132543ff6d1e3b',1,'FolderType']]],
-  ['displayinformationonscreen',['DisplayInformationOnScreen',['../class_folder_type.html#a53ae31e69d5c355c7d6296bf1293951a',1,'FolderType']]],
-  ['displaynameonscreen',['DisplayNameOnScreen',['../class_folder_type.html#a57284d6532ca07e8a51c7c6c53d0acdf',1,'FolderType']]],
-  ['displaynumofsubfoldersonscreen',['DisplayNumOfSubFoldersOnScreen',['../class_folder_type.html#a44c694006115265648f47884de7aa773',1,'FolderType']]],
-  ['displaypathonscreen',['DisplayPathOnScreen',['../class_folder_type.html#a325257ff4b0dda0db0f18d53a77b3d9e',1,'FolderType']]],
-  ['displayproperty',['DisplayProperty',['../class_application.html#abd4dc1529968578256f5d8d81261e270',1,'Application']]],
-  ['displayrecentfolders',['DisplayRecentFolders',['../class_application.html#aa7421740b89cd628c9be6dcbb7087583',1,'Application']]],
-  ['displaysizeonscreen',['DisplaySizeOnScreen',['../class_folder_type.html#a036b7286ff176d64551d00f869238641',1,'FolderType']]],
-  ['displayworingdirectory',['DisplayWoringDirectory',['../class_application.html#a94c79430f16d6fa2b4cb3757ea96400c',1,'Application']]]
+  ['changefoldername',['ChangeFolderName',['../class_application.html#afa2788f77930b824768bca62d6fe1990',1,'Application']]],
+  ['changeitemkey',['ChangeItemKey',['../class_sorted_doubly_linked_list.html#a78ee97a32a080aa68f6802804b1ff9d3',1,'SortedDoublyLinkedList::ChangeItemKey()'],['../class_sorted_linked_list.html#a6d27fb0a481fe5923387f2985bfa1e8c',1,'SortedLinkedList::ChangeItemKey()']]],
+  ['changesubfoldername',['ChangeSubFolderName',['../class_folder_type.html#ae556c8f5b8f30d4c420a5e0292c7b759',1,'FolderType']]],
+  ['circularqueue',['CircularQueue',['../class_circular_queue.html',1,'CircularQueue&lt; T &gt;'],['../class_circular_queue.html#afb497745b3a1e472ec670345328301a3',1,'CircularQueue::CircularQueue()'],['../class_circular_queue.html#a4be46542617b0d74768fb695534aa040',1,'CircularQueue::CircularQueue(int size)'],['../class_circular_queue.html#aeb0d17bcec6633306200d6bbd5375702',1,'CircularQueue::CircularQueue(const CircularQueue&lt; T &gt; &amp;copied_object)']]],
+  ['circularqueue_2eh',['CircularQueue.h',['../_circular_queue_8h.html',1,'']]],
+  ['circularqueue_3c_20foldertype_20_2a_20_3e',['CircularQueue&lt; FolderType * &gt;',['../class_circular_queue.html',1,'']]],
+  ['circulateindex',['CirculateIndex',['../class_circular_queue.html#a4a2332fd5bc3c44dc0fd785929041904',1,'CircularQueue']]],
+  ['comparebyname',['CompareByName',['../class_folder_type.html#aab56726074cad51d17c3fe415b285b6a',1,'FolderType']]],
+  ['created_5fdate_5f',['created_date_',['../class_folder_type.html#a62a5bdf9cc577edcc547d914c987d2a1',1,'FolderType']]],
+  ['current_5ffolder_5f',['current_folder_',['../class_application.html#af25db880c18c0085aa0d913d29ab0a5b',1,'Application']]],
+  ['current_5fiterator_5f',['current_iterator_',['../class_sorted_array_list.html#ac2b282c00ba46484b8352aae5ce45480',1,'SortedArrayList']]],
+  ['current_5fnode_5f',['current_node_',['../class_doubly_pointing_iterator.html#a4156bd6bb70ddefc293b2317beec0ed8',1,'DoublyPointingIterator']]]
 ];

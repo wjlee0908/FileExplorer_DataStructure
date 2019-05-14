@@ -10,8 +10,9 @@ FolderType::FolderType(const FolderType & copied_data)
 string FolderType::GetPathString()
 {
 	string path_string = "";
+	DoublyPointingIterator<FolderType*> iter(*path_);
 	FolderType* iterated_folder;	// while문에서 현재 탐색 중인 폴더
-
+	/*
 	// path 결정되지 않으면 빈 스트링 리턴
 	if (path_->IsEmpty()) {
 		return path_string;
@@ -35,6 +36,7 @@ string FolderType::GetPathString()
 			path_string.append(iterated_folder->name_);
 		}
 	}
+	*/
 
 	return path_string;
 }
@@ -123,12 +125,12 @@ void FolderType::AssignCopy(const FolderType & copied_object)
 
 	if (copied_object.num_sub_folder_ != 0) {
 		// 공간 생성하고 데이터 deep copy.
-		this->sub_folder_list_ = new SortedLinkedList<FolderType>;
+		this->sub_folder_list_ = new SortedDoublyLinkedList<FolderType>;
 		*(this->sub_folder_list_) = *(copied_object.sub_folder_list_);
 	}
 
 	// path list deep copy
-	this->path_ = new LinkedList<FolderType*>;
+	this->path_ = new DoublyLinkedList<FolderType*>;
 	*(this->path_) = *(copied_object.path_);	
 }
 
@@ -157,7 +159,7 @@ int FolderType::AddSubFolder() {
 	string new_folder_path;
 
 	if (num_sub_folder_ == 0) {
-		sub_folder_list_ = new SortedLinkedList<FolderType>;
+		sub_folder_list_ = new SortedDoublyLinkedList<FolderType>;
 	}
 
 	new_folder.SetRecordFromKeyboard();
@@ -283,17 +285,17 @@ FolderType* FolderType::GetSubFolder() {
 // Retrieve folders containing finding name
 int FolderType::RetrieveFolderByName() {
 	FolderType retrieving_folder;
-	FolderType iterator;    // 리스트 탐색할 item
+	FolderType iter;    // 리스트 탐색할 item
 	bool is_found = false;
 
 	retrieving_folder.SetNameFromKeyboard(); //name을 입력받는다.
 
 	sub_folder_list_->ResetIterator();
 	// 리스트 순차 탐색
-	while (sub_folder_list_->GetNextItem(iterator) != 0) {
+	while (sub_folder_list_->GetNextItem(iter) != 0) {
 		// 이름 확인
-		if (iterator.GetName().find(retrieving_folder.GetName()) != string::npos) {
-			iterator.DisplayInformationOnScreen();
+		if (iter.GetName().find(retrieving_folder.GetName()) != string::npos) {
+			iter.DisplayInformationOnScreen();
 			is_found = true;
 		}
 	}
@@ -311,11 +313,13 @@ void FolderType::DisplayAllSubFolders() {
 	FolderType displayed_folder;
 
 	cout << "\n\tSub Folder list" << endl;
-
+	// TODO: ERROR
+	/*
 	sub_folder_list_->ResetIterator();
 
 	// 리스트의 끝까지 displayed_folder에 할당
 	while (sub_folder_list_->GetNextItem(displayed_folder) != 0) {
 		displayed_folder.DisplayNameOnScreen();
 	}
+	*/
 }

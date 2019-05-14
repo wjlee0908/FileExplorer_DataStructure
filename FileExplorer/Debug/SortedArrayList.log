@@ -2,8 +2,12 @@
   Application.cpp
 c:\users\dnwls\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\application.cpp(152): warning C4101: 'exception' :참조되지 않은 지역 변수입니다.
   FolderType.cpp
-c:\users\dnwls\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\foldertype.cpp(83): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+c:\users\dnwls\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\foldertype.cpp(14): warning C4101: 'iterated_folder' :참조되지 않은 지역 변수입니다.
+c:\users\dnwls\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\foldertype.cpp(85): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\time.h(506): note: 'localtime' 선언을 참조하십시오.
+c:\users\dnwls\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\foldertype.cpp(293): error C2039: 'ResetIterator': 'SortedDoublyLinkedList<FolderType>'의 멤버가 아닙니다.
+  c:\users\dnwls\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\foldertype.h(96): note: 'SortedDoublyLinkedList<FolderType>' 선언을 참조하십시오.
+c:\users\dnwls\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\foldertype.cpp(295): error C2039: 'GetNextItem': 'SortedDoublyLinkedList<FolderType>'의 멤버가 아닙니다.
+  c:\users\dnwls\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\foldertype.h(96): note: 'SortedDoublyLinkedList<FolderType>' 선언을 참조하십시오.
   main.cpp
   코드를 생성하고 있습니다...
-  SortedArrayList.vcxproj -> C:\Users\dnwls\Source\Repos\wjlee0908\FileExplorer_DataStructure\FileExplorer\Debug\FileExplorer.exe

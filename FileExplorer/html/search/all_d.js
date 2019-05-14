@@ -1,15 +1,9 @@
 var searchData=
 [
-  ['readdatafromfile',['ReadDataFromFile',['../class_folder_type.html#a4cdaaf996bb9097b658e3cdd79c3c05b',1,'FolderType']]],
-  ['rear_5f',['rear_',['../class_circular_queue.html#a723ce2793992bcc4568337bd1c3050ce',1,'CircularQueue']]],
-  ['recent_5ffolders_5f',['recent_folders_',['../class_application.html#a6bfe5e048782b0472441c0a7bfeecb53',1,'Application']]],
-  ['recent_5fsize',['RECENT_SIZE',['../_application_8h.html#a203c12cc5aca0498173c9c2b70bcb054',1,'Application.h']]],
-  ['relationtype',['RelationType',['../_folder_type_8h.html#afe9640666d0d789fef4ba0b6a02f6b4a',1,'FolderType.h']]],
-  ['replace',['Replace',['../class_linked_list.html#a3ccbb034e269365c29362bbcdb41be23',1,'LinkedList::Replace()'],['../class_sorted_array_list.html#a5f0d7ab41c0928e1aef68f3ba6250fc9',1,'SortedArrayList::Replace()']]],
-  ['resetiterator',['ResetIterator',['../class_linked_list.html#a0bd64162ed5ded876f1a42a346b54b4d',1,'LinkedList']]],
-  ['resetlist',['ResetList',['../class_sorted_array_list.html#a616f55b1d492448bc008a500b62c81be',1,'SortedArrayList']]],
-  ['retrievefolderbyname',['RetrieveFolderByName',['../class_folder_type.html#ac1d73f64d1a61ff443c0edfbce0c7512',1,'FolderType']]],
-  ['retrivefolderbyname',['RetriveFolderByName',['../class_application.html#acf88524645e92b850ddfce38a4e09618',1,'Application']]],
-  ['root_5ffolder_5f',['root_folder_',['../class_application.html#a147aa9d28596df81c51c55110025bbdd',1,'Application']]],
-  ['run',['Run',['../class_application.html#aaf09cd6cb412086dc039e28cdb059f0d',1,'Application']]]
+  ['parent_5ffolder_5f',['parent_folder_',['../class_folder_type.html#a04f0078c3fc54ffd2ec103f9310edb10',1,'FolderType']]],
+  ['path_5f',['path_',['../class_folder_type.html#a67f0b86bbda86b6847ceb4afb761c1e5',1,'FolderType']]],
+  ['pop',['Pop',['../class_stack.html#a362b42769896d3a4b3ce675522ab8711',1,'Stack']]],
+  ['previous',['previous',['../struct_doubly_pointing_node.html#a60674c2872d3adada9096a72722c6879',1,'DoublyPointingNode']]],
+  ['print',['print',['../class_exception_full_queue.html#a48ca6cfef6eb6a2242cb72d2d79d133c',1,'ExceptionFullQueue::print()'],['../class_exception_empty_queue.html#ac37f3984905d94886a98f04a326dc8b0',1,'ExceptionEmptyQueue::print()'],['../class_exception_full_stack.html#a2317bdc4962a4a6dfc76b932e35df24d',1,'ExceptionFullStack::print()'],['../class_exception_empty_stack.html#aef6a4b709a652ee8f04ba848f160b78d',1,'ExceptionEmptyStack::print()']]],
+  ['push',['Push',['../class_stack.html#ae55b838016f28bead7c28972ad4a2ad8',1,'Stack']]]
 ];

@@ -2,6 +2,8 @@
 #ifndef _DOUBLY_LINKED_LIST_H
 #define _DOUBLY_LINKED_LIST_H
 
+#include "DoublyPointingIterator.h"
+
 /**
 *	Structure for NodeType to use in Linked structure.
 */
@@ -196,7 +198,7 @@ DoublyLinkedList<T>::~DoublyLinkedList()
 template <typename T>
 void DoublyLinkedList<T>::MakeEmpty()
 {
-	DoublyPointingIterator<T> iterator(*this);
+	DoublyPointingIterator<T> iter(*this);
 	DoublyPointingNode<T>* deleted_node;
 
 	// 이미 비어있으면 수행하지 않음
@@ -206,8 +208,8 @@ void DoublyLinkedList<T>::MakeEmpty()
 
 	// head 옮겨가며 head 삭제
 	while (length_ > 0) {
-		deleted_node = iterator.current_node_;
-		iterator.Next();
+		deleted_node = iter.current_node_;
+		iter.Next();
 		delete deleted_node;
 
 		length_--;
@@ -251,10 +253,10 @@ template <typename T>
 T* DoublyLinkedList<T>::Add(T item)
 {
 	DoublyPointingNode<T>* new_node = new DoublyPointingNode<T>;
-	DoublyPointingIterator iterator(*this);
+	DoublyPointingIterator<T> iter(*this);
 
 	new_node->data = item;
-	new_node->previous = NULL:
+	new_node->previous = NULL;
 	new_node->next = NULL;
 
 	// special case: 리스트가 비어있을 때는 new를 head, tail로 지정
@@ -345,22 +347,22 @@ bool DoublyLinkedList<T>::Get(T& item)
 template<typename T>
 bool DoublyLinkedList<T>::GetNode(T & item, DoublyPointingNode<T> & found_node)
 {
-	DoublyPointingIterator<T> iterator(this*);
+	DoublyPointingIterator<T> iter(*this);
 	DoublyPointingNode<T> current_node;
 	bool is_found = false;
 
 	// 리스트 끝까지 탐색
-	while (!iterator.IsNull()) {
-		iterator.GetCurrentNode(current_node);
+	while (!iter.IsNull()) {
+		iter.GetCurrentNode(current_node);
 		// item과 일치하는 노드 찾음
 		if (current_node.data == item) {
 			// returns current node reference
-			iterator.GetCurrentNode(found_node);
+			iter.GetCurrentNode(found_node);
 			is_found = true;
 		}
 		else {
 			// 다음 노드 탐색
-			iterator.Next();
+			iter.Next();
 		}
 	}
 

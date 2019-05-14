@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['recent_5fsize',['RECENT_SIZE',['../_application_8h.html#a203c12cc5aca0498173c9c2b70bcb054',1,'Application.h']]]
+  ['max_5fsize',['MAX_SIZE',['../_circular_queue_8h.html#a0592dba56693fad79136250c11e5a7fe',1,'MAX_SIZE():&#160;CircularQueue.h'],['../_stack_8h.html#a0592dba56693fad79136250c11e5a7fe',1,'MAX_SIZE():&#160;Stack.h']]],
+  ['maxsize',['MAXSIZE',['../_sorted_array_list_8h.html#a2a37b4217917105aac7557862ccc19c3',1,'SortedArrayList.h']]]
 ];

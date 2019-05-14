@@ -20,11 +20,11 @@ var class_folder_type =
     [ "GetName", "class_folder_type.html#ac78195e5cb283831a25e62b123e74a14", null ],
     [ "GetNumSubFolder", "class_folder_type.html#a954677fbf19b3792f27c538da87262df", null ],
     [ "GetParentFolder", "class_folder_type.html#a3c34c207d94593ae2f93f3b5e91d9d45", null ],
-    [ "GetPath", "class_folder_type.html#a4ffd7c46c890d7e78cd5f80478e73a74", null ],
+    [ "GetPath", "class_folder_type.html#a1c866cd4dfeda7d8cd1223049d069d6b", null ],
     [ "GetPathString", "class_folder_type.html#accd9e2e38e8c33bad9343a1224601c4a", null ],
     [ "GetSize", "class_folder_type.html#a5b60a90a99db9bf0b51c42179b541be5", null ],
     [ "GetSubFolder", "class_folder_type.html#a55fc34cce5082ede5b9f009a38968381", null ],
-    [ "GetSubFolders", "class_folder_type.html#a06ab5fdccbe0fc249d2a1ad6617f61db", null ],
+    [ "GetSubFolders", "class_folder_type.html#a388b79b0ce0c3d119f41b2a681dca794", null ],
     [ "IsDupliactedSubFolderExists", "class_folder_type.html#aa08bdfb45c655670eb888b96b1cf1be9", null ],
     [ "IsRootFolder", "class_folder_type.html#a1c5eb95d123c4ed7c3b9538010f682ce", null ],
     [ "operator<", "class_folder_type.html#aa3a55716f115d1b7b4ed0ea9e2c810e2", null ],
@@ -36,8 +36,6 @@ var class_folder_type =
     [ "SetName", "class_folder_type.html#a353e871a7f7e486770278a544edbfb3c", null ],
     [ "SetNameFromKeyboard", "class_folder_type.html#ae76dfe15be8e0b70d5f3c7fa6dfb3b7a", null ],
     [ "SetPath", "class_folder_type.html#a00b954ee6e7bb628214a35ca27c7f46b", null ],
-    [ "SetPath", "class_folder_type.html#a416c04153ab5d44363eeeb9246005f7b", null ],
-    [ "SetPathFromKeyboard", "class_folder_type.html#a6c5607daa2bd4ad8300ce30952898020", null ],
     [ "SetRecord", "class_folder_type.html#a665ddcd77e96fe60a215ee6621b78617", null ],
     [ "SetRecordFromKeyboard", "class_folder_type.html#a370e415d5f58f6fa90e67d6fbe51f75a", null ],
     [ "WriteDataToFile", "class_folder_type.html#acfd7175858f5d529a722012e53903821", null ],
@@ -45,8 +43,7 @@ var class_folder_type =
     [ "name_", "class_folder_type.html#a69f054070d957ed994ac64e224ce0174", null ],
     [ "num_sub_folder_", "class_folder_type.html#a5d4759cfa644ecf4c073755eee563396", null ],
     [ "parent_folder_", "class_folder_type.html#a04f0078c3fc54ffd2ec103f9310edb10", null ],
-    [ "path_", "class_folder_type.html#a8963e1078b8023cb28c5537fb4b61a78", null ],
-    [ "path_string_", "class_folder_type.html#a1e4069b4cb29845bd0c92877c560c823", null ],
+    [ "path_", "class_folder_type.html#a67f0b86bbda86b6847ceb4afb761c1e5", null ],
     [ "size_", "class_folder_type.html#a6c7552eb6c86f8ac24c5c5cc2c66513c", null ],
-    [ "sub_folder_list_", "class_folder_type.html#aab59ab14163144423d60dab21ded61df", null ]
+    [ "sub_folder_list_", "class_folder_type.html#a74ac98fabdb494055a229663747a6f4e", null ]
 ];

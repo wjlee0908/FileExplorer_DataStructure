@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <time.h>
 #include <iomanip>
-#include "SortedLinkedList.h"
+#include "SortedDoublyLinkedList.h"
 #include "SortedDoublyLinkedList.h"
 
 
@@ -35,7 +35,7 @@ public:
 		sub_folder_list_ = NULL;
 		num_sub_folder_ = 0;
 		name_ = "";
-		path_ = new LinkedList<FolderType*>;
+		path_ = new DoublyLinkedList<FolderType*>;
 		GenerateCreatedDate();
 		parent_folder_ = NULL;
 	}
@@ -93,7 +93,7 @@ public:
 	*	@post	none.
 	*	@return	address of sub folders list.
 	*/
-	const SortedLinkedList<FolderType>* GetSubFolders() {
+	const SortedDoublyLinkedList<FolderType>* GetSubFolders() {
 		return sub_folder_list_;
 	}
 
@@ -114,7 +114,7 @@ public:
 	*	@post	none.
 	*	@return	folder path.
 	*/
-	LinkedList<FolderType*>* GetPath()
+	DoublyLinkedList<FolderType*>* GetPath()
 	{
 		// return path_string_;
 		return path_;
@@ -371,9 +371,9 @@ protected:
 
 	int size_;          ///< folder size.
 	int num_sub_folder_;    ///< number of sub folders.
-	LinkedList<FolderType*>* path_;    ///< folder path list.
+	DoublyLinkedList<FolderType*>* path_;    ///< folder path list.
 	string created_date_;    ///< date that folder created.
-	SortedLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
+	SortedDoublyLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
 	FolderType* parent_folder_;    ///< address of parent folder
 
 private:
