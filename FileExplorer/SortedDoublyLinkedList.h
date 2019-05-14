@@ -10,7 +10,6 @@ template <typename T>
 class SortedDoublyLinkedList : public DoublyLinkedList<T>
 {
 public:
-
 	/**
 	*	@brief	Add item into appropriate spot of this list.
 	*	@pre	List is not full. item is not in list.
@@ -68,7 +67,7 @@ T* SortedDoublyLinkedList<T>::Add(T item)
 template<typename T>
 bool SortedDoublyLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
 {
-	DoublyPointingIterator<T> iter(*this);
+	DoublyPointingIterator<T> iterator(this*);
 	DoublyPointingNode<T> replaced_node;
 	bool is_found = false;
 
@@ -103,7 +102,7 @@ bool SortedDoublyLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
 template<typename T>
 bool SortedDoublyLinkedList<T>::InsertNodeSorted(DoublyPointingNode<T>* node)
 {
-	DoublyPointingIterator<T> iter(*this);
+	DoublyPointingIterator<T> iterator(*this);
 	DoublyPointingNode<T> current_node;
 	bool is_inserted = false;
 
@@ -117,8 +116,8 @@ bool SortedDoublyLinkedList<T>::InsertNodeSorted(DoublyPointingNode<T>* node)
 	}
 
 	// 리스트 끝까지 탐색
-	while (!iter.IsNull()) {
-		iter.GetCurrentNode(current_node);
+	while (!iterator.IsNull()) {
+		iterator.GetCurrentNode(current_node);
 		// item보다 더 큰 노드 직전에 삽입
 		if (node->data < current_node.data) {
 			if (current_node.previous == nullptr) {
@@ -137,7 +136,7 @@ bool SortedDoublyLinkedList<T>::InsertNodeSorted(DoublyPointingNode<T>* node)
 		}
 		else {
 			// 다음 노드 탐색
-			iter.Next();
+			iterator.Next();
 		}
 	}
 
