@@ -67,7 +67,7 @@ T* SortedDoublyLinkedList<T>::Add(T item)
 template<typename T>
 bool SortedDoublyLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
 {
-	DoublyPointingIterator<T> iterator(this*);
+	// DoublyPointingIterator<T> iter(this*);
 	DoublyPointingNode<T> replaced_node;
 	bool is_found = false;
 
@@ -93,7 +93,7 @@ bool SortedDoublyLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
 	length_--;
 
 	// ÀçÁ¤·Ä
-	InsertNodeSorted(replaced_node);
+	InsertNodeSorted(&replaced_node);
 
 	return true;
 }

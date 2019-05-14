@@ -119,14 +119,6 @@ public:
 	bool GetNode(T& item, DoublyPointingNode<T>& found_node);
 
 	/**
-	*	@brief	Retrieve list element whose key matches item's key (if present).
-	*	@pre	Key member of item is initialized.
-	*	@post	none.
-	*	@return	address of found item. if not found, returns NULL
-	*/
-	T* GetItemAddress(const T item);
-
-	/**
 	*	@brief	Get last element of list
 	*	@pre	list elements are set.
 	*	@post	none.
@@ -296,7 +288,7 @@ int DoublyLinkedList<T>::Delete(T item)
 			deleted_node.next->previous = deleted_node.previous;
 		}
 		// 노드 메모리 해제
-		delete deleted_node;
+		delete &deleted_node;
 		length_--;
 	}
 
@@ -347,7 +339,7 @@ bool DoublyLinkedList<T>::Get(T& item)
 template<typename T>
 bool DoublyLinkedList<T>::GetNode(T & item, DoublyPointingNode<T> & found_node)
 {
-	DoublyPointingIterator<T> iterator(this*);
+	DoublyPointingIterator<T> iterator(*this);
 	DoublyPointingNode<T> current_node;
 	bool is_found = false;
 
@@ -367,17 +359,6 @@ bool DoublyLinkedList<T>::GetNode(T & item, DoublyPointingNode<T> & found_node)
 	}
 
 	return is_found;
-}
-
-// Retrieve list element whose key matches item's key (if present).
-// TODO: Get으로 대체
-template<typename T>
-T * DoublyLinkedList<T>::GetItemAddress(const T item)
-{
-	T found_item;
-	Get(found_item);
-	
-	return &found_item;
 }
 
 // Copy parameter list and assign to this list when using = operator.
