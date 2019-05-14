@@ -10,29 +10,27 @@ FolderType::FolderType(const FolderType & copied_data)
 string FolderType::GetPathString()
 {
 	string path_string = "";
-	DoublyPointingIterator<FolderType*> iter(*path_);    // path 탐색할 iterator
-	FolderType* iterated_folder;	// while문에서 현재 탐색 중인 폴더
+	// FolderType* iterated_folder;	// while문에서 현재 탐색 중인 폴더
 	
 	// path 결정되지 않으면 빈 스트링 리턴
 	if (path_->IsEmpty()) {
 		return path_string;
 	}
 
-	while (!iter.IsNextNull()) {
-		iterated_folder = iter.Next();
-
+	DoublyPointingIterator<FolderType*> iter(*path_);    // path 탐색할 iterator
+	for (iter.First(); !iter.IsNull(); iter.Next()) {
 		// 루트 폴더는 이름만 append
-		if (iterated_folder->parent_folder_ == NULL) {
-			path_string.append(iterated_folder->name_);
+		if (iter->parent_folder_ == NULL) {
+			path_string.append(iter->name_);
 		}
 		// 루트 폴더 자식은 이름만 append. 앞에 또 / 안붙임
-		else if (iterated_folder->parent_folder_->name_.compare("/") == 0) {
-			path_string.append(iterated_folder->name_);
+		else if (iter->parent_folder_->name_.compare("/") == 0) {
+			path_string.append(iter->name_);
 		}
 		// 나머지는 '/' + 이름 append
 		else {
 			path_string.append("/");
-			path_string.append(iterated_folder->name_);
+			path_string.append(iter->name_);
 		}
 	}
 
@@ -325,4 +323,6 @@ void FolderType::DisplayAllSubFolders() {
 		displayed_folder = iter.Next();
 		displayed_folder.DisplayNameOnScreen();
 	}
+
+
 }
