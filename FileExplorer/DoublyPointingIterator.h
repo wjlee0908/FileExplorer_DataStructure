@@ -129,12 +129,12 @@ template <typename T>
 T DoublyPointingIterator<T>::Next() {
 	if (IsNull()) {
 		throw std::out_of_range("Next() : current node is NULL");
-		return T();
 	}
 
+	DoublyPointingNode<T> original_node = (*current_node_);
 	current_node_ = current_node_->next;
 	if (IsNull()) {
-		return T();    // return dummy
+		return original_node.data;    // return original node if next is null.
 	}
 	return current_node_->data;
 }
