@@ -358,7 +358,7 @@ DoublyPointingNode<T>* DoublyLinkedList<T>::GetNode(T& item)
 	while (!iterator.IsNull()) {
 		current_node = iterator.GetCurrentNode();
 		// item과 일치하는 노드 찾음
-		if (current_node->data == item) {
+		if (*(current_node->data) == item) {
 			// returns current node reference
 			//iterator.GetCurrentNode(found_node);
 			found_node = current_node;

@@ -17,7 +17,7 @@ public:
 	FolderType()
 	{
 		ItemType::ItemType();
-		sub_folder_list_ = NULL;
+		sub_item_list_ = NULL;
 		num_sub_folder_ = 0;
 	}
 
@@ -28,7 +28,7 @@ public:
 	{
 		ItemType::~ItemType();
 		if (num_sub_folder_ != 0) {
-			delete sub_folder_list_;
+			delete sub_item_list_;
 		}
 	}
 
@@ -63,8 +63,8 @@ public:
 	*	@post	none.
 	*	@return	address of sub folders list.
 	*/
-	const SortedDoublyLinkedList<FolderType>* GetSubFolders() {
-		return sub_folder_list_;
+	const SortedDoublyLinkedList<ItemType*>* GetSubFolders() {
+		return sub_item_list_;
 	}
 
 	/**
@@ -170,7 +170,7 @@ public:
 
 protected:
 	int num_sub_folder_;    ///< number of sub folders.
-	SortedDoublyLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
+	SortedDoublyLinkedList<ItemType*>* sub_item_list_;   ///< sorted sub item(file+folder) list
 
 private:
 	/**

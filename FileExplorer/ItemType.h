@@ -210,6 +210,16 @@ public:
 	bool operator< (const FolderType& comparing_data) { return (CompareByName(comparing_data) == LESS); }
 
 	/**
+	*	@brief	Returns whether this is less than comparing data.
+	*            primary key is name.
+	*	@pre	comparing_data is set.
+	*	@post	none.
+	*   @param  comparing_data    data to compare
+	*   @return retruns boolean expresses whether this is less than comparing data.
+	*/
+	bool operator< (const FolderType*& comparing_data) { return (CompareByName(*comparing_data) == LESS); }
+
+	/**
 	*	@brief	Returns whether this is equal to comparing data
 	*			primary key is name.
 	*	@pre	comparing_data is set.
@@ -220,6 +230,16 @@ public:
 	bool operator== (const FolderType& comparing_data) { return (CompareByName(comparing_data) == EQUAL); }
 
 	/**
+	*	@brief	Returns whether this is equal to comparing data
+	*			primary key is name.
+	*	@pre	comparing_data is set.
+	*	@post	none.
+	*   @param  comparing_data    data to compare
+	*   @return retruns boolean expresses whether whether this is equal to comparing data.
+	*/
+	bool operator== (const FolderType*& comparing_data) { return (CompareByName(*comparing_data) == EQUAL); }
+
+	/**
 	*	@brief	Returns whether this is greater than comparing data.
 	*			primary key is name.
 	*	@pre	comparing_data is set.
@@ -228,6 +248,16 @@ public:
 	*   @return retruns boolean expresses whether this is greater than comparing data.
 	*/
 	bool operator> (const FolderType& comparing_data) { return (CompareByName(comparing_data) == GREATER);  }
+
+	/**
+	*	@brief	Returns whether this is greater than comparing data.
+	*			primary key is name.
+	*	@pre	comparing_data is set.
+	*	@post	none.
+	*   @param  comparing_data    data to compare
+	*   @return retruns boolean expresses whether this is greater than comparing data.
+	*/
+	bool operator> (const FolderType*& comparing_data) { return (CompareByName(*comparing_data) == GREATER); }
 
 protected:
 	/**
