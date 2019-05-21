@@ -14,7 +14,7 @@
 
 using namespace std;
 
-class FolderType : ItemType;
+class FolderType;
 
 /**
 *	Relation between two items.
@@ -34,6 +34,7 @@ public:
 		name_ = "";
 		size_ = 0;
 		GenerateCreatedDate();
+		parent_folder_ = NULL;
 	}
 	/**
 	*	destructor.
@@ -68,7 +69,7 @@ public:
 	*	@post	none.
 	*	@return	Item path.
 	*/
-	DoublyLinkedList<ItemType*> GetPath() const { return this->path_; }
+	DoublyLinkedList<FolderType*> GetPath() { return this->path_; }
 
 	/**
 	*	@brief	Get item path by string type.
@@ -105,9 +106,9 @@ public:
 	/**
 	*	@brief	Set item path using item name and parent folders
 	*	@pre	parent folder is set.
-	*	@post	folder path is set.
+	*	@post	item path is set.
 	*/
-	void SetPath();
+	virtual void SetPath();
 
 	/**
 	*	@brief	Set item attributes.
@@ -171,6 +172,7 @@ public:
 	{
 		DisplayNameOnScreen();
 		DisplayPathOnScreen();
+		DisplaySizeOnScreen();
 		DisplayCreatedDateOnScreen();
 	}
 

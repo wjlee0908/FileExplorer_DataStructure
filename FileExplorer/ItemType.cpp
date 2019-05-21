@@ -1,4 +1,5 @@
 #include "ItemType.h"
+#include "FolderType.h"
 
 ItemType::~ItemType()
 {
@@ -14,11 +15,11 @@ string ItemType::GetPathString()
 	string path_string = "";
 
 	// path 결정되지 않으면 빈 스트링 리턴
-	if (path_->IsEmpty()) {
+	if (path_.IsEmpty()) {
 		return path_string;
 	}
 
-	DoublyPointingIterator<FolderType*> iter(*path_);    // path 탐색할 iterator
+	DoublyPointingIterator<FolderType*> iter(path_);    // path 탐색할 iterator
 	for (iter.First(); !iter.IsNull(); iter.Next()) {
 		// 루트 폴더는 이름만 append
 		if (iter->parent_folder_ == NULL) {
@@ -43,10 +44,8 @@ void ItemType::SetPath()
 {
 	// 부모 폴더 있으면 부모 폴더의 경로 복사
 	if (parent_folder_ != NULL) {
-		path_ = parent_folder_.path_;
+		path_ = parent_folder_->path_;
 	}
-	// 뒤에 현재 폴더 붙이기
-	path_->Add(this);
 }
 
 // Assign copy of parameter
@@ -84,7 +83,7 @@ void ItemType::SetAttributesFromKeyboard()
 ItemType & ItemType::operator=(const ItemType & copied_item)
 {
 	AssignCopy(copied_item);
-	return this;
+	return *this;
 }
 
 // Generate item's created date.

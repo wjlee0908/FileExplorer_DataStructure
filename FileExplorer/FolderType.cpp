@@ -6,102 +6,6 @@ FolderType::FolderType(const FolderType & copied_data)
 	AssignCopy(copied_data);
 }
 
-// return path to string type
-string FolderType::GetPathString()
-{
-	string path_string = "";
-	// FolderType* iterated_folder;	// while문에서 현재 탐색 중인 폴더
-	
-	// path 결정되지 않으면 빈 스트링 리턴
-	if (path_->IsEmpty()) {
-		return path_string;
-	}
-
-	DoublyPointingIterator<FolderType*> iter(*path_);    // path 탐색할 iterator
-	for (iter.First(); !iter.IsNull(); iter.Next()) {
-		// 루트 폴더는 이름만 append
-		if (iter->parent_folder_ == NULL) {
-			path_string.append(iter->name_);
-		}
-		// 루트 폴더 자식은 이름만 append. 앞에 또 / 안붙임
-		else if (iter->parent_folder_->name_.compare("/") == 0) {
-			path_string.append(iter->name_);
-		}
-		// 나머지는 '/' + 이름 append
-		else {
-			path_string.append("/");
-			path_string.append(iter->name_);
-		}
-	}
-
-	//while(!iter.IsNull())
-
-	return path_string;
-}
-
-// initialize folder name
-// use ChangeSubFolderName() to change name. 
-int FolderType::SetName(string input_name) {
-	
-	// 최초 1회만 이름 변경하고 끝냄
-	if (name_ == "") {
-		name_ = input_name;
-		return 1;
-	}
-	else {
-		return 0;
-	}
-
-}
-
-// Set folder path using folder name and parent folder
-void FolderType::SetPath() {
-
-	// 부모 폴더 있으면 부모 폴더의 경로 복사
-	if (parent_folder_ != NULL) {
-		*path_ = *(parent_folder_->path_);
-	}
-	// 뒤에 현재 폴더 붙이기
-	path_->Add(this);
-
-}
-
-void FolderType::GenerateCreatedDate() {
-	// Declaring argument for time() 
-	time_t current_time;
-
-	// Declaring variable to store return value of 
-	// localtime() 
-	struct tm * current_tm;
-
-	// Applying time() 
-	time(&current_time);
-
-	// Using localtime() 
-	current_tm = localtime(&current_time);
-
-	// stream output
-	stringstream ss;
-	ss << setw(4) << current_tm->tm_year + 1900 << setfill('0') << setw(2)
-		<< current_tm->tm_mon + 1 << setfill('0') << setw(2) << current_tm->tm_mday << setfill('0') << setw(2) << current_tm->tm_hour << setfill('0') << setw(2)
-		<< current_tm->tm_min << setfill('0') << setw(2) << current_tm->tm_sec << "\0";
-	created_date_ = ss.str();  // copy the stream buffer to name 
-
-}
-
-// Set folder name from keyboard.
-void FolderType::SetNameFromKeyboard()
-{
-	cout << "\tName : ";
-	cin >> name_;
-}
-
-// Set folder record from keyboard.
-void FolderType::SetRecordFromKeyboard()
-{
-	SetNameFromKeyboard();
-}
-
 // copy and assgin parameter to this folder
 FolderType & FolderType::operator=(const FolderType & copied_data)
 {
@@ -112,10 +16,9 @@ FolderType & FolderType::operator=(const FolderType & copied_data)
 // Assign copy of parameter
 void FolderType::AssignCopy(const FolderType & copied_object)
 {
-	this->name_ = copied_object.name_;
-	this->created_date_ = copied_object.created_date_;
+	ItemType::AssignCopy(copied_object);
+
 	this->num_sub_folder_ = copied_object.num_sub_folder_;
-	this->parent_folder_ = copied_object.parent_folder_;
 
 	if (copied_object.num_sub_folder_ != 0) {
 		// 공간 생성하고 데이터 deep copy.
@@ -123,27 +26,15 @@ void FolderType::AssignCopy(const FolderType & copied_object)
 		*(this->sub_folder_list_) = *(copied_object.sub_folder_list_);
 	}
 
-	// path list deep copy
-	this->path_ = new DoublyLinkedList<FolderType*>;
-	*(this->path_) = *(copied_object.path_);	
 }
 
-// Returns whether this is less than comparing data.
-bool FolderType::operator<(const FolderType & comparing_data)
+// Set folder path using item name and parent folders
+void FolderType::SetPath()
 {
-	return (CompareByName(comparing_data) == LESS);
-}
+	ItemType::SetPath();
 
-// Returns whether this is equal to comparing data.
-bool FolderType::operator==(const FolderType & comparing_data)
-{
-	return (CompareByName(comparing_data) == EQUAL);
-}
-
-// Returns whether this is greater than comparing data.
-bool FolderType::operator>(const FolderType & comparing_data)
-{
-	return (CompareByName(comparing_data) == GREATER);
+	// 뒤에 현재 폴더 붙이기
+	path_.Add(this);
 }
 
 // add sub folder into sub folder list.
@@ -156,7 +47,9 @@ int FolderType::AddSubFolder() {
 		sub_folder_list_ = new SortedDoublyLinkedList<FolderType>;
 	}
 
-	new_folder.SetRecordFromKeyboard();
+	//new_folder.SetRecordFromKeyboard();
+	new_folder.SetAttributesFromKeyboard();
+
 	// 이름이 중복된 폴더면 생성 불가
 	if (IsDupliactedSubFolderExists(new_folder)) {
 		cout << "\tExisting folder name" << endl;
@@ -165,7 +58,6 @@ int FolderType::AddSubFolder() {
 
 
 	new_folder.parent_folder_ = this;  
-	new_folder.GenerateCreatedDate();
 	
 	// 리스트 안에 들어있는 생성한 폴더의 원본에 Path 설정
 	created_folder = sub_folder_list_->Add(new_folder);
@@ -211,17 +103,6 @@ bool FolderType::IsDupliactedSubFolderExists(FolderType folder_find)
 	}
 
 	return false;
-}
-
-// Compare two folder types.
-RelationType FolderType::CompareByName(const FolderType &data)
-{
-	if(this->name_.compare(data.name_) > 0)
-		return GREATER;
-	else if(this->name_.compare(data.name_) < 0)
-		return LESS;
-	else
-		return EQUAL;
 }
 
 int FolderType::DeleteSubFolder() {

@@ -43,7 +43,7 @@ public:
 	*/
 	DoublyLinkedList(const DoublyLinkedList<T>& copied_object)
 	{
-		AssignCopy();
+		AssignCopy(copied_object);
 	}
 
 	/**

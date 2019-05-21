@@ -1,29 +1,14 @@
 #ifndef _FOLDERTYPE_H
 #define _FOLDERTYPE_H
 
-#include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
-#include <stdexcept>
-#include <time.h>
-#include <iomanip>
-
-#include "SortedDoublyLinkedList.h"
-
+#include "ItemType.h"
 
 using namespace std;
 
 /**
-*	Relation between two items.
-*/
-enum RelationType {LESS, GREATER, EQUAL};
-
-
-/**
 *	folder information class.
 */
-class FolderType
+class FolderType : public ItemType
 {
 public:
 	/**
@@ -31,13 +16,9 @@ public:
 	*/
 	FolderType()
 	{
-		size_ = 0;
+		ItemType();
 		sub_folder_list_ = NULL;
 		num_sub_folder_ = 0;
-		name_ = "";
-		path_ = new DoublyLinkedList<FolderType*>;
-		GenerateCreatedDate();
-		parent_folder_ = NULL;
 	}
 
 	/**
@@ -45,27 +26,16 @@ public:
 	*/
 	~FolderType()	
 	{
+		ItemType::~ItemType();
 		if (num_sub_folder_ != 0) {
 			delete sub_folder_list_;
 		}
-		// delete path_;
 	}
 
 	/**
 	*    copy constructor
 	*/
 	FolderType(const FolderType &copied_data);
-
-	/**
-	*	@brief	Get folder size.
-	*	@pre	folder size is set.
-	*	@post	none.
-	*	@return	folder size.
-	*/
-	int GetSize() 
-	{
-		return size_;
-	}
 
 	/**
 	*	@brief	Get number of sub folders.
@@ -98,45 +68,11 @@ public:
 	}
 
 	/**
-	*	@brief	Get folder name.
-	*	@pre	folder name is set.
-	*	@post	none.
-	*	@return	folder name.
+	*	@brief	Set folder path using item name and parent folders
+	*	@pre	parent folder is set.
+	*	@post	folder path is set.
 	*/
-	string GetName()
-	{
-		return name_;
-	}
-
-	/**
-	*	@brief	Get folder path
-	*	@pre	folder path is set.
-	*	@post	none.
-	*	@return	folder path.
-	*/
-	DoublyLinkedList<FolderType*>* GetPath()
-	{
-		// return path_string_;
-		return path_;
-	}
-
-	/**
-	*	@brief	Get folder path to string type.
-	*	@pre	folder path is set.
-	*	@post	none.
-	*	@return	folder path string.
-	*/
-	string GetPathString();
-
-	/**
-	*	@brief	Get created date.
-	*	@pre	folder path is set.
-	*	@post	none.
-	*	@return	folder path.
-	*/
-	string GetCreatedDate() {
-		return created_date_;
-	}
+	virtual void SetPath() override;
 
 	/**
 	*	@brief	Returns wheter this folder is root folder.
@@ -149,156 +85,13 @@ public:
 	}
 
 	/**
-	*	@brief	Set folder name.
-	*	@pre	none.
-	*	@post	folder name is set.
-	*           name's position is sorted
-	*	@param	input_name	folder name.
-	*   @return return 1 if this function works well, otherwise 0.
-	*/
-	int SetName(string input_name);
-
-	/**
-	*	@brief	Set folder path using folder name and parent folder
-	*	@pre	parent folder is set.
-	*	@post	folder path is set.
-	*/
-	void SetPath();
-	
-	/**
-	*	@brief	Generate folder's created date.
-	*	@pre	none.
-	*	@post	folder's created date is set.
-	*/
-	void GenerateCreatedDate();
-
-	/**
-	*	@brief	Set folder record.
-	*	@pre	none.
-	*	@post	folder record is set.
-	*	@param	input_name	folder name.
-	*   @param  input_parent    input parent folder
-	*/
-	void SetRecord(string input_name, FolderType* input_parent)
-	{
-		SetName(input_name);
-		parent_folder_ = input_parent;
-		SetPath();
-		GenerateCreatedDate();
-	}
-
-	/**
-	*	@brief	Display folder size on screen.
-	*	@pre	folder size is set.
-	*	@post	folder size is on screen.
-	*/
-	void DisplaySizeOnScreen() {
-		cout << "\tFolder Size : " << size_ << endl;
-	}
-
-	/**
 	*	@brief	Display number of sub folders on screen.
 	*	@pre	num_sub_folder is set.
 	*	@post	number of sub folders is on screen.
 	*/
 	void DisplayNumOfSubFoldersOnScreen() {
-		cout << "\tNumber of Sub folders : " << size_ << endl;
+		cout << "\tNumber of Sub folders : " << num_sub_folder_ << endl;
 	}
-
-	/**
-	*	@brief	Display folder name on screen.
-	*	@pre	folder name is set.
-	*	@post	folder name is on screen.
-	*/
-	void DisplayNameOnScreen() 
-	{
-		cout << "\tName : " << name_ << endl; 
-	}
-
-	/**
-	*	@brief	Display folder path on screen.
-	*	@pre	folder path is set.
-	*	@post	folder path is on screen.
-	*/
-	void DisplayPathOnScreen() 
-	{
-		// cout << "\tPath : " << path_string_ << endl; 
-		cout << "\tPath : " << GetPathString() << endl;
-	}
-
-	/**
-	*	@brief	Display folder's created date on screen
-	*	@pre	folder's created time is set.
-	*	@post	folder's  is on screen.
-	*/
-	void DisplayCreatedDateOnScreen() {
-		cout << "\tCreated date : " << created_date_ << endl;
-	}
-
-	/**
-	*	@brief	Display an folder record on screen.
-	*	@pre	folder record is set.
-	*	@post	folder record is on screen.
-	*/
-	void DisplayInformationOnScreen()
-	{
-		DisplayNameOnScreen();
-		DisplayPathOnScreen();
-		DisplayCreatedDateOnScreen();
-	}
-
-	/**
-	*	@brief	Set folder name from keyboard.
-	*	@pre	none.
-	*	@post	folder name is set.
-	*/
-	void SetNameFromKeyboard();
-	
-	/**
-	*	@brief	Set folder record from keyboard.
-	*	@pre	none.
-	*	@post	folder record is set.
-	*/
-	void SetRecordFromKeyboard();
-
-	/**
-	*	@brief	Copy parameter folder and assign to this folder.
-	*	@pre	copied_data is set.
-	*	@post	folder record is set.
-	*   @param  copied_data    data to assign
-	*   @return retrun this after assigning parameter.
-	*/
-	FolderType& operator= (const FolderType& copied_data);
-	
-	/**
-	*	@brief	Returns whether this is less than comparing data.
-	*            primary key is name.
-	*	@pre	comparing_data is set.
-	*	@post	folder record is set.
-	*   @param  comparing_data    data to compare
-	*   @return retruns boolean expresses whether this is less than comparing data.
-	*/
-	bool operator< (const FolderType& comparing_data);
-
-	/**
-	*	@brief	Returns whether this is equal to comparing data
-	*			primary key is name.
-	*	@pre	comparing_data is set.
-	*	@post	folder record is set.
-	*   @param  comparing_data    data to compare
-	*   @return retruns boolean expresses whether whether this is equal to comparing data.
-	*/
-	bool operator== (const FolderType& comparing_data);
-
-	/**
-	*	@brief	Returns whether this is greater than comparing data.
-	*			primary key is name.
-	*	@pre	comparing_data is set.
-	*	@post	folder record is set.
-	*   @param  comparing_data    data to compare
-	*   @return retruns boolean expresses whether this is greater than comparing data.
-	*/
-	bool operator> (const FolderType& comparing_data);
 
 	/**
 	*	@brief	Add sub folder of this folder.
@@ -366,15 +159,18 @@ public:
 	*/
 	int WriteDataToFile(ofstream& fout);
 
-protected:
-	string name_;		///< folder name.
+	/**
+	*	@brief	Copy parameter folder and assign to this folder.
+	*	@pre	copied_data is set.
+	*	@post	folder record is set.
+	*   @param  copied_data    data to assign
+	*   @return retrun this after assigning parameter.
+	*/
+	FolderType& operator= (const FolderType& copied_data);
 
-	int size_;          ///< folder size.
+protected:
 	int num_sub_folder_;    ///< number of sub folders.
-	DoublyLinkedList<FolderType*>* path_;    ///< folder path list.
-	string created_date_;    ///< date that folder created.
 	SortedDoublyLinkedList<FolderType>* sub_folder_list_;   ///< sorted sub folder list
-	FolderType* parent_folder_;    ///< address of parent folder
 
 private:
 	/**
@@ -393,17 +189,6 @@ private:
 	*   @return retruns boolean expresses whether duplicated folder is exist.
 	*/
 	bool IsDupliactedSubFolderExists(FolderType folder_find);
-
-	/**
-	*	@brief	Compare two folders by folder name.
-	*	@pre	two folders should be initialized.
-	*	@post	none.
-	*	@param	data	target folder for comparing.
-	*	@return	return LESS if this.name < data.name,
-	*			return GREATER if this.name > data.name then,
-	*			otherwise return EQUAL.
-	*/
-	RelationType CompareByName(const FolderType &data);
 };
 
 #endif	// _FOLDERTYPE_H
