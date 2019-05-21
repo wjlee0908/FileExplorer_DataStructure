@@ -63,9 +63,7 @@ void FolderType::SetPath() {
 	}
 	// 뒤에 현재 폴더 붙이기
 	path_->Add(this);
-	
-	
-	cout << endl;
+
 }
 
 void FolderType::GenerateCreatedDate() {
@@ -94,8 +92,6 @@ void FolderType::GenerateCreatedDate() {
 // Set folder name from keyboard.
 void FolderType::SetNameFromKeyboard()
 {
-	string input_name;
-
 	cout << "\tName : ";
 	cin >> name_;
 }

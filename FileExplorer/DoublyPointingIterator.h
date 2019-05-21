@@ -56,7 +56,7 @@ public:
 	*	@brief	Get next data of the current pointer.
 	*	@pre	Iterator has been initialized.
 	*	@post	Current pointer is moved to the next node.
-	*	@return	Return next data of the list.
+	*	@return	Return next data of the list. if next is null, return current data.
 	*/
 	T Next();
 

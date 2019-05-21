@@ -80,11 +80,13 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="FolderType.cpp" />
+    <ClCompile Include="ItemType.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="CircularQueue.h" />
+    <ClInclude Include="ItemType.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="SortedArrayList.h" />
     <ClInclude Include="FolderType.h" />

@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include <time.h>
 #include <iomanip>
-#include "SortedDoublyLinkedList.h"
+
 #include "SortedDoublyLinkedList.h"
 
 
@@ -21,7 +21,7 @@ enum RelationType {LESS, GREATER, EQUAL};
 
 
 /**
-*	item information class.
+*	folder information class.
 */
 class FolderType
 {
