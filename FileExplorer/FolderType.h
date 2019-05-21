@@ -16,7 +16,7 @@ public:
 	*/
 	FolderType()
 	{
-		ItemType();
+		ItemType::ItemType();
 		sub_folder_list_ = NULL;
 		num_sub_folder_ = 0;
 	}
