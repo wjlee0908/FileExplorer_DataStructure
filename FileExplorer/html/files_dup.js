@@ -9,8 +9,16 @@ var files_dup =
       [ "DoublyPointingNode", "struct_doubly_pointing_node.html", "struct_doubly_pointing_node" ],
       [ "DoublyPointingIterator", "class_doubly_pointing_iterator.html", "class_doubly_pointing_iterator" ]
     ] ],
+    [ "FileType.cpp", "_file_type_8cpp.html", null ],
+    [ "FileType.h", "_file_type_8h.html", [
+      [ "FileType", "class_file_type.html", "class_file_type" ]
+    ] ],
     [ "FolderType.cpp", "_folder_type_8cpp.html", null ],
-    [ "FolderType.h", "_folder_type_8h.html", "_folder_type_8h" ],
+    [ "FolderType.h", "_folder_type_8h.html", [
+      [ "FolderType", "class_folder_type.html", "class_folder_type" ]
+    ] ],
+    [ "ItemType.cpp", "_item_type_8cpp.html", null ],
+    [ "ItemType.h", "_item_type_8h.html", "_item_type_8h" ],
     [ "LinkedList.h", "_linked_list_8h.html", [
       [ "ListNode", "struct_list_node.html", "struct_list_node" ],
       [ "LinkedList", "class_linked_list.html", "class_linked_list" ]

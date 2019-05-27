@@ -23,13 +23,13 @@ for the JavaScript code in this file
 */
 var NAVTREE =
 [
-  [ "Data Structure File Explorer", "index.html", [
+  [ "Data Structure ArrayList", "index.html", [
     [ "클래스", "annotated.html", [
       [ "클래스 목록", "annotated.html", "annotated_dup" ],
       [ "클래스 색인", "classes.html", null ],
       [ "클래스 계통도", "hierarchy.html", "hierarchy" ],
       [ "클래스 멤버", "functions.html", [
-        [ "모두", "functions.html", null ],
+        [ "모두", "functions.html", "functions_dup" ],
         [ "함수", "functions_func.html", null ],
         [ "변수", "functions_vars.html", null ],
         [ "관련된 함수들", "functions_rela.html", null ]
@@ -51,7 +51,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_application_8cpp.html",
-"class_stack.html"
+"class_item_type.html#aeaea10f9c0681b17f42eed1ac07f0637"
 ];
 
 var SYNCONMSG = '패널 동기화를 비활성화하기 위해 클릭하십시오';

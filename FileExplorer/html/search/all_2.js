@@ -7,8 +7,8 @@ var searchData=
   ['circularqueue_2eh',['CircularQueue.h',['../_circular_queue_8h.html',1,'']]],
   ['circularqueue_3c_20foldertype_20_2a_20_3e',['CircularQueue&lt; FolderType * &gt;',['../class_circular_queue.html',1,'']]],
   ['circulateindex',['CirculateIndex',['../class_circular_queue.html#a4a2332fd5bc3c44dc0fd785929041904',1,'CircularQueue']]],
-  ['comparebyname',['CompareByName',['../class_folder_type.html#aab56726074cad51d17c3fe415b285b6a',1,'FolderType']]],
-  ['created_5fdate_5f',['created_date_',['../class_folder_type.html#a62a5bdf9cc577edcc547d914c987d2a1',1,'FolderType']]],
+  ['comparebyname',['CompareByName',['../class_item_type.html#a4df7311ccd3d37fef83949a5e789069d',1,'ItemType']]],
+  ['created_5fdate_5f',['created_date_',['../class_item_type.html#a5a46b0c5218dcf98d6cdc6cadd0eea58',1,'ItemType']]],
   ['current_5ffolder_5f',['current_folder_',['../class_application.html#af25db880c18c0085aa0d913d29ab0a5b',1,'Application']]],
   ['current_5fiterator_5f',['current_iterator_',['../class_sorted_array_list.html#ac2b282c00ba46484b8352aae5ce45480',1,'SortedArrayList']]],
   ['current_5fnode_5f',['current_node_',['../class_doubly_pointing_iterator.html#a4156bd6bb70ddefc293b2317beec0ed8',1,'DoublyPointingIterator']]]

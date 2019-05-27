@@ -125,10 +125,10 @@ public:
 	}
 
 	/**
-*	@brief	Display item name on screen.
-*	@pre	item name is set.
-*	@post	item name is on screen.
-*/
+	*	@brief	Display item name on screen.
+	*	@pre	item name is set.
+	*	@post	item name is on screen.
+	*/
 	void DisplayNameOnScreen()
 	{
 		cout << "\tName : " << name_ << endl;

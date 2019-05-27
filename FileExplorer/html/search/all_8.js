@@ -10,8 +10,11 @@ var searchData=
   ['isempty',['IsEmpty',['../class_circular_queue.html#a7c60d48843af75672fb527ca5924c1e9',1,'CircularQueue::IsEmpty()'],['../class_doubly_linked_list.html#ac3bcf63995510b59c25187c78f9d8e3a',1,'DoublyLinkedList::IsEmpty()'],['../class_linked_list.html#ab96a870fddcb3ccabe16817e48aef52a',1,'LinkedList::IsEmpty()'],['../class_stack.html#a40f94bc9a3d5c100f3b5616015c097f6',1,'Stack::IsEmpty()']]],
   ['isfull',['IsFull',['../class_circular_queue.html#a84020efa4beff40e30aceef88eab2118',1,'CircularQueue::IsFull()'],['../class_doubly_linked_list.html#ad1637fc3e9a6fa7b91854af4713d261b',1,'DoublyLinkedList::IsFull()'],['../class_sorted_array_list.html#af8b5b9347fe7a1e33506fc2500f13d6f',1,'SortedArrayList::IsFull()'],['../class_stack.html#a19c1f92a202d234cd4886d987a73d1d6',1,'Stack::IsFull()']]],
   ['isnextnull',['IsNextNull',['../class_doubly_pointing_iterator.html#ae1a8304788d9d6c16b7874645e0411a2',1,'DoublyPointingIterator']]],
-  ['isnull',['IsNull',['../class_doubly_pointing_iterator.html#a9d16341ed46a106035023aede749be53',1,'DoublyPointingIterator']]],
+  ['isnull',['IsNull',['../class_doubly_pointing_iterator.html#af130c70b8471d29639d23b6da449b08e',1,'DoublyPointingIterator']]],
   ['isrootfolder',['IsRootFolder',['../class_folder_type.html#a1c5eb95d123c4ed7c3b9538010f682ce',1,'FolderType']]],
   ['items_5f',['items_',['../class_circular_queue.html#aebe57492b3cbb84ed3dfa6cb8185ba1a',1,'CircularQueue::items_()'],['../class_stack.html#a43565fa64c67ff07e17a7f1d2d8d483b',1,'Stack::items_()']]],
+  ['itemtype',['ItemType',['../class_item_type.html',1,'ItemType'],['../class_item_type.html#a518a594c5e8dd2cf2a6ee6208d6d5279',1,'ItemType::ItemType()'],['../class_item_type.html#a61aae5aa1a08a4fc49672b7a03ae46d4',1,'ItemType::ItemType(const ItemType &amp;coplied_data)']]],
+  ['itemtype_2ecpp',['ItemType.cpp',['../_item_type_8cpp.html',1,'']]],
+  ['itemtype_2eh',['ItemType.h',['../_item_type_8h.html',1,'']]],
   ['iterator_5f',['iterator_',['../class_linked_list.html#a34ff73c7b15c00750fe517cb34ebb323',1,'LinkedList']]]
 ];

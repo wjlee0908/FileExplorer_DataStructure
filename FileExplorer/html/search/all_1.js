@@ -6,5 +6,5 @@ var searchData=
   ['application',['Application',['../class_application.html',1,'Application'],['../class_application.html#afa8cc05ce6b6092be5ecdfdae44e05f8',1,'Application::Application()']]],
   ['application_2ecpp',['Application.cpp',['../_application_8cpp.html',1,'']]],
   ['application_2eh',['Application.h',['../_application_8h.html',1,'']]],
-  ['assigncopy',['AssignCopy',['../class_circular_queue.html#a3de2a5850fd8796ed6c7446783ed3a22',1,'CircularQueue::AssignCopy()'],['../class_doubly_linked_list.html#a87111f765dadfdbfceb6cd3e2aadf5c8',1,'DoublyLinkedList::AssignCopy()'],['../class_folder_type.html#a951365abbf837198a9a49d08cb75c31c',1,'FolderType::AssignCopy()'],['../class_linked_list.html#aa5e764c6fb9b27b64232b333dadd21e9',1,'LinkedList::AssignCopy()']]]
+  ['assigncopy',['AssignCopy',['../class_circular_queue.html#a3de2a5850fd8796ed6c7446783ed3a22',1,'CircularQueue::AssignCopy()'],['../class_doubly_linked_list.html#a87111f765dadfdbfceb6cd3e2aadf5c8',1,'DoublyLinkedList::AssignCopy()'],['../class_folder_type.html#a951365abbf837198a9a49d08cb75c31c',1,'FolderType::AssignCopy()'],['../class_item_type.html#a372ee8f24f8be40422dc0e42711f936b',1,'ItemType::AssignCopy()'],['../class_linked_list.html#aa5e764c6fb9b27b64232b333dadd21e9',1,'LinkedList::AssignCopy()']]]
 ];

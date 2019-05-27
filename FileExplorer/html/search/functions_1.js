@@ -5,5 +5,5 @@ var searchData=
   ['changesubfoldername',['ChangeSubFolderName',['../class_folder_type.html#ae556c8f5b8f30d4c420a5e0292c7b759',1,'FolderType']]],
   ['circularqueue',['CircularQueue',['../class_circular_queue.html#afb497745b3a1e472ec670345328301a3',1,'CircularQueue::CircularQueue()'],['../class_circular_queue.html#a4be46542617b0d74768fb695534aa040',1,'CircularQueue::CircularQueue(int size)'],['../class_circular_queue.html#aeb0d17bcec6633306200d6bbd5375702',1,'CircularQueue::CircularQueue(const CircularQueue&lt; T &gt; &amp;copied_object)']]],
   ['circulateindex',['CirculateIndex',['../class_circular_queue.html#a4a2332fd5bc3c44dc0fd785929041904',1,'CircularQueue']]],
-  ['comparebyname',['CompareByName',['../class_folder_type.html#aab56726074cad51d17c3fe415b285b6a',1,'FolderType']]]
+  ['comparebyname',['CompareByName',['../class_item_type.html#a4df7311ccd3d37fef83949a5e789069d',1,'ItemType']]]
 ];

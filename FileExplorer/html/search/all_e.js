@@ -4,7 +4,7 @@ var searchData=
   ['rear_5f',['rear_',['../class_circular_queue.html#a723ce2793992bcc4568337bd1c3050ce',1,'CircularQueue']]],
   ['recent_5ffolders_5f',['recent_folders_',['../class_application.html#a6bfe5e048782b0472441c0a7bfeecb53',1,'Application']]],
   ['recent_5fsize',['RECENT_SIZE',['../_application_8h.html#a203c12cc5aca0498173c9c2b70bcb054',1,'Application.h']]],
-  ['relationtype',['RelationType',['../_folder_type_8h.html#afe9640666d0d789fef4ba0b6a02f6b4a',1,'FolderType.h']]],
+  ['relationtype',['RelationType',['../_item_type_8h.html#afe9640666d0d789fef4ba0b6a02f6b4a',1,'ItemType.h']]],
   ['replace',['Replace',['../class_doubly_linked_list.html#a4d7e6b6020b6fdf4e9365127768770ce',1,'DoublyLinkedList::Replace()'],['../class_linked_list.html#a3ccbb034e269365c29362bbcdb41be23',1,'LinkedList::Replace()'],['../class_sorted_array_list.html#a5f0d7ab41c0928e1aef68f3ba6250fc9',1,'SortedArrayList::Replace()']]],
   ['resetiterator',['ResetIterator',['../class_linked_list.html#a0bd64162ed5ded876f1a42a346b54b4d',1,'LinkedList']]],
   ['resetlist',['ResetList',['../class_sorted_array_list.html#a616f55b1d492448bc008a500b62c81be',1,'SortedArrayList']]],

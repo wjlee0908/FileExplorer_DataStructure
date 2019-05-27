@@ -7,18 +7,21 @@ var hierarchy =
       [ "SortedDoublyLinkedList< T >", "class_sorted_doubly_linked_list.html", null ]
     ] ],
     [ "DoublyLinkedList< FolderType * >", "class_doubly_linked_list.html", null ],
-    [ "DoublyLinkedList< FolderType >", "class_doubly_linked_list.html", [
-      [ "SortedDoublyLinkedList< FolderType >", "class_sorted_doubly_linked_list.html", null ]
+    [ "DoublyLinkedList< ItemType * >", "class_doubly_linked_list.html", [
+      [ "SortedDoublyLinkedList< ItemType * >", "class_sorted_doubly_linked_list.html", null ]
     ] ],
     [ "DoublyPointingIterator< T >", "class_doubly_pointing_iterator.html", null ],
     [ "DoublyPointingNode< T >", "struct_doubly_pointing_node.html", null ],
     [ "DoublyPointingNode< FolderType * >", "struct_doubly_pointing_node.html", null ],
-    [ "DoublyPointingNode< FolderType >", "struct_doubly_pointing_node.html", null ],
+    [ "DoublyPointingNode< ItemType * >", "struct_doubly_pointing_node.html", null ],
     [ "ExceptionEmptyQueue", "class_exception_empty_queue.html", null ],
     [ "ExceptionEmptyStack", "class_exception_empty_stack.html", null ],
     [ "ExceptionFullQueue", "class_exception_full_queue.html", null ],
     [ "ExceptionFullStack", "class_exception_full_stack.html", null ],
-    [ "FolderType", "class_folder_type.html", null ],
+    [ "ItemType", "class_item_type.html", [
+      [ "FileType", "class_file_type.html", null ],
+      [ "FolderType", "class_folder_type.html", null ]
+    ] ],
     [ "LinkedList< T >", "class_linked_list.html", [
       [ "SortedLinkedList< T >", "class_sorted_linked_list.html", null ]
     ] ],
