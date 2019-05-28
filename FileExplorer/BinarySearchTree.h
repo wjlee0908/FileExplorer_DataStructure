@@ -60,7 +60,7 @@ public:
 	*   @param  data    추가할 data
 	*	@post	Tree에 새 node가 추가됨
 	*/
-	void Add(T data);
+	void Insert(T value);
 
 	/**
 	*	@brief	Tree에서 지우고자 하는 node를 찾고 지움
@@ -68,14 +68,15 @@ public:
 	*   @param  data  지울 데이터
 	*	@post	Tree에서 입력한 node가 삭제됨
 	*/
-	void DeleteItem(T data);
+	void Remove(T data);
 
 	/**
 	*	@brief	입력한 값의 node를 Tree에서 검색함
-	*	@pre	찾고자 하는 data과 검색결과에 대한 found 설정
+	*	@pre	찾고자 하는 data 설정
 	*	@post	node가 Tree에 있는지 검색결과를 알려줌
+	*   @retrun 노드를 찾으면 true를 반환
 	*/
-	void RetrieveItem(T& data, bool &found)const;
+	bool Search(T& data) const;
 
 	/**
 	*	@brief	Tree의 node를 스크린에 출력한다.
@@ -197,23 +198,24 @@ int BinarySearchTree<T>::GetLength()const
 
 // Tree에 새로운 node 추가
 template<typename T>
-void BinarySearchTree<T>::Add(T data)
+void BinarySearchTree<T>::Insert(T value)
 {
-	Insert(root, data);					// 새 node 추가하는 함수 호출
+	Insert(root, value);    // root node tree에 추가
 }
 
 // Tree의 node를 지움
 template<typename T>
-void BinarySearchTree<T>::DeleteItem(T data)
+void BinarySearchTree<T>::Remove(T data)
 {
-	Delete(root, data);					// 존재하는 node 삭제하는 함수를 호출
+	Remove(root, data);					// 존재하는 node 삭제하는 함수를 호출
 }
 
 // Tree에서 찾고자 하는 값의 node를 검색
 template<typename T>
-void BinarySearchTree<T>::RetrieveItem(T& data, bool &found)const
+bool BinarySearchTree<T>::Search(T& data) const
 {
-	Retrieve(root, data, found);		// Tree 검색 함수 호출
+	bool is_found = Search(root, data);
+	return is_found;
 }
 
 // Tree의 node를 각각의 방법대로 출력함
