@@ -10,7 +10,7 @@
 #include <time.h>
 #include <iomanip>
 
-#include "DoublyLinkedList.h"
+#include "SortedDoublyLinkedList.h"
 
 using namespace std;
 

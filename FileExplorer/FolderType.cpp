@@ -22,12 +22,8 @@ void FolderType::AssignCopy(const FolderType & copied_object)
 
 	if (copied_object.num_sub_folder_ != 0) {
 		// 공간 생성하고 데이터 deep copy.
-		this->sub_folder_list_ = new BinarySearchTree<FolderType>;
-		*(this->sub_folder_list_) = *(copied_object.sub_folder_list_);
-	}
-	if (copied_object.file_list_ != nullptr) {
-		this->file_list_ = new BinarySearchTree<FileType>;
-		*(this->file_list_) = *(copied_object.file_list_);
+		this->sub_item_list_ = new SortedDoublyLinkedList<ItemType*>;
+		*(this->sub_item_list_) = *(copied_object.sub_item_list_);
 	}
 
 }
@@ -44,11 +40,11 @@ void FolderType::SetPath()
 // add sub folder into sub folder list.
 int FolderType::AddSubFolder() {
 	FolderType* new_folder = new FolderType;
-	FolderType created_folder;
+	FolderType* created_folder;
 	string new_folder_path;
 
 	if (num_sub_folder_ == 0) {
-		sub_folder_list_ = new BinarySearchTree<FolderType>;
+		sub_item_list_ = new SortedDoublyLinkedList<ItemType*>;
 	}
 
 	//new_folder.SetRecordFromKeyboard();
@@ -64,11 +60,10 @@ int FolderType::AddSubFolder() {
 	new_folder->parent_folder_ = this;  
 	
 	// 리스트 안에 들어있는 생성한 폴더의 원본에 Path 설정
-	sub_folder_list_->Insert(*new_folder);
-	bool is_found = sub_folder_list_->Search(created_folder);
-	if (is_found) {
+	created_folder = (FolderType*)(sub_item_list_->Add(new_folder));
+	if (created_folder != NULL) {
 		num_sub_folder_++;
-		created_folder.SetPath();
+		created_folder->SetPath();
 	}
 
 	return 1;
@@ -104,8 +99,9 @@ bool FolderType::IsDupliactedSubFolderExists(FolderType folder_find)
 	FolderType find_result = folder_find;
 
 	// 중복 검사
-	if (sub_folder_list_ != NULL) {
-		if (sub_folder_list_->Search(folder_find) == true) {
+	if (sub_item_list_ != NULL) {
+
+		if (sub_item_list_->Get((ItemType*)&find_result) == 1) {
 			return true;
 		}
 	}
@@ -113,24 +109,21 @@ bool FolderType::IsDupliactedSubFolderExists(FolderType folder_find)
 	return false;
 }
 
-// 하위 폴더 제거
 int FolderType::DeleteSubFolder() {
 	FolderType deleting_folder;
-	bool is_folder_exist = false;
+	int is_delete_suceed = 0;
 
 	deleting_folder.SetNameFromKeyboard();
-	// 삭제할 폴더 있는지 탐색
-	is_folder_exist = sub_folder_list_->Search(deleting_folder);
+	is_delete_suceed = sub_item_list_->Delete(&deleting_folder);
 
-	if (sub_folder_list_->Search(deleting_folder) == true) {
-		sub_folder_list_->Remove(deleting_folder);
+	if (is_delete_suceed != 0)
+	{
 		cout << "<========DELETE SUCCESS !===========>" << endl;
 		num_sub_folder_--;
 		return 1;
 	}
-	else {
-		cout << "<========DELETE FAIL !=======>" << endl;
-	}
+
+	cout << "<========DELETE FAIL !=======>" << endl;
 
 	return 0;
 }
@@ -138,29 +131,27 @@ int FolderType::DeleteSubFolder() {
 // Change sub folder name and rearrange it in the list
 int FolderType::ChangeSubFolderName()
 {
-	FolderType folder_change;
-	bool is_found = false;    // 이름 바꿀 폴더를 찾았는지 저장
+	FolderType* folder_change;    // folder to change name
+	FolderType changed_folder;    // folder that its name changed.
 
 	// 바꿀 폴더 찾기
 	cout << "\tinput name of folder to change" << endl;
-	folder_change.SetNameFromKeyboard();
-	is_found = sub_folder_list_->Search(folder_change);
+	folder_change = GetSubFolder();
 
-	// 바꿀 폴더 없으면 에러 메세지 출력하고 종료
-	if (!is_found) {
-		cout << "\tfolder not found!" << endl;
+	if (folder_change == NULL) {
+		cout << "\tfolder not found" << endl;
 		return 0;
 	}
 
 	// 바꿀 폴더 이름 바꾸기
-	folder_change = sub_folder_list_->Get(folder_change);    // 실제 바꿀 폴더 데이터를 Get
-	sub_folder_list_->Remove(folder_change);    // 정렬을 위해 리스트에서 제거하고
+	changed_folder = (*folder_change);
 	cout << "\tinput name to change" << endl;
-	folder_change.SetNameFromKeyboard();
-	sub_folder_list_->Insert(folder_change);	// 다시 삽입
+	changed_folder.SetNameFromKeyboard();
 
-	return 1;
-} 
+	sub_item_list_->ChangeItemKey(folder_change, &changed_folder);
+
+	return 0;
+}
 
 // Get sub folder by name
 FolderType* FolderType::GetSubFolder() {
@@ -168,7 +159,7 @@ FolderType* FolderType::GetSubFolder() {
 	bool is_found;
 
 	finding_folder.SetNameFromKeyboard();
-	is_found = sub_folder_list_->Get((ItemType*)&finding_folder);
+	is_found = sub_item_list_->Get((ItemType*)&finding_folder);
 
 	if (!is_found) {
 		return nullptr;
@@ -185,7 +176,7 @@ int FolderType::RetrieveFolderByName() {
 	retrieving_folder.SetNameFromKeyboard(); //name을 입력받는다.
 
 	// 리스트 순차 탐색
-	DoublyPointingIterator<ItemType*> iter(*sub_folder_list_);    // 서브 폴더들 탐색할 iterator
+	DoublyPointingIterator<ItemType*> iter(*sub_item_list_);    // 서브 폴더들 탐색할 iterator
 	for (iter.First(); !iter.IsNull(); iter.Next()) {
 		// 이름 확인
 		if ((*iter).GetName().find(retrieving_folder.GetName()) != string::npos) {
@@ -208,7 +199,7 @@ void FolderType::DisplayAllSubFolders() {
 
 	cout << "\n\tSub Folder list" << endl;
 	// 리스트의 끝까지 displayed_folder에 할당
-	DoublyPointingIterator<ItemType*> iter(*sub_folder_list_);
+	DoublyPointingIterator<ItemType*> iter(*sub_item_list_);
 	for (iter.First(); !iter.IsNull(); iter.Next()) {
 		(*iter)->DisplayNameOnScreen();
 	}
