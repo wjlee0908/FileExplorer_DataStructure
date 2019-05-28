@@ -5,8 +5,9 @@ ItemType::~ItemType()
 {
 }
 
-ItemType::ItemType(const ItemType & coplied_data)
+ItemType::ItemType(const ItemType & copied_data)
 {
+	AssignCopy(copied_data);
 }
 
 // Get item path by string type
@@ -19,7 +20,7 @@ string ItemType::GetPathString()
 		return path_string;
 	}
 
-	TreeIterator<FolderType*> iter(path_);    // path 탐색할 iterator
+	DoublyPointingIterator<FolderType*> iter(path_);    // path 탐색할 iterator
 	for (iter.First(); !iter.IsNull(); iter.Next()) {
 		// 루트 폴더는 이름만 append
 		if (iter->parent_folder_ == NULL) {
@@ -108,4 +109,10 @@ void ItemType::GenerateCreatedDate()
 		<< current_tm->tm_mon + 1 << setfill('0') << setw(2) << current_tm->tm_mday << setfill('0') << setw(2) << current_tm->tm_hour << setfill('0') << setw(2)
 		<< current_tm->tm_min << setfill('0') << setw(2) << current_tm->tm_sec << "\0";
 	created_date_ = ss.str();  // copy the stream buffer to name 
+}
+
+ostream & operator<<(ostream & os, const ItemType & item)
+{
+	os << "\tName : " << item.name_ << endl;
+	return os;
 }

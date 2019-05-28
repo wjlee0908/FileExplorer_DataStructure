@@ -20,12 +20,18 @@ void FolderType::AssignCopy(const FolderType & copied_object)
 
 	this->num_sub_folder_ = copied_object.num_sub_folder_;
 
-	if (copied_object.num_sub_folder_ != 0) {
+	if (copied_object.num_sub_folder_ == 0) {
+		this->sub_folder_list_ = nullptr;
+	}
+	else {
 		// 공간 생성하고 데이터 deep copy.
 		this->sub_folder_list_ = new BinarySearchTree<FolderType>;
 		*(this->sub_folder_list_) = *(copied_object.sub_folder_list_);
 	}
-	if (copied_object.file_list_ != nullptr) {
+	if (copied_object.file_list_ == nullptr) {
+		this->file_list_ = nullptr;
+	}
+	else {
 		this->file_list_ = new BinarySearchTree<FileType>;
 		*(this->file_list_) = *(copied_object.file_list_);
 	}
@@ -44,14 +50,13 @@ void FolderType::SetPath()
 // add sub folder into sub folder list.
 int FolderType::AddSubFolder() {
 	FolderType* new_folder = new FolderType;
-	FolderType created_folder;
+	FolderType* created_folder;
 	string new_folder_path;
 
 	if (num_sub_folder_ == 0) {
 		sub_folder_list_ = new BinarySearchTree<FolderType>;
 	}
 
-	//new_folder.SetRecordFromKeyboard();
 	new_folder->SetAttributesFromKeyboard();
 
 	// 이름이 중복된 폴더면 생성 불가
@@ -60,16 +65,13 @@ int FolderType::AddSubFolder() {
 		return 0;
 	}
 
-
 	new_folder->parent_folder_ = this;  
-	
-	// 리스트 안에 들어있는 생성한 폴더의 원본에 Path 설정
 	sub_folder_list_->Insert(*new_folder);
-	bool is_found = sub_folder_list_->Search(created_folder);
-	if (is_found) {
-		num_sub_folder_++;
-		created_folder.SetPath();
-	}
+
+	// 리스트 안에 들어있는 생성한 폴더의 원본에 Path 설정
+	created_folder = sub_folder_list_->GetItemAdderess(*new_folder);
+	num_sub_folder_++;
+	created_folder->SetPath();
 
 	return 1;
 }

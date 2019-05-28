@@ -113,7 +113,7 @@ public:
 	*	@post	node가 Tree에 있는지 검색결과를 알려줌
 	*   @retrun 노드를 찾으면 true를 반환
 	*/
-	bool Search(T& data) const;
+	bool Search(T& data);
 
 	/**
 	*	@brief	Tree의 node를 스크린에 출력한다.
@@ -122,7 +122,7 @@ public:
 	*   @param  order    순회 방법(출력 순서) 지정
 	*	@post	스크린에 Tree가 InOrder, PreOrder, PostOrder 방법으로 각각 출력됨.
 	*/
-	void Print(ostream &os, TraversalMode order) const;
+	void Print(ostream &os, TraversalMode order);
 
 	/**
 	*	@brief	Copy parameter tree and assign to this tree.
@@ -243,7 +243,7 @@ private:
 	*	@post	None.
 	*   @return 복사 완료된 tree 반환
 	*/
-	Node<T>* Copy(Node<T>* tree, const Node<T>& copied_tree);
+	Node<T>* Copy(Node<T>* tree, const Node<T>* copied_tree);
 
 	Node<T>* root_;		// Node 타입의 root
 };
@@ -324,7 +324,7 @@ T BinarySearchTree<T>::Get(T key)
 	T found_item;
 	Node<T>* found_node;
 
-	found_node = Search(root, data);
+	found_node = Search(root_, key);
 
 	if (found_node == nullptr) {
 		throw invalid_argument("Get(): key not found");
@@ -341,11 +341,11 @@ T * BinarySearchTree<T>::GetItemAdderess(T key)
 	T found_item;
 	Node<T>* found_node;
 
-	found_node = Search(root, data);
+	found_node = Search(root_, key);
 
 	if (found_node == nullptr) {
 		throw invalid_argument("GetAddress(): key not found");
-		return key;
+		return nullptr;
 	}
 	else {
 		return &(found_node->data);
@@ -354,9 +354,10 @@ T * BinarySearchTree<T>::GetItemAdderess(T key)
 
 // Tree에서 찾고자 하는 값의 node를 검색
 template<typename T>
-bool BinarySearchTree<T>::Search(T& data) const
+bool BinarySearchTree<T>::Search(T& data)
 {
-	Node<T>* found_node = Search(root_, data);
+	Node<T>* found_node;
+	found_node = Search(root_, data);
 	if (found_node != nullptr) {
 		data = found_node->data;
 		return true;
@@ -368,7 +369,7 @@ bool BinarySearchTree<T>::Search(T& data) const
 
 // Tree의 node를 스크린에 출력한다.
 template<typename T>
-void BinarySearchTree<T>::Print(ostream & os, TraversalMode order) const
+void BinarySearchTree<T>::Print(ostream & os, TraversalMode order)
 {
 	switch (order)
 	{
@@ -390,8 +391,8 @@ void BinarySearchTree<T>::Print(ostream & os, TraversalMode order) const
 template<typename T>
 BinarySearchTree<T>& BinarySearchTree<T>::operator=(const BinarySearchTree<T>& copied_data)
 {
-	AssignCopy();
-	return (*this)
+	AssignCopy(copied_data);
+	return (*this);
 }
 
 // Copy parameter tree and assign to this tree. (deep copy)
@@ -399,7 +400,7 @@ template<typename T>
 void BinarySearchTree<T>::AssignCopy(const BinarySearchTree<T>& copied_object)
 {
 	DestroyTree(root_);    // 기존 데이터 삭제
-	Copy(root_, copied_object);    // 복사
+	Copy(root_, copied_object.root_);    // 복사
 }
 
 // tree 하위에 새 노드 추가
@@ -473,7 +474,7 @@ Node<T>* BinarySearchTree<T>::FindMax(Node<T>* tree)
 	if (tree->right == nullptr) {
 		return tree;
 	}
-	return FindMax(tree->right)
+	return FindMax(tree->right);
 }
 
 // 최댓값 노드를 입력받아 tree에서 제거하고 다시 순서에 맞게 연결함
@@ -564,7 +565,7 @@ void BinarySearchTree<T>::PrintPreOrderTraversal(Node<T>* tree, ostream & os)
 {
 	if (tree != NULL)								// root가 존재하는 경우
 	{
-		out << tree->data;							// root 출력
+		os << tree->data;							// root 출력
 		PrintInOrderTraversal(tree->left, os);		// root의 왼쪽으로 가서 다시 InOrder 함수 호출
 		PrintInOrderTraversal(tree->right, os);	// root의 오른쪽으로 가서 다시 InOrder 함수 호출
 	}
@@ -578,13 +579,13 @@ void BinarySearchTree<T>::PrintPostOrderTraversal(Node<T>* tree, ostream & os)
 	{
 		PrintInOrderTraversal(tree->left, os);		// root의 왼쪽으로 가서 다시 InOrder 함수 호출
 		PrintInOrderTraversal(tree->right, os);	// root의 오른쪽으로 가서 다시 InOrder 함수 호출
-		out << tree->data;							// root 출력
+		os << tree->data;							// root 출력
 	}
 }
 
 // 트리를 재귀적으로 복사
 template<typename T>
-Node<T>* BinarySearchTree<T>::Copy(Node<T>* tree, const Node<T>& copied_tree)
+Node<T>* BinarySearchTree<T>::Copy(Node<T>* tree, const Node<T>* copied_tree)
 {
 	// 복사할 데이터 없으면 null 반환 후 재귀 종료
 	if (copied_tree == nullptr) {
@@ -595,13 +596,12 @@ Node<T>* BinarySearchTree<T>::Copy(Node<T>* tree, const Node<T>& copied_tree)
 		Node<T>* new_tree = new Node<T>;
 		new_tree->left = nullptr;
 		new_tree->right = nullptr;
-		new_tree->data = copied_tree.data;    // 데이터 복사
-		tree->left = Copy(tree->left, copied_tree);
+		new_tree->data = copied_tree->data;    // 데이터 복사
 	}
 
 	// 왼쪽 서브트리, 오른쪽 서브트리에 복사된 트리 붙이고 재귀적으로 반복
-	tree->left = Copy(tree->left, copied_tree.left);
-	tree->right = Copy(tree->right, copied_tree.right);
+	tree->left = Copy(tree->left, copied_tree->left);
+	tree->right = Copy(tree->right, copied_tree->right);
 
 	return tree;
 }

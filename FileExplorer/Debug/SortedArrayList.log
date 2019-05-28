@@ -1,12 +1,4 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: 중간 디렉터리(Debug\)에 다른 프로젝트(SortedArrayList.vcxproj)에서 공유하는 파일이 포함되어 있습니다.  이로 인해 잘못된 정리 및 다시 빌드 동작이 수행될 수 있습니다.
   FolderType.cpp
-c:\users\user\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\foldertype.cpp(104): error C2664: 'bool DoublyLinkedList<T>::Get(T &)': 인수 1을(를) 'ItemType *'에서 'T &'(으)로 변환할 수 없습니다.
-          with
-          [
-              T=ItemType *
-          ]
-c:\users\user\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\foldertype.cpp(162): error C2664: 'bool DoublyLinkedList<T>::Get(T &)': 인수 1을(를) 'ItemType *'에서 'T &'(으)로 변환할 수 없습니다.
-          with
-          [
-              T=ItemType *
-          ]
+c:\users\user\source\repos\wjlee0908\fileexplorer_datastructure\fileexplorer\binarysearchtree.h(497): warning C4715: 'BinarySearchTree<FolderType>::RemoveMaxNode': 모든 제어 경로에서 값을 반환하지는 않습니다.
+  SortedArrayList.vcxproj -> C:\Users\User\source\repos\wjlee0908\FileExplorer_DataStructure\FileExplorer\Debug\FileExplorer.exe

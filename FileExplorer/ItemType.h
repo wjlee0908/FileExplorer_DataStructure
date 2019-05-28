@@ -44,7 +44,7 @@ public:
 	/**
 	*    copy constructor
 	**/
-	ItemType(const ItemType &coplied_data);
+	ItemType(const ItemType &copied_data);
 
 	/**
 	*	@brief	Get Item name.
@@ -258,6 +258,16 @@ public:
 	*   @return retruns boolean expresses whether this is greater than comparing data.
 	*/
 	bool operator> (const FolderType*& comparing_data) { return (CompareByName(*comparing_data) == GREATER); }
+
+	/**
+	*	@brief	output stream 출력 함수 오버로딩
+	*	@pre	item is set.
+	*	@post	item name is printed in stream.
+	*   @param  os    output stream
+	*   @param  item  item to print
+	*   @return retruns output stream
+	*/
+	friend ostream& operator<<(ostream& os, const ItemType& item);
 
 protected:
 	/**
