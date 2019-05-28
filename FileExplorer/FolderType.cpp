@@ -151,7 +151,7 @@ int FolderType::ChangeSubFolderName()
 		cout << "\tfolder not found!" << endl;
 		return 0;
 	}
-
+	 
 	// 바꿀 폴더 이름 바꾸기
 	folder_change = sub_folder_list_->Get(folder_change);    // 실제 바꿀 폴더 데이터를 Get
 	sub_folder_list_->Remove(folder_change);    // 정렬을 위해 리스트에서 제거하고
