@@ -2,6 +2,7 @@
 #define _BINARY_SEARCH_TREE_H
 
 #include <iostream>
+#include <exception>
 using namespace std;
 
 /**
@@ -25,8 +26,14 @@ class BinarySearchTree
 public:
 	// 생성자
 	BinarySearchTree();
+
+	// 복사 생성자
+	BinarySearchTree(const BinarySearchTree<T>& copied_object) {
+		AssignCopy();
+	}
+
 	// 소멸자
-	~BinarySearchTree() { }
+	~BinarySearchTree();
 
 	/**
 	*	@brief	Tree가 Empty인지 확인
@@ -76,6 +83,15 @@ public:
 	void Remove(T data);
 
 	/**
+	*	@brief	Tree에서 primary key가 일치하는 아이템을 찾아 반환
+	*	@pre	Tree가 초기화되어 있어야 함
+	*   @param  key  찾을 primary key
+	*	@post	None
+	*   @return primary key가 일치하는 트리의 노드 데이터를 반환
+	*/
+	T Get(T key);
+
+	/**
 	*	@brief	입력한 값의 node를 Tree에서 검색함
 	*	@pre	찾고자 하는 data 설정
 	*	@post	node가 Tree에 있는지 검색결과를 알려줌
@@ -92,14 +108,31 @@ public:
 	*/
 	void Print(ostream &os, TraversalMode order) const;
 
+	/**
+	*	@brief	Copy parameter tree and assign to this tree.
+	*	@pre	copied_data is set.
+	*	@post	this tree is set.
+	*   @param  copied_data    data to assign
+	*   @return retrun this after assigning parameter.
+	*/
+	BinarySearchTree<T>& operator= (const BinarySearchTree<T>& copied_data);
+
 private:
+	/**
+	*	@brief	Copy parameter tree and assign to this tree. (deep copy)
+	*	@pre	copied_object is set.
+	*	@post	this tree is set.
+	*   @param  copied_object    object to assign
+	*/
+	void AssignCopy(const BinarySearchTree<T>& copied_object);
+
 	/**
 	*	@brief	tree 노드 뒤에 새 노드 삽입
 	*	@pre	삽입할 tree와 value가 초기화되어 있어야 함
 	*   @param  tree    이어 붙일 대상 트리
 	*   @param  key   삽입할 데이터
 	*	@post	Tree에 새 node가 추가됨
-	*   @return 추가한 노드의 포인터
+	*   @return 노드 추가된 트리
 	*/
 	Node<T>* Insert(Node<T>* tree, T key);
 
@@ -146,7 +179,7 @@ private:
 	*   @param  tree 노드 제거할 대상 트리(혹은 서브트리)
 	*   @param  key  제거할 노드의 key
 	*	@post	key와 일치하는 노드가 제거됨
-	*   @return 노드 제거 후 남은 노드 연결하기 위한 반환값
+	*   @return 노드 제거 된 트리 반환
 	*/
 	Node<T>* Remove(Node<T>* tree, T key);
 
@@ -186,6 +219,15 @@ private:
 	*/
 	void PrintPostOrderTraversal(Node<T>* tree, ostream& os);
 
+	/**
+	*	@brief	트리를 재귀적으로 복사
+	*	@pre	tree는 빈 tree이어야 함. 복사할 tree 설정
+	*   @param  tree 복사해서 저장할 subtree
+	*   @param  copied_tree 복사될 tree
+	*	@post	None.
+	*   @return 복사 완료된 tree 반환
+	*/
+	Node<T>* Copy(Node<T>* tree, const Node<T>& copied_tree);
 
 	Node<T>* root_;		// Node 타입의 root
 };
@@ -195,6 +237,12 @@ template<typename T>
 BinarySearchTree<T>::BinarySearchTree()
 {
 	root_ = NULL;
+}
+
+template<typename T>
+BinarySearchTree<T>::~BinarySearchTree()
+{
+	DestroyTree(root_);
 }
 
 // Tree가 비어있는지 확인
@@ -229,6 +277,7 @@ template<typename T>
 void BinarySearchTree<T>::MakeEmpty()
 {
 	DestroyTree(root_);
+	root_ = nullptr;
 }
 
 // Tree의 node개수를 알려줌
@@ -242,14 +291,32 @@ int BinarySearchTree<T>::GetLength() const
 template<typename T>
 void BinarySearchTree<T>::Insert(T value)
 {
-	Insert(root_, value);    // root node tree에 추가
+	root_ = Insert(root_, value);    // root node tree에 추가
 }
 
 // Tree의 node를 지움
 template<typename T>
 void BinarySearchTree<T>::Remove(T data)
 {
-	Remove(root_, data);					// 존재하는 node 삭제하는 함수를 호출
+	root_ = Remove(root_, data);					// 존재하는 node 삭제하는 함수를 호출
+}
+
+// Tree에서 primary key가 일치하는 아이템을 찾아 반환
+template<typename T>
+T BinarySearchTree<T>::Get(T key)
+{
+	T found_item;
+	Node<T>* found_node;
+
+	found_node = Search(root, data);
+
+	if (found_node == nullptr) {
+		throw invalid_argument("Get(): data not found");
+		return key;
+	}
+	else {
+		return found_node->data;
+	}
 }
 
 // Tree에서 찾고자 하는 값의 node를 검색
@@ -286,13 +353,29 @@ void BinarySearchTree<T>::Print(ostream & os, TraversalMode order) const
 	}
 }
 
+// = 오버로딩 해서 깊은 복사 구현
+template<typename T>
+BinarySearchTree<T>& BinarySearchTree<T>::operator=(const BinarySearchTree<T>& copied_data)
+{
+	AssignCopy();
+	return (*this)
+}
+
+// Copy parameter tree and assign to this tree. (deep copy)
+template<typename T>
+void BinarySearchTree<T>::AssignCopy(const BinarySearchTree<T>& copied_object)
+{
+	DestroyTree(root_);    // 기존 데이터 삭제
+	Copy(root_, copied_object);    // 복사
+}
+
 // tree 하위에 새 노드 추가
 template<typename T>
 Node<T>* BinarySearchTree<T>::Insert(Node<T>* tree, T key)
 {
 	// base case : 빈 트리에 도달하여 새 노드 삽입
 	if (tree == nullptr) {
-		Node<T>* new_tree = new Node;
+		Node<T>* new_tree = new Node<T>;
 		new_tree->left = nullptr;
 		new_tree->right = nullptr;
 		new_tree->data = key;
@@ -464,6 +547,30 @@ void BinarySearchTree<T>::PrintPostOrderTraversal(Node<T>* tree, ostream & os)
 		PrintInOrderTraversal(tree->right, os);	// root의 오른쪽으로 가서 다시 InOrder 함수 호출
 		out << tree->data;							// root 출력
 	}
+}
+
+// 트리를 재귀적으로 복사
+template<typename T>
+Node<T>* BinarySearchTree<T>::Copy(Node<T>* tree, const Node<T>& copied_tree)
+{
+	// 복사할 데이터 없으면 null 반환 후 재귀 종료
+	if (copied_tree == nullptr) {
+		return nullptr;
+	}
+	// 새 노드 만들고 데이터 복사
+	else {
+		Node<T>* new_tree = new Node<T>;
+		new_tree->left = nullptr;
+		new_tree->right = nullptr;
+		new_tree->data = copied_tree.data;    // 데이터 복사
+		tree->left = Copy(tree->left, copied_tree);
+	}
+
+	// 왼쪽 서브트리, 오른쪽 서브트리에 복사된 트리 붙이고 재귀적으로 반복
+	tree->left = Copy(tree->left, copied_tree.left);
+	tree->right = Copy(tree->right, copied_tree.right);
+
+	return tree;
 }
 
 #endif // _BINARY_SEARCH_TREE_H
