@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="BinarySearchTree.h" />
     <ClInclude Include="CircularQueue.h" />
     <ClInclude Include="FileType.h" />
     <ClInclude Include="ItemType.h" />

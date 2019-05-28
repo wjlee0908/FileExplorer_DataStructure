@@ -4,6 +4,11 @@
 #include <iostream>
 using namespace std;
 
+/**
+*	트리 순회 방법 종류
+*/
+enum TraversalMode { INORDER, PREORDER, POSTORDER };
+
 // Tree를 구성하는 Node (node data, left 포인터, right 포인터)
 template<typename T>
 struct Node
@@ -81,9 +86,11 @@ public:
 	/**
 	*	@brief	Tree의 node를 스크린에 출력한다.
 	*	@pre	none
+	*   @param  os    output stream
+	*   @param  order    순회 방법(출력 순서) 지정
 	*	@post	스크린에 Tree가 InOrder, PreOrder, PostOrder 방법으로 각각 출력됨.
 	*/
-	void PrintTree(ostream &out)const;
+	void Print(ostream &os, TraversalMode order) const;
 
 private:
 	/**
@@ -143,23 +150,58 @@ private:
 	*/
 	Node<T>* Remove(Node<T>* tree, T key);
 
+	/**
+	*	@brief	트리에 포함된 노드의 개수를 셈
+	*	@pre	찾을 tree 설정
+	*   @param  tree 노드 갯수 셀 대상 트리(혹은 서브트리)
+	*	@post	None.
+	*   @return 노드의 개수를 반환
+	*/
+	int CountNodes(Node<T>* tree);
+
+	/**
+	*	@brief	트리를 inorder로 순회하며 출력. Left - Center - Right 순서.
+	*	@pre	찾을 tree 설정
+	*   @param  tree 출력할 대상 트리
+	*   @param  os output stream
+	*	@post	None.
+	*/
+	void PrintInOrderTraversal(Node<T>* tree, ostream& os);
+
+	/**
+	*	@brief	트리를 preorder로 순회하며 출력. Center - Left - Right 순서.
+	*	@pre	찾을 tree 설정
+	*   @param  tree 출력할 대상 트리
+	*   @param  os output stream
+	*	@post	None.
+	*/
+	void PrintPreOrderTraversal(Node<T>* tree, ostream& os);
+
+	/**
+	*	@brief	트리를 postorder로 순회하며 출력. Left - Right - Center 순서.
+	*	@pre	찾을 tree 설정
+	*   @param  tree 출력할 대상 트리
+	*   @param  os output stream
+	*	@post	None.
+	*/
+	void PrintPostOrderTraversal(Node<T>* tree, ostream& os);
 
 
-	Node<T>* root;		// Node 타입의 root
+	Node<T>* root_;		// Node 타입의 root
 };
 
 // 생성자
 template<typename T>
 BinarySearchTree<T>::BinarySearchTree()
 {
-	root = NULL;
+	root_ = NULL;
 }
 
 // Tree가 비어있는지 확인
 template<typename T>
 bool BinarySearchTree<T>::IsEmpty()const
 {
-	if (root == NULL)			// root 노드가 NULL인 경우 true 리턴
+	if (root_ == NULL)			// root 노드가 NULL인 경우 true 리턴
 		return true;
 	else
 		return false;			// root 노드가 NULL이 아닌 경우 false 리턴
@@ -186,48 +228,62 @@ bool BinarySearchTree<T>::IsFull()const
 template<typename T>
 void BinarySearchTree<T>::MakeEmpty()
 {
-	MakeEmptyTree(root);				// Tree 초기화 함수 호출
+	DestroyTree(root_);
 }
 
 // Tree의 node개수를 알려줌
 template<typename T>
-int BinarySearchTree<T>::GetLength()const
+int BinarySearchTree<T>::GetLength() const
 {
-	return CountNodes(root);			// node 개수를 새는 함수 호출
+	return CountNodes(root_);			// node 개수를 새는 함수 호출
 }
 
 // Tree에 새로운 node 추가
 template<typename T>
 void BinarySearchTree<T>::Insert(T value)
 {
-	Insert(root, value);    // root node tree에 추가
+	Insert(root_, value);    // root node tree에 추가
 }
 
 // Tree의 node를 지움
 template<typename T>
 void BinarySearchTree<T>::Remove(T data)
 {
-	Remove(root, data);					// 존재하는 node 삭제하는 함수를 호출
+	Remove(root_, data);					// 존재하는 node 삭제하는 함수를 호출
 }
 
 // Tree에서 찾고자 하는 값의 node를 검색
 template<typename T>
 bool BinarySearchTree<T>::Search(T& data) const
 {
-	bool is_found = Search(root, data);
-	return is_found;
+	Node<T>* found_node = Search(root_, data);
+	if (found_node != nullptr) {
+		data = found_node->data;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
-// Tree의 node를 각각의 방법대로 출력함
+// Tree의 node를 스크린에 출력한다.
 template<typename T>
-void BinarySearchTree<T>::PrintTree(ostream &out)const
+void BinarySearchTree<T>::Print(ostream & os, TraversalMode order) const
 {
-	cout << "[InOrder]" << endl;
-	PrintInOrderTraversal(root, out);			// InOrder 방법으로 출력
-	cout << endl << "[PreOrder]" << endl;
-	PrintPreOrderTraversal(root, out);			// PreOrder 방법으로 출력
-	cout << endl << "[PostOrder]" << endl;
-	PrintPostOrderTraversal(root, out);			// PostOrder 방법으로 출력
+	switch (order)
+	{
+	case INORDER:
+		PrintInOrderTraversal(root_, os);			// InOrder 방법으로 출력
+		break;
+	case PREORDER:
+		PrintPreOrderTraversal(root_, os);			// PreOrder 방법으로 출력
+		break;
+	case POSTORDER:
+		PrintPostOrderTraversal(root_, os);			// PostOrder 방법으로 출력
+		break;
+	default:
+		break;
+	}
 }
 
 // tree 하위에 새 노드 추가
@@ -362,139 +418,52 @@ Node<T>* BinarySearchTree<T>::Remove(Node<T>* tree, T key)
 	return tree;
 }
 
-/////////////////////////////Global functions//////////////////////////
-// Tree를 초기화하는 함수
+// 트리에 포함된 노드의 개수를 셈
 template<typename T>
-void MakeEmptyTree(Node<T>*& root)
+int BinarySearchTree<T>::CountNodes(Node<T>* tree)
 {
-	root = NULL;			// root 노드를 Null로 함
-}
-
-// Tree의 node 개수를 세는 함수
-template<typename T>
-int CountNodes(Node<T>* root)
-{
-	if (root == NULL)		// root 노드가 null일경우 0을 리턴
+	if (tree == nullptr)		// root 노드가 null일경우 0을 리턴
 		return 0;
 	else
-		return CountNodes(root->left) + CountNodes(root->right) + 1;		// 노드의 왼쪽, 오른쪽에 대한 재귀적 호출과 root에 해당하는 1을 더해서 값을 리턴
+		// 왼쪽, 오른쪽 서브트리 재귀적으로 호출
+		// 호출될 때마다 1 증가
+		return CountNodes(tree->left) + CountNodes(tree->right) + 1;		
 }
 
-// BinarySearchTree에 새로운 노드 추가
+// 트리를 inorder로 순회하며 출력. Left - Center - Right 순서.
 template<typename T>
-void Insert2(Node<T>*& root, T data)
+void BinarySearchTree<T>::PrintInOrderTraversal(Node<T>* tree, ostream & os)
 {
-	if (root == NULL)				// root가 null일 경우 
+	if (tree != NULL)								// root가 존재하는 경우
 	{
-		root = new Node<T>;	// root 노드 생성
-		root->left = NULL;			// root 노드이므로 left와 right는 NULL로 설정
-		root->right = NULL;
-		root->data = data;			// root 노드의 값
+		PrintInOrderTraversal(tree->left, os);		// root의 왼쪽으로 가서 다시 InOrder 함수 호출
+		os << tree->data;							// root 출력
+		PrintInOrderTraversal(tree->right, os);	// root의 오른쪽으로 가서 다시 InOrder 함수 호출
 	}
-	else if (root->data > data)		// root가 존재하고, 그 값이 새로운 data 값보다 클 때
-		Insert(root->left, data);	// root의 왼쪽으로 Insert 함수 다시 호출
-	else if (root->data < data)		// root가 존재하고, 그 값이 새로운 data 값보다 작을 때
-		Insert(root->right, data);	// root의 오른쪽으로 Insert 함수 다시 호출
 }
 
-// 가장 큰 값을 찾는 함수 
+// 트리를 preorder로 순회하며 출력. Center - Left - Right 순서.
 template<typename T>
-void GetPredecessor(Node<T> *root, T& data)
+void BinarySearchTree<T>::PrintPreOrderTraversal(Node<T>* tree, ostream & os)
 {
-	while (root->right != NULL)			// root의 오른쪽이 존재할 경우
-		root = root->right;				// root의 오른쪽 노드값이 root에 오도록 한다
-	data = root->data;					// root 노드의 값을 data에 복사한다.
-}
-
-// 지우려는 노드를 찾으면 실제로 트리에서 그 노드를 지우는 함수
-template<typename T>
-void DeleteNode(Node<T> *&root)
-{
-	T data;
-	Node<T>* tempPtr;			// 임시 노드를 생성하고 root 노드를 임시 노드에 복사
-	tempPtr = root;
-
-	if (root->left == NULL)				// 왼쪽노드가 없을 때
+	if (tree != NULL)								// root가 존재하는 경우
 	{
-		root = root->right;				// 오른쪽 노드가 root가 되도록 복사하고 임시노드를 지움
-		delete tempPtr;
-	}
-	else if (root->right == NULL)		// 오른쪽노드가 없을 때
-	{
-		root = root->left;				// 왼쪽 노드가 root가 되도록 복사하고 임시노드를 지움
-		delete tempPtr;
-	}
-	else
-	{
-		GetPredecessor(root->left, data);	// 중간에 있는 노드를 지우고 싶을 때 (left, right, child 노드 있을 경우)
-		root->data = data;					// 지우려는 노드보다 작은 노드들 중에 가장 큰 노드를 찾음
-		Delete(root->left, data);			// 그 값을 지울 노드에 복사를 해서 지운 것처럼 눈속임
+		out << tree->data;							// root 출력
+		PrintInOrderTraversal(tree->left, os);		// root의 왼쪽으로 가서 다시 InOrder 함수 호출
+		PrintInOrderTraversal(tree->right, os);	// root의 오른쪽으로 가서 다시 InOrder 함수 호출
 	}
 }
 
-// 내가 지우려고 하는 노드를 찾는 recursive 함수
+// 트리를 postorder로 순회하며 출력. Left - Right - Center 순서.
 template<typename T>
-void Delete(Node<T> *&root, T data)
+void BinarySearchTree<T>::PrintPostOrderTraversal(Node<T>* tree, ostream & os)
 {
-	if (data < root->data)				// root노드값보다 data노드가 작을 때
-		Delete(root->left, data);		// 왼쪽노드로 가서 delete함수 호출
-	else if (data > root->data)			// root노드값보다 data노드가 클 때
-		Delete(root->right, data);		// 오른쪽노드로 가서 delete함수 호출
-	else
-		DeleteNode(root);				// 찾고자 하는 값이 일치하는 경우 deletenode 함수 호출
-}
-
-// Tree에서 node를 검색하는 함수
-template<typename T>
-void Retrieve(Node<T> *root, T& data, bool &found)
-{
-	if (root == NULL)						// root가 NULL인 경우 found는 false 
-		found = false;
-	else if (data < root->data)				// 찾고자 하는 아이템값이 root값보다 작을 때 
-		Retrieve(root->left, data, found);	// 왼쪽 노드로 가서 retrieve 함수 호출
-	else if (data > root->data)				// 찾고자 하는 아이템값이 root값보다 클 때
-		Retrieve(root->right, data, found);	// 오른쪽 노드로 가서 retrieve 함수 호출
-	else
-	{										// 찾고자 하는 값과 일치할 때
-		data = root->data;					// data에 노드 정보를 복사
-		found = true;						// found값을 true로 해서 찾는 과정을 멈춤
-	}
-}
-
-// InOrder 방법으로 출력하는 함수 
-template<typename T>
-void PrintInOrderTraversal(Node<T>* root, ostream& out)
-{
-	if (root != NULL)								// root가 존재하는 경우
+	if (tree != NULL)								// root가 존재하는 경우
 	{
-		PrintInOrderTraversal(root->left, out);		// root의 왼쪽으로 가서 다시 InOrder 함수 호출
-		out << root->data;							// root 출력
-		PrintInOrderTraversal(root->right, out);	// root의 오른쪽으로 가서 다시 InOrder 함수 호출
+		PrintInOrderTraversal(tree->left, os);		// root의 왼쪽으로 가서 다시 InOrder 함수 호출
+		PrintInOrderTraversal(tree->right, os);	// root의 오른쪽으로 가서 다시 InOrder 함수 호출
+		out << tree->data;							// root 출력
 	}
 }
 
-// PreOrder 방법으로 출력하는 함수
-template<typename T>
-void PrintPreOrderTraversal(Node<T>* root, ostream& out)
-{
-	if (root != NULL)								// root가 존재하는 경우
-	{
-		out << root->data;							// root를 먼저 출력
-		PrintPreOrderTraversal(root->left, out);	// root의 왼쪽으로 가서 PreOrder 함수 다시 호출
-		PrintPreOrderTraversal(root->right, out);	// root의 오른쪽으로 가서 PreOrder 함수 다시 호출
-	}
-}
-
-// PostOrder 방법으로 출력하는 함수
-template<typename T>
-void PrintPostOrderTraversal(Node<T>* root, ostream& out)
-{
-	if (root != NULL)								// root가 존재하는 경우
-	{
-		PrintPostOrderTraversal(root->left, out);	// root의 왼쪽으로 가서 다시 PostOrder 함수 호출
-		PrintPostOrderTraversal(root->right, out);	// root의 오른쪽으로 가서 다시 PostOrder 함수 호출
-		out << root->data;							// root의 값 출력
-	}
-}
-
-#endif // !_BINARY_SEARCH_TREE_H
+#endif // _BINARY_SEARCH_TREE_H
