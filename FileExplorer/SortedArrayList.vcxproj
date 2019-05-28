@@ -97,6 +97,8 @@
     <ClInclude Include="SortedLinkedList.h" />
     <ClInclude Include="DoublyLinkedList.h" />
     <ClInclude Include="DoublyPointingIterator.h" />
+    <ClInclude Include="Stack.h" />
+    <ClInclude Include="TreeIterator.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

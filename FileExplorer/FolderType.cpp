@@ -165,16 +165,19 @@ int FolderType::ChangeSubFolderName()
 // Get sub folder by name
 FolderType* FolderType::GetSubFolder() {
 	FolderType finding_folder;
+	FolderType* sub_folder;
 	bool is_found;
 
 	finding_folder.SetNameFromKeyboard();
-	is_found = sub_folder_list_->Get((ItemType*)&finding_folder);
+	is_found = sub_folder_list_->Search(finding_folder);
 
 	if (!is_found) {
-		return nullptr;
+		return nullptr;    // 찾는 서브 폴더 없음
 	}
 
-	return &finding_folder;
+	sub_folder = sub_folder_list_->GetItemAdderess(finding_folder);
+
+	return sub_folder;
 }
 
 // Retrieve folders containing finding name
@@ -185,7 +188,7 @@ int FolderType::RetrieveFolderByName() {
 	retrieving_folder.SetNameFromKeyboard(); //name을 입력받는다.
 
 	// 리스트 순차 탐색
-	DoublyPointingIterator<ItemType*> iter(*sub_folder_list_);    // 서브 폴더들 탐색할 iterator
+	TreeIterator<FolderType> iter((*sub_folder_list_));    // 서브 폴더들 탐색할 iterator
 	for (iter.First(); !iter.IsNull(); iter.Next()) {
 		// 이름 확인
 		if ((*iter).GetName().find(retrieving_folder.GetName()) != string::npos) {
@@ -207,10 +210,5 @@ void FolderType::DisplayAllSubFolders() {
 	FolderType displayed_folder;
 
 	cout << "\n\tSub Folder list" << endl;
-	// 리스트의 끝까지 displayed_folder에 할당
-	DoublyPointingIterator<ItemType*> iter(*sub_folder_list_);
-	for (iter.First(); !iter.IsNull(); iter.Next()) {
-		(*iter)->DisplayNameOnScreen();
-	}
-
+	sub_folder_list_->Print(cout, INORDER);
 }

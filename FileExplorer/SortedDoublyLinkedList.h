@@ -102,7 +102,7 @@ bool SortedDoublyLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
 template<typename T>
 bool SortedDoublyLinkedList<T>::InsertNodeSorted(DoublyPointingNode<T>* node)
 {
-	DoublyPointingIterator<T> iterator(*this);
+	TreeIterator<T> iterator(*this);
 	DoublyPointingNode<T>* current_node;
 	bool is_inserted = false;
 

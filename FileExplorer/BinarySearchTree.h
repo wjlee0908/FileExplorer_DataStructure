@@ -3,12 +3,18 @@
 
 #include <iostream>
 #include <exception>
+
+#include "TreeIterator.h"
+
 using namespace std;
 
 /**
 *	트리 순회 방법 종류
 */
 enum TraversalMode { INORDER, PREORDER, POSTORDER };
+
+template <typename T>
+class TreeIterator;
 
 // Tree를 구성하는 Node (node data, left 포인터, right 포인터)
 template<typename T>
@@ -23,6 +29,7 @@ struct Node
 template<typename T>
 class BinarySearchTree
 {
+	friend class TreeIterator<T>;
 public:
 	// 생성자
 	BinarySearchTree();
@@ -87,9 +94,18 @@ public:
 	*	@pre	Tree가 초기화되어 있어야 함
 	*   @param  key  찾을 primary key
 	*	@post	None
-	*   @return primary key가 일치하는 트리의 노드 데이터를 반환
+	*   @return primary key가 일치하는 노드의 데이터를 반환
 	*/
 	T Get(T key);
+
+	/**
+	*	@brief	Tree에서 primary key가 일치하는 아이템을 찾아 아이템의 주소를 반환
+	*	@pre	Tree가 초기화되어 있어야 함
+	*   @param  key  찾을 primary key
+	*	@post	None
+	*   @return primary key가 일치하는 노드의 아이템 주소를 반환
+	*/
+	T* GetItemAdderess(T key);
 
 	/**
 	*	@brief	입력한 값의 node를 Tree에서 검색함
@@ -311,11 +327,28 @@ T BinarySearchTree<T>::Get(T key)
 	found_node = Search(root, data);
 
 	if (found_node == nullptr) {
-		throw invalid_argument("Get(): data not found");
+		throw invalid_argument("Get(): key not found");
 		return key;
 	}
 	else {
 		return found_node->data;
+	}
+}
+
+template<typename T>
+T * BinarySearchTree<T>::GetItemAdderess(T key)
+{
+	T found_item;
+	Node<T>* found_node;
+
+	found_node = Search(root, data);
+
+	if (found_node == nullptr) {
+		throw invalid_argument("GetAddress(): key not found");
+		return key;
+	}
+	else {
+		return &(found_node->data);
 	}
 }
 

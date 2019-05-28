@@ -9,7 +9,7 @@
 */
 
 template <typename T>
-class DoublyPointingIterator;
+class TreeIterator;
 
 template <typename T>
 struct DoublyPointingNode
@@ -26,7 +26,7 @@ struct DoublyPointingNode
 template <typename T>
 class DoublyLinkedList
 {
-	friend class DoublyPointingIterator<T>;
+	friend class TreeIterator<T>;
 public:
 	/**
 	*	default constructor.
@@ -190,7 +190,7 @@ DoublyLinkedList<T>::~DoublyLinkedList()
 template <typename T>
 void DoublyLinkedList<T>::MakeEmpty()
 {
-	DoublyPointingIterator<T> iterator(*this);
+	TreeIterator<T> iterator(*this);
 	DoublyPointingNode<T>* deleted_node;
 
 	// 이미 비어있으면 수행하지 않음
@@ -349,7 +349,7 @@ bool DoublyLinkedList<T>::Get(T& item)
 template<typename T>
 DoublyPointingNode<T>* DoublyLinkedList<T>::GetNode(T& item)
 {
-	DoublyPointingIterator<T> iterator(*this);
+	TreeIterator<T> iterator(*this);
 	DoublyPointingNode<T>* current_node;
 	DoublyPointingNode<T>* found_node = nullptr;
 	bool is_found = false;

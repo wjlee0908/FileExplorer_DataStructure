@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="FileType.cpp" />
+    <ClCompile Include="FolderType.cpp" />
+    <ClCompile Include="ItemType.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="FileType.h" />
+    <ClInclude Include="ItemType.h" />
+    <ClInclude Include="FolderType.h" />
+    <ClInclude Include="BinarySearchTree.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularQueue.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="DoublyLinkedList.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="DoublyPointingIterator.h">
+      <Filter>DataStructure\Iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="LinkedList.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedLinkedList.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedArrayList.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedDoublyLinkedList.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeIterator.h">
+      <Filter>DataStructure\Iterator</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="DataStructure">
+      <UniqueIdentifier>{253db86f-f53d-44bb-a81d-a137c0c0c366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataStructure\Iterator">
+      <UniqueIdentifier>{964b9006-64c3-428e-8b77-34d6b5834d09}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

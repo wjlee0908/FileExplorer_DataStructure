@@ -19,7 +19,7 @@ string ItemType::GetPathString()
 		return path_string;
 	}
 
-	DoublyPointingIterator<FolderType*> iter(path_);    // path 탐색할 iterator
+	TreeIterator<FolderType*> iter(path_);    // path 탐색할 iterator
 	for (iter.First(); !iter.IsNull(); iter.Next()) {
 		// 루트 폴더는 이름만 append
 		if (iter->parent_folder_ == NULL) {
