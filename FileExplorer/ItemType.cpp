@@ -53,7 +53,7 @@ void ItemType::SetPath()
 void ItemType::AssignCopy(const ItemType & copied_object)
 {
 	this->name_ = copied_object.name_;
-	this->created_date_ = copied_object.created_date_;
+	this->created_time_ = copied_object.created_time_;
 	this->size_ = copied_object.size_;
 	this->path_ = copied_object.path_;    // path list deep copy
 	
@@ -88,7 +88,7 @@ ItemType & ItemType::operator=(const ItemType & copied_item)
 }
 
 // Generate item's created date.
-void ItemType::GenerateCreatedDate()
+void ItemType::GenerateCreatedTime()
 {
 	// Declaring argument for time() 
 	time_t current_time;
@@ -108,7 +108,7 @@ void ItemType::GenerateCreatedDate()
 	ss << setw(4) << current_tm->tm_year + 1900 << setfill('0') << setw(2)
 		<< current_tm->tm_mon + 1 << setfill('0') << setw(2) << current_tm->tm_mday << setfill('0') << setw(2) << current_tm->tm_hour << setfill('0') << setw(2)
 		<< current_tm->tm_min << setfill('0') << setw(2) << current_tm->tm_sec << "\0";
-	created_date_ = ss.str();  // copy the stream buffer to name 
+	created_time_ = ss.str();  // copy the stream buffer to name 
 }
 
 ostream & operator<<(ostream & os, const ItemType & item)

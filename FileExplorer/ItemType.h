@@ -33,7 +33,7 @@ public:
 	ItemType() {
 		name_ = "";
 		size_ = 0;
-		GenerateCreatedDate();
+		GenerateCreatedTime();
 		parent_folder_ = NULL;
 	}
 	/**
@@ -80,12 +80,12 @@ public:
 	string GetPathString();
 
 	/**
-	*	@brief	Get Created date.
-	*	@pre	Created date is set.
+	*	@brief	Get Created time.
+	*	@pre	Created time is set.
 	*	@post	none.
-	*	@return	Created date.
+	*	@return	Created time.
 	*/
-	string GetCreatedDate() const { return this->created_date_; }
+	string GetCreatedTime() const { return this->created_time_; }
 
 	/**
 	*	@brief	Set Item Name.
@@ -121,7 +121,7 @@ public:
 		SetName(name);
 		parent_folder_ = parent_folder;
 		SetPath();
-		GenerateCreatedDate();
+		GenerateCreatedTime();
 	}
 
 	/**
@@ -155,12 +155,12 @@ public:
 	}
 
 	/**
-	*	@brief	Display item's created date on screen
+	*	@brief	Display item's created time on screen
 	*	@pre	item's created time is set.
 	*	@post	item's  is on screen.
 	*/
-	void DisplayCreatedDateOnScreen() {
-		cout << "\tCreated date : " << created_date_ << endl;
+	void DisplayCreatedTimeOnScreen() {
+		cout << "\tCreated time : " << created_time_ << endl;
 	}
 
 	/**
@@ -173,7 +173,7 @@ public:
 		DisplayNameOnScreen();
 		DisplayPathOnScreen();
 		DisplaySizeOnScreen();
-		DisplayCreatedDateOnScreen();
+		DisplayCreatedTimeOnScreen();
 	}
 
 	/**
@@ -292,16 +292,16 @@ protected:
 	string name_;		///< item name.
 	int size_;          ///< item size.
 	DoublyLinkedList<FolderType*> path_;    ///< folder path list.
-	string created_date_;    ///< date that item created.
+	string created_time_;    ///< time that item created.
 	FolderType* parent_folder_;    ///< adderess of folder that includes this item
 
 private:
 	/**
-	*	@brief	Generate item's created date.
+	*	@brief	Generate item's created time.
 	*	@pre	none.
-	*	@post	item's created date is set.
+	*	@post	item's created time is set.
 	*/
-	void GenerateCreatedDate();
+	void GenerateCreatedTime();
 };
 
 #endif	// _ITEMTYPE_H

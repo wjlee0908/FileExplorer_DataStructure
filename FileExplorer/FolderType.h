@@ -107,6 +107,14 @@ public:
 	int AddSubFolder();
 
 	/**
+	*	@brief	Add file in this folder.
+	*	@pre	none.
+	*	@post	new file is added.
+	*	@return	return 1 if this function works well, otherwise 0.
+	*/
+	int AddFile();
+
+	/**
 	*	@brief  Delete sub folder by name
 	*	@pre	sub folder list is set.
 	*	@post	none.

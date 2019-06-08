@@ -76,6 +76,36 @@ int FolderType::AddSubFolder() {
 	return 1;
 }
 
+// Add file in this folder
+int FolderType::AddFile()
+{
+	FileType new_file;
+	FileType* created_file;
+	string new_file_path;
+
+	if (file_list_->GetLength() == 0) {
+		file_list_ = new BinarySearchTree<FileType>;
+	}
+
+	// new_file->SetAttributesFromKeyboard();
+
+	// 이름이 중복된 파일이면 생성 불가
+	/*
+	if (IsDupliactedSubFolderExists(*new_folder)) {
+		cout << "\tExisting folder name" << endl;
+		return 0;
+	}
+	*/
+
+	file_list_->Insert(new_file);
+
+	// 리스트 안에 들어있는 생성한 폴더의 원본에 Path 설정
+	created_file = file_list_->GetItemAdderess(new_file);
+	created_file->SetPath();
+
+	return 1;
+}
+
 
 // Read a record from file.
 int FolderType::ReadDataFromFile(ifstream& fin)
