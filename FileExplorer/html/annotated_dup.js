@@ -1,6 +1,7 @@
 var annotated_dup =
 [
     [ "Application", "class_application.html", "class_application" ],
+    [ "BinarySearchTree", "class_binary_search_tree.html", "class_binary_search_tree" ],
     [ "CircularQueue", "class_circular_queue.html", "class_circular_queue" ],
     [ "DoublyLinkedList", "class_doubly_linked_list.html", "class_doubly_linked_list" ],
     [ "DoublyPointingIterator", "class_doubly_pointing_iterator.html", "class_doubly_pointing_iterator" ],
@@ -14,8 +15,10 @@ var annotated_dup =
     [ "ItemType", "class_item_type.html", "class_item_type" ],
     [ "LinkedList", "class_linked_list.html", "class_linked_list" ],
     [ "ListNode", "struct_list_node.html", "struct_list_node" ],
+    [ "Node", "struct_node.html", "struct_node" ],
     [ "SortedArrayList", "class_sorted_array_list.html", "class_sorted_array_list" ],
     [ "SortedDoublyLinkedList", "class_sorted_doubly_linked_list.html", "class_sorted_doubly_linked_list" ],
     [ "SortedLinkedList", "class_sorted_linked_list.html", "class_sorted_linked_list" ],
-    [ "Stack", "class_stack.html", "class_stack" ]
+    [ "Stack", "class_stack.html", "class_stack" ],
+    [ "TreeIterator", "class_tree_iterator.html", "class_tree_iterator" ]
 ];

@@ -4,9 +4,6 @@
 #include <iostream>
 using namespace std;
 
-#define MAX_SIZE 10
-
-
 /**
 *	@brief	Exception class thrown by Push when stack is full.
 */
@@ -130,6 +127,8 @@ private:
 	*/
 	void InitializeStack(int size);
 
+	static const int kDefaultMaxSize = 10;    ///< default max size of stack 
+
 	int top_;	///< Number of elements in current array.
 	int size_;	///< size of the stack.
 	T* items_;	///< dynamically allocated item array.
@@ -139,7 +138,7 @@ private:
 template<typename T>
 Stack<T>::Stack()
 {
-	InitializeStack(MAX_SIZE);
+	InitializeStack(kDefaultMaxSize);
 }
 
 //Constructs stack whose size is parameter size.

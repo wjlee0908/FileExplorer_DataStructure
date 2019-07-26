@@ -59,7 +59,7 @@ void ItemType::AssignCopy(const ItemType & copied_object)
 	
 }
 
-RelationType ItemType::CompareByName(const FolderType & data)
+RelationType ItemType::CompareByName(const ItemType & data)
 {
 	if (this->name_.compare(data.name_) > 0)
 		return GREATER;

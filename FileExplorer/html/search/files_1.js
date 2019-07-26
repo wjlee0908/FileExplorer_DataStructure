@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['circularqueue_2eh',['CircularQueue.h',['../_circular_queue_8h.html',1,'']]]
+  ['binarysearchtree_2eh',['BinarySearchTree.h',['../_binary_search_tree_8h.html',1,'']]]
 ];

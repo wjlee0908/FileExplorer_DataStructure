@@ -206,7 +206,7 @@ private:
 	*	@post	None.
 	*   @return 노드의 개수를 반환
 	*/
-	int CountNodes(Node<T>* tree);
+	int CountNodes(Node<T>* tree) const;
 
 	/**
 	*	@brief	트리를 inorder로 순회하며 출력. Left - Center - Right 순서.
@@ -537,7 +537,7 @@ Node<T>* BinarySearchTree<T>::Remove(Node<T>* tree, T key)
 
 // 트리에 포함된 노드의 개수를 셈
 template<typename T>
-int BinarySearchTree<T>::CountNodes(Node<T>* tree)
+int BinarySearchTree<T>::CountNodes(Node<T>* tree) const
 {
 	if (tree == nullptr)		// root 노드가 null일경우 0을 리턴
 		return 0;

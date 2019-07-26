@@ -4,7 +4,7 @@
 #include <iostream>
 using namespace std;
 
-#define MAX_SIZE 10
+#define default_max_size_ 10
 
 /**
 *	@brief	Exception class thrown by Enqueue when queue is full.
@@ -158,7 +158,7 @@ private:
 template <typename T>
 CircularQueue<T>::CircularQueue()
 {
-	InitializeQueue(MAX_SIZE);   // set queue to max size.
+	InitializeQueue(default_max_size_);   // set queue to max size.
 }
 
 // Allocate queue whose size is parameter

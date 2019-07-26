@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['length_5f',['length_',['../class_doubly_linked_list.html#a6f029de7e8ba7baa0ad9a78926fad2e9',1,'DoublyLinkedList::length_()'],['../class_linked_list.html#a3167e0136ba1dac96fe5375b4d6606a9',1,'LinkedList::length_()'],['../class_sorted_array_list.html#a0d4e23a9d29d16b606d438fc0e852c4d',1,'SortedArrayList::length_()']]],
-  ['list_5f',['list_',['../class_doubly_pointing_iterator.html#a164e85c5f18aa9f1c52047bc38c22ba9',1,'DoublyPointingIterator']]]
+  ['kdefaultmaxsize',['kDefaultMaxSize',['../class_stack.html#a2b54db093a6001c47db27fd0f5b3647a',1,'Stack']]],
+  ['kfilenamelength',['kFileNameLength',['../class_application.html#ad49cc165e10aea556110aef555caedf4',1,'Application']]],
+  ['khistorysize',['kHistorySize',['../class_application.html#aed2d8b52d721a197c496867443219c63',1,'Application']]],
+  ['krecentlistsize',['kRecentListSize',['../class_application.html#a903dc06290a23cc031c61aa20d4f9f24',1,'Application']]]
 ];

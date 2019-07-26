@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['size_5f',['size_',['../class_circular_queue.html#a5f5d2a0d8fa3e957c978f3d0f36b1fb4',1,'CircularQueue::size_()'],['../class_item_type.html#a60be16dfdb39173e0e819a95c0981b3c',1,'ItemType::size_()'],['../class_stack.html#a333a2d9ee2f5f5b4a4532a91a180b69e',1,'Stack::size_()']]],
-  ['sub_5fitem_5flist_5f',['sub_item_list_',['../class_folder_type.html#af45dfd29b0d8cc6861b34792f643054c',1,'FolderType']]]
+  ['rear_5f',['rear_',['../class_circular_queue.html#a723ce2793992bcc4568337bd1c3050ce',1,'CircularQueue']]],
+  ['recent_5ffolders_5f',['recent_folders_',['../class_application.html#a6bfe5e048782b0472441c0a7bfeecb53',1,'Application']]],
+  ['right',['right',['../struct_node.html#a4009a1138f2f04372037fbec63406f11',1,'Node']]],
+  ['root_5f',['root_',['../class_binary_search_tree.html#ae7046dd28350a29a33b29fa916694ac2',1,'BinarySearchTree']]],
+  ['root_5ffolder_5f',['root_folder_',['../class_application.html#a147aa9d28596df81c51c55110025bbdd',1,'Application']]]
 ];

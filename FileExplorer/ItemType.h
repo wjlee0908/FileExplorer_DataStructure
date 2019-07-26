@@ -200,14 +200,14 @@ public:
 	ItemType& operator= (const ItemType& copied_item);
 
 	/**
-	*	@brief	Returns whether this is less than comparing data.
+	*	@brief	Returns whether this is greater than comparing data.
 	*            primary key is name.
 	*	@pre	comparing_data is set.
 	*	@post	none.
 	*   @param  comparing_data    data to compare
-	*   @return retruns boolean expresses whether this is less than comparing data.
+	*   @return retruns boolean expresses whether this is greater than comparing data.
 	*/
-	bool operator< (const FolderType& comparing_data) { return (CompareByName(comparing_data) == LESS); }
+	bool operator> (const ItemType& comparing_data) { return (CompareByName(comparing_data) == GREATER); }
 
 	/**
 	*	@brief	Returns whether this is less than comparing data.
@@ -217,7 +217,7 @@ public:
 	*   @param  comparing_data    data to compare
 	*   @return retruns boolean expresses whether this is less than comparing data.
 	*/
-	bool operator< (const FolderType*& comparing_data) { return (CompareByName(*comparing_data) == LESS); }
+	bool operator< (const ItemType& comparing_data) { return (CompareByName(comparing_data) == LESS); }
 
 	/**
 	*	@brief	Returns whether this is equal to comparing data
@@ -227,37 +227,7 @@ public:
 	*   @param  comparing_data    data to compare
 	*   @return retruns boolean expresses whether whether this is equal to comparing data.
 	*/
-	bool operator== (const FolderType& comparing_data) { return (CompareByName(comparing_data) == EQUAL); }
-
-	/**
-	*	@brief	Returns whether this is equal to comparing data
-	*			primary key is name.
-	*	@pre	comparing_data is set.
-	*	@post	none.
-	*   @param  comparing_data    data to compare
-	*   @return retruns boolean expresses whether whether this is equal to comparing data.
-	*/
-	bool operator== (const FolderType*& comparing_data) { return (CompareByName(*comparing_data) == EQUAL); }
-
-	/**
-	*	@brief	Returns whether this is greater than comparing data.
-	*			primary key is name.
-	*	@pre	comparing_data is set.
-	*	@post	none.
-	*   @param  comparing_data    data to compare
-	*   @return retruns boolean expresses whether this is greater than comparing data.
-	*/
-	bool operator> (const FolderType& comparing_data) { return (CompareByName(comparing_data) == GREATER);  }
-
-	/**
-	*	@brief	Returns whether this is greater than comparing data.
-	*			primary key is name.
-	*	@pre	comparing_data is set.
-	*	@post	none.
-	*   @param  comparing_data    data to compare
-	*   @return retruns boolean expresses whether this is greater than comparing data.
-	*/
-	bool operator> (const FolderType*& comparing_data) { return (CompareByName(*comparing_data) == GREATER); }
+	bool operator== (const ItemType& comparing_data) { return (CompareByName(comparing_data) == EQUAL); }
 
 	/**
 	*	@brief	output stream 출력 함수 오버로딩
@@ -287,7 +257,7 @@ protected:
 	*			return GREATER if this.name > data.name then,
 	*			otherwise return EQUAL.
 	*/
-	RelationType CompareByName(const FolderType &data);
+	RelationType CompareByName(const ItemType &data);
 
 	string name_;		///< item name.
 	int size_;          ///< item size.

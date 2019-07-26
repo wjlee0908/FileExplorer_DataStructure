@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['parent_5ffolder_5f',['parent_folder_',['../class_item_type.html#a307c4e1662433b2df10ac316ce635b34',1,'ItemType']]],
-  ['path_5f',['path_',['../class_item_type.html#a159f7ad85426132d329de92aa3135811',1,'ItemType']]],
-  ['pop',['Pop',['../class_stack.html#a362b42769896d3a4b3ce675522ab8711',1,'Stack']]],
-  ['previous',['previous',['../struct_doubly_pointing_node.html#a60674c2872d3adada9096a72722c6879',1,'DoublyPointingNode']]],
-  ['print',['print',['../class_exception_full_queue.html#a48ca6cfef6eb6a2242cb72d2d79d133c',1,'ExceptionFullQueue::print()'],['../class_exception_empty_queue.html#ac37f3984905d94886a98f04a326dc8b0',1,'ExceptionEmptyQueue::print()'],['../class_exception_full_stack.html#a2317bdc4962a4a6dfc76b932e35df24d',1,'ExceptionFullStack::print()'],['../class_exception_empty_stack.html#aef6a4b709a652ee8f04ba848f160b78d',1,'ExceptionEmptyStack::print()']]],
-  ['push',['Push',['../class_stack.html#ae55b838016f28bead7c28972ad4a2ad8',1,'Stack']]]
+  ['name_5f',['name_',['../class_item_type.html#aeac28135f301a602cf3f61c8274c06cf',1,'ItemType']]],
+  ['next',['next',['../struct_doubly_pointing_node.html#aae0e7df5cea749593e1ecdc8a84df75d',1,'DoublyPointingNode::next()'],['../struct_list_node.html#aa5d5cd1078f0342696f4fb713e0d7744',1,'ListNode::next()'],['../class_doubly_pointing_iterator.html#abfecad047fc2bc8fd56f87d55d32e786',1,'DoublyPointingIterator::Next()'],['../class_tree_iterator.html#a7e141a8d6fdf40ef028daab9e1d428cd',1,'TreeIterator::Next()']]],
+  ['node',['Node',['../struct_node.html',1,'']]],
+  ['node_3c_20filetype_20_3e',['Node&lt; FileType &gt;',['../struct_node.html',1,'']]],
+  ['node_3c_20foldertype_20_3e',['Node&lt; FolderType &gt;',['../struct_node.html',1,'']]],
+  ['num_5fsub_5ffolder_5f',['num_sub_folder_',['../class_folder_type.html#a5d4759cfa644ecf4c073755eee563396',1,'FolderType']]]
 ];

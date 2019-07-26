@@ -13,6 +13,7 @@ var class_stack =
     [ "Push", "class_stack.html#ae55b838016f28bead7c28972ad4a2ad8", null ],
     [ "operator<<", "class_stack.html#a0d9d3f484fb9523947fd4482d0d39331", null ],
     [ "items_", "class_stack.html#a43565fa64c67ff07e17a7f1d2d8d483b", null ],
+    [ "kDefaultMaxSize", "class_stack.html#a2b54db093a6001c47db27fd0f5b3647a", null ],
     [ "size_", "class_stack.html#a333a2d9ee2f5f5b4a4532a91a180b69e", null ],
     [ "top_", "class_stack.html#a43f310171381626f395f79cb811f5977", null ]
 ];

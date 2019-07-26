@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['itemtype',['ItemType',['../class_item_type.html',1,'']]]
+  ['filetype',['FileType',['../class_file_type.html',1,'']]],
+  ['foldertype',['FolderType',['../class_folder_type.html',1,'']]]
 ];

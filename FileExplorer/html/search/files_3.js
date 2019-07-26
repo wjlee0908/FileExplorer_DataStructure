@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['filetype_2ecpp',['FileType.cpp',['../_file_type_8cpp.html',1,'']]],
-  ['filetype_2eh',['FileType.h',['../_file_type_8h.html',1,'']]],
-  ['foldertype_2ecpp',['FolderType.cpp',['../_folder_type_8cpp.html',1,'']]],
-  ['foldertype_2eh',['FolderType.h',['../_folder_type_8h.html',1,'']]]
+  ['doublylinkedlist_2eh',['DoublyLinkedList.h',['../_doubly_linked_list_8h.html',1,'']]],
+  ['doublypointingiterator_2eh',['DoublyPointingIterator.h',['../_doubly_pointing_iterator_8h.html',1,'']]]
 ];

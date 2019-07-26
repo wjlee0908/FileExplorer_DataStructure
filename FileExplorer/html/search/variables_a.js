@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['rear_5f',['rear_',['../class_circular_queue.html#a723ce2793992bcc4568337bd1c3050ce',1,'CircularQueue']]],
-  ['recent_5ffolders_5f',['recent_folders_',['../class_application.html#a6bfe5e048782b0472441c0a7bfeecb53',1,'Application']]],
-  ['root_5ffolder_5f',['root_folder_',['../class_application.html#a147aa9d28596df81c51c55110025bbdd',1,'Application']]]
+  ['parent_5ffolder_5f',['parent_folder_',['../class_item_type.html#a307c4e1662433b2df10ac316ce635b34',1,'ItemType']]],
+  ['path_5f',['path_',['../class_item_type.html#a159f7ad85426132d329de92aa3135811',1,'ItemType']]],
+  ['previous',['previous',['../struct_doubly_pointing_node.html#a60674c2872d3adada9096a72722c6879',1,'DoublyPointingNode']]]
 ];

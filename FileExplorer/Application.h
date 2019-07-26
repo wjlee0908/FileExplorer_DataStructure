@@ -11,10 +11,6 @@ using namespace std;
 #include "CircularQueue.h"
 #include "Stack.h"
 
-#define FILENAMESIZE 1024
-#define HISTORY_SIZE 10
-#define RECENT_SIZE 10
-
 /**
 *	application class for item management simply.
 */
@@ -191,6 +187,10 @@ private:
 	*   @param  folder    folder to add recent queue.
 	*/
 	void AddToRecentFolders(FolderType* folder);
+
+	const int kFileNameLength = 1024;   ///< length of file name string
+	const int kHistorySize = 10;    ///< size of history stack
+	const int kRecentListSize = 10;    ///< size of recent item queue
 
 	FolderType root_folder_;    ///< default root folder
 	FolderType* current_folder_;   ///< current working folder.
