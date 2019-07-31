@@ -4,8 +4,6 @@
 #include <iostream>
 using namespace std;
 
-#define default_max_size_ 10
-
 /**
 *	@brief	Exception class thrown by Enqueue when queue is full.
 */
@@ -97,7 +95,7 @@ public:
 	*	@post	item is inserted as last element.
 	*   @param  item    item to insert.
 	*/
-	void EnQueue(T item);
+	void EnQueue(const T& item);
 
 	/**
 	*	@brief	Pop first item from the queue.
@@ -148,6 +146,8 @@ private:
 	*/
 	int CirculateIndex(int& index);
 
+	static const int kDefaultMaxSize = 10;    ///< default max size of queue
+
 	int front_;	///< index of the first-1 element.
 	int rear_;	///< index of the last element.
 	int size_;	///< size of the queue.
@@ -158,7 +158,7 @@ private:
 template <typename T>
 CircularQueue<T>::CircularQueue()
 {
-	InitializeQueue(default_max_size_);   // set queue to max size.
+	InitializeQueue(kDefaultMaxSize);   // set queue to max size.
 }
 
 // Allocate queue whose size is parameter
@@ -220,7 +220,7 @@ void CircularQueue<T>::MakeEmpty()
 
 // Adds new item to the last of the queue.
 template <typename T>
-void CircularQueue<T>::EnQueue(T item)
+void CircularQueue<T>::EnQueue(const T& item)
 {
 	// full일 때는 추가로 삽입하지 않음.
 	if (IsFull()) {

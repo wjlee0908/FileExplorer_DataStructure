@@ -44,7 +44,7 @@ public:
 	*	@post	None.
 	*	@return	nullptr true, otherwise false.
 	*/
-	bool IsNextNull();
+	bool IsNextNull() const;
 
 	/**
 	*	@brief	Get first data of the tree.
@@ -52,7 +52,7 @@ public:
 	*	@post	Current pointer is moved to the first node.
 	*	@return	Return first data of the tree.
 	*/
-	T First();
+	T& First();
 
 	/**
 	*	@brief	Get next data of the current pointer.
@@ -60,7 +60,7 @@ public:
 	*	@post	Current pointer is moved to the next node.
 	*	@return	Return next data of the tree. if next is null, return current data.
 	*/
-	T Next();
+	T& Next();
 
 	/**
 	*	@brief	Get current node of the tree
@@ -68,7 +68,20 @@ public:
 	*	@post	out_node is assigned to current_node reference.
 	*	@return	true if current node exist, otherwise false.
 	*/
-	Node<T>* GetCurrentNode();
+	Node<T>* GetCurrentNode() {
+		// call const version of GetCurrentNode and cast return value to non-const
+		return const_cast<Node<T>*>(
+			static_cast<const TreeIterator<T>&>(*this).GetCurrentNode()
+			);
+	}
+
+	/**
+	*	@brief	Get current node of the tree. For const iterator.
+	*	@pre	Iterator has been initialized.
+	*	@post	out_node is assigned to current_node reference.
+	*	@return	true if current node exist, otherwise false.
+	*/
+	const Node<T>* GetCurrentNode() const;
 
 	/**
 	*	@brief	Get current item of the tree
@@ -76,7 +89,20 @@ public:
 	*	@post	None
 	*	@return	current item reference.
 	*/
-	T& operator*() const;
+	T& operator*() {
+		// call const version of GetCurrentNode and cast return value to non-const
+		return const_cast<T&>(
+			static_cast<const TreeIterator<T>&>(*this).operator*()
+			);
+	}
+
+	/**
+	*	@brief	Get current item of the tree. For const iteator
+	*	@pre	Iterator has been initialized.
+	*	@post	None
+	*	@return	current item reference.
+	*/
+	const T& operator*() const;
 
 	/**
 	*	@brief	Reference current item of the tree
@@ -84,7 +110,20 @@ public:
 	*	@post	None
 	*	@return	current item reference.
 	*/
-	T& operator-> () const;
+	T& operator->() {
+		// call const version of GetCurrentNode and cast return value to non-const
+		return const_cast<T&>(
+			static_cast<const TreeIterator<T>&>(*this).operator->()
+			);
+	}
+
+	/**
+	*	@brief	Reference current item of the tree
+	*	@pre	Iterator has been initialized.
+	*	@post	None
+	*	@return	current item reference.
+	*/
+	const T& operator->() const;
 
 private:
 	/**
@@ -113,7 +152,7 @@ bool TreeIterator<T>::IsNull() const {
 
 // Returns whether pointer of next node is null.
 template <typename T>
-bool TreeIterator<T>::IsNextNull() {
+bool TreeIterator<T>::IsNextNull() const{
 	if (!stack_.IsEmpty()) {	// pop할 노드 없으면 next null
 		return true;
 	}
@@ -124,7 +163,7 @@ bool TreeIterator<T>::IsNextNull() {
 
 // Get first data of the tree.
 template <typename T>
-T TreeIterator<T>::First() {
+T& TreeIterator<T>::First() {
 	current_node_ = tree_.root_;
 	if (tree_.IsEmpty()) {
 		// throw std::out_of_range("Head(): tree is empty");
@@ -136,7 +175,7 @@ T TreeIterator<T>::First() {
 
 // Get next data of the current pointer.
 template <typename T>
-T TreeIterator<T>::Next() {
+T& TreeIterator<T>::Next() {
 	if (IsNull()) {
 		throw std::out_of_range("Next() : current node is NULL");
 	}
@@ -154,7 +193,7 @@ T TreeIterator<T>::Next() {
 
 // Get current node of the tree
 template <typename T>
-Node<T>* TreeIterator<T>::GetCurrentNode() {
+const Node<T>* TreeIterator<T>::GetCurrentNode() const {
 	if (IsNull()) {
 		throw std::invalid_argument("GetCurrentNode(): current node is null");
 		return nullptr;
@@ -165,7 +204,7 @@ Node<T>* TreeIterator<T>::GetCurrentNode() {
 }
 
 template<typename T>
-T & TreeIterator<T>::operator*() const
+const T & TreeIterator<T>::operator*() const
 {
 	if (IsNull()) {
 		throw invalid_argument("iterating item is null");
@@ -174,7 +213,7 @@ T & TreeIterator<T>::operator*() const
 }
 
 template<typename T>
-T & TreeIterator<T>::operator->() const
+const T & TreeIterator<T>::operator->() const
 {
 	if (IsNull()) {
 		throw invalid_argument("iterating item is null");

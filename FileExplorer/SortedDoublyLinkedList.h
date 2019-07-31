@@ -16,7 +16,7 @@ public:
 	*	@post	Item is inserted in this list.
 	*	@return	retrun address of created item if works well, oterwise return NULL;
 	*/
-	virtual T* Add(T item) override;
+	virtual T* Add(const T& item) override;
 
 	/**
 	*	@brief	Change key of item which is in this list.
@@ -26,7 +26,7 @@ public:
 	*   @param  changed_item    item that its key is changed
 	*	@return	true if this function works well, otherwise false.
 	*/
-	bool ChangeItemKey(T original_item, T changed_item);
+	bool ChangeItemKey(const T& original_item, const T& changed_item);
 
 private:
 	/**
@@ -44,12 +44,12 @@ private:
 	*   @param  item_check    item to check duplication.
 	*   @return retruns boolean expresses whether duplicated item is exist.
 	*/
-	bool IsDupliactedItemExists(T item_check);
+	bool IsDupliactedItemExists(const T& item_check) const;
 };
 
 // Add item into this list.
 template <typename T>
-T* SortedDoublyLinkedList<T>::Add(T item)
+T* SortedDoublyLinkedList<T>::Add(const T& item)
 {
 	DoublyPointingNode<T>* new_node = new DoublyPointingNode<T>;
 
@@ -65,7 +65,7 @@ T* SortedDoublyLinkedList<T>::Add(T item)
 
 // Change value of item which is in this list.
 template<typename T>
-bool SortedDoublyLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
+bool SortedDoublyLinkedList<T>::ChangeItemKey(const T& original_item, const T& changed_item)
 {
 	// DoublyPointingIterator<T> iter(this*);
 	DoublyPointingNode<T>* replaced_node;
@@ -156,7 +156,7 @@ bool SortedDoublyLinkedList<T>::InsertNodeSorted(DoublyPointingNode<T>* node)
 }
 
 template<typename T>
-bool SortedDoublyLinkedList<T>::IsDupliactedItemExists(T item_check)
+bool SortedDoublyLinkedList<T>::IsDupliactedItemExists(const T& item_check) const
 {
 	if (Get(item_check)) {
 		return true;

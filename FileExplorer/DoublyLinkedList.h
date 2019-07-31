@@ -31,7 +31,7 @@ public:
 	/**
 	*	default constructor.
 	*/
-	DoublyLinkedList();
+	DoublyLinkedList() : length_(0), head_(nullptr), tail_(nullptr) {}
 
 	/**
 	*	destructor.
@@ -84,7 +84,7 @@ public:
 	*	@post	Item is inserted in this list.
 	*	@return	retrun address of created item if works well, oterwise return NULL;
 	*/
-	virtual T* Add(T item);
+	virtual T* Add(const T& item);
 
 	/**
 	*	@brief	Delete item from this list.
@@ -92,7 +92,7 @@ public:
 	*	@post	Item is deleted from this list.
 	*	@return	1 if this function works well, otherwise 0.
 	*/
-	int Delete(T item);
+	int Delete(const T& item);
 
 	/**
 	*	@brief	Change value of item which is in this list.
@@ -100,7 +100,7 @@ public:
 	*	@post	Item's value is changed.
 	*	@return	1 if this function works well, otherwise 0.
 	*/
-	int Replace(T item);
+	int Replace(const T& item);
 
 	/**
 	*	@brief	Returns list element whose key matches item's key (if present).
@@ -116,15 +116,40 @@ public:
 	*	@post	If there is an element whose key matches with item's key then found node is assgined to found_node.
 	*	@return	true if any element's primary key matches with item's, otherwise false.
 	*/
-	DoublyPointingNode<T>* GetNode(T& item);
+	DoublyPointingNode<T>* GetNode(const T& item) {
+		// calls const version and cast return item to non-const
+		return const_cast<DoublyPointingNode<T>*>(
+			static_cast<DoublyLinkedList<T>&>(*this).GetNode(item)
+			);
+	}
 
 	/**
-	*	@brief	Get last element of list
+	*	@brief	Returns list node whose key matches item's key (if present). For const list.
+	*	@pre	Key member of item is initialized.
+	*	@post	If there is an element whose key matches with item's key then found node is assgined to found_node.
+	*	@return	true if any element's primary key matches with item's, otherwise false.
+	*/
+	const DoublyPointingNode<T>* GetNode(const T& item) const;
+
+	/**
+	*	@brief	Get last element of list for const list.
 	*	@pre	list elements are set.
 	*	@post	none.
 	*   @return last element of this list
 	*/
-	DoublyPointingNode<T>* GetTail();
+	DoublyPointingNode<T>* GetTail() {
+		return const_cast<DoublyPointingNode<T>*>(
+			static_cast<DoublyLinkedList<T>&>(*this).GetTail()
+			);
+	}
+
+	/**
+	*	@brief	Get last element of list for const list.
+	*	@pre	list elements are set.
+	*	@post	none.
+	*   @return last element of this list
+	*/
+	const DoublyPointingNode<T>* GetTail() const;
 
 	/**
 	*	@brief	Get address of last item of list
@@ -133,13 +158,25 @@ public:
 	*   @return address  of last item of this list
 	*/
 	T* GetTailItemAddress() {
+		return const_cast<T*>(
+			static_cast<const DoublyLinkedList<T>&>(*this).GetTailItemAddress()
+			);
+	}
+
+	/**
+	*	@brief	Get address of last item of list
+	*	@pre	list elements are set.
+	*	@post	none.
+	*   @return address  of last item of this list
+	*/
+	const T* GetTailItemAddress() const {
 		if (tail_ == NULL) {
 			return NULL;
 		}
 		else {
 			return &(tail_->data)
 		}
-	};
+	}
 
 	/**
 	*	@brief	Copy parameter list and assign to this list.
@@ -164,18 +201,6 @@ private:
 	*/
 	void AssignCopy(const DoublyLinkedList<T>& copied_object);
 };
-
-
-
-// Class constructor
-template <typename T>
-DoublyLinkedList<T>::DoublyLinkedList()
-{
-	length_ = 0;
-	head_ = nullptr;
-	tail_ = nullptr;
-}
-
 
 // Class destructor
 template <typename T>
@@ -242,7 +267,7 @@ inline bool DoublyLinkedList<T>::IsEmpty() const
 
 // Add item into this list.
 template <typename T>
-T* DoublyLinkedList<T>::Add(T item)
+T* DoublyLinkedList<T>::Add(const T& item)
 {
 	DoublyPointingNode<T>* new_node = new DoublyPointingNode<T>;
 
@@ -269,7 +294,7 @@ T* DoublyLinkedList<T>::Add(T item)
 
 // Delete item from this list.
 template <typename T>
-int DoublyLinkedList<T>::Delete(T item)
+int DoublyLinkedList<T>::Delete(const T& item)
 {
 	DoublyPointingNode<T>* deleted_node;
 	bool is_found;
@@ -312,7 +337,7 @@ int DoublyLinkedList<T>::Delete(T item)
 
 // Change value of item which is in this list.
 template <typename T>
-int DoublyLinkedList<T>::Replace(T item)
+int DoublyLinkedList<T>::Replace(const T& item)
 {
 	bool is_found;
 	DoublyPointingNode<T>* target_node;
@@ -347,7 +372,7 @@ bool DoublyLinkedList<T>::Get(T& item)
 
 // Returns list node whose key matches item's key (if present).
 template<typename T>
-DoublyPointingNode<T>* DoublyLinkedList<T>::GetNode(T& item)
+const DoublyPointingNode<T>* DoublyLinkedList<T>::GetNode(const T& item) const
 {
 	DoublyPointingIterator<T> iterator(*this);
 	DoublyPointingNode<T>* current_node;
@@ -401,7 +426,7 @@ void DoublyLinkedList<T>::AssignCopy(const DoublyLinkedList<T> & copied_object)
 
 // Get last element of list
 template<typename T>
-DoublyPointingNode<T>* DoublyLinkedList<T>::GetTail() {
+const DoublyPointingNode<T>* DoublyLinkedList<T>::GetTail() const{
 	return tail_;
 }
 

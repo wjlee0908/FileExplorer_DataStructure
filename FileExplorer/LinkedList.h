@@ -3,7 +3,7 @@
 
 
 /**
-*	Structure for node to use in Unsortec Linked list.
+*	Structure for node to use in Unsorted Linked list.
 */
 template <typename T>
 struct ListNode
@@ -23,12 +23,7 @@ public:
 	/**
 	*	default constructor.
 	*/
-	LinkedList();
-
-	/**
-	*	destructor.
-	*/
-	~LinkedList();
+	LinkedList() : length_(0), head_(nullptr), iterator_(nullptr) {}
 
 	/**
 	*    copy constructor
@@ -37,6 +32,11 @@ public:
 	{
 		AssignCopy();
 	}
+
+	/**
+	*	destructor.
+	*/
+	~LinkedList();
 
 	/**
 	*	@brief	Initialize list to empty state.
@@ -67,7 +67,7 @@ public:
 	*	@post	Item is inserted in this list.
 	*	@return	retrun address of created item if works well, oterwise return NULL;
 	*/
-	T* Add(T item);
+	virtual T* Add(const T& item);
 
 	/**
 	*	@brief	Delete item from this list.
@@ -99,14 +99,22 @@ public:
 	*	@post	none.
 	*	@return	address of found item. if not found, returns NULL
 	*/
-	T* GetItemAddress(const T item);
+	T* GetItemAddress(const T& item);
+
+	/**
+	*	@brief	Retrieve list element whose key matches item's key (if present). For const list.
+	*	@pre	Key member of item is initialized.
+	*	@post	none.
+	*	@return	address of found item. if not found, returns NULL.
+	*/
+	const T* GetItemAddress(const T& item) const;
 
 	/**
 	*	@brief	Initialize current pointer for an iteration through the list.
 	*	@pre	None.
 	*	@post	current pointer is prior to list. current pointer has been initialized.
 	*/
-	void ResetIterator();
+	void ResetIterator() const;
 
 	/**
 	*	@brief	Move iterator to next list node.
@@ -114,7 +122,7 @@ public:
 	*	@post	iterator is updated to next position.
 	*   @return current iterating node pointer.
 	*/
-	ListNode<T>* WalkIterator();
+	ListNode<T>* WalkIterator() const;
 
 	/**
 	*	@brief	Get the next element in list.
@@ -139,13 +147,27 @@ public:
 	*   @return address  of last item of this list
 	*/
 	T* GetTailItemAddress() {
-		if (GetTail() == NULL) {
-			return NULL;
+		// cast const T* to non-const T*
+		return const_cast<T*>(
+			// call const version of GetTailItemAddress
+			static_cast<const LinkedList<T>&>(*this).GetTailItemAddress()
+		);
+	}
+
+	/**
+	*	@brief	Get address of last item of list. For const object.
+	*	@pre	list elements are set.
+	*	@post	none.
+	*   @return address  of last item of this list
+	*/
+	const T* GetTailItemAddress() const {
+		if (GetTail() == nullptr) {
+			return nullptr;
 		}
 		else {
-			return &(GetTail()->data)
+			return &(GetTail()->data);
 		}
-	};
+	}
 
 	/**
 	*	@brief	Copy parameter list and assign to this list.
@@ -158,7 +180,7 @@ public:
 
 protected:
 	ListNode<T>* head_;	///< Pointer for pointing a first node.
-	ListNode<T>* iterator_;	///< Node pointer for pointing current iterating node.
+	mutable ListNode<T>* iterator_;	///< Node pointer for pointing current iterating node.
 	int length_;	///< Number of node in the list.
 
 private:
@@ -170,17 +192,6 @@ private:
 	*/
 	void AssignCopy(const LinkedList<T>& copied_object);
 };
-
-
-// Class constructor
-template <typename T>
-LinkedList<T>::LinkedList()
-{
-	length_ = 0;
-	head_ = NULL;
-	iterator_ = NULL;
-}
-
 
 // Class destructor
 template <typename T>
@@ -230,7 +241,7 @@ inline bool LinkedList<T>::IsEmpty() const
 
 // Add item into this list.
 template <typename T>
-T* LinkedList<T>::Add(T item)
+T* LinkedList<T>::Add(const T& item)
 {
 	ListNode<T>* new_node = new ListNode<T>;
 
@@ -359,7 +370,18 @@ int LinkedList<T>::Get(T& item)
 
 // Retrieve list element whose key matches item's key (if present).
 template<typename T>
-T * LinkedList<T>::GetItemAddress(const T item)
+T* LinkedList<T>::GetItemAddress(const T& item)
+{
+	// cast const pointer to not-const pointer
+	return const_cast<T*>(
+		// call const version of GetItemAddress
+		static_cast<const LinkedList<T>&>(*this).GetItemAddress(item);
+	)
+}
+
+// const list version of GetItemAddress
+template<typename T>
+const T* LinkedList<T>::GetItemAddress(const T& item) const
 {
 	ResetIterator();
 
@@ -372,18 +394,18 @@ T * LinkedList<T>::GetItemAddress(const T item)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 // Initializes iterator pointer to NULL
 template <typename T>
-void LinkedList<T>::ResetIterator()
+void LinkedList<T>::ResetIterator() const
 {
 	iterator_ = NULL;
 }
 
 template<typename T>
-ListNode<T>* LinkedList<T>::WalkIterator()
+ListNode<T>* LinkedList<T>::WalkIterator() const
 {
 	// current pointer가 초기화된 상태면 head 가리킴.
 	if (iterator_ == NULL) {

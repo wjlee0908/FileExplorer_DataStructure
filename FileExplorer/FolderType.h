@@ -48,7 +48,7 @@ public:
 	*	@post	none.
 	*	@return	number of sub folders.
 	*/
-	int GetNumSubFolder() {
+	int GetNumSubFolder() const {
 		return num_sub_folder_;
 	}
 
@@ -58,7 +58,7 @@ public:
 	*	@post	none.
 	*	@return	adderss of parent folder.
 	*/
-	FolderType* GetParentFolder() {
+	FolderType* GetParentFolder() const {
 		return parent_folder_;
 	}
 
@@ -68,7 +68,7 @@ public:
 	*	@post	none.
 	*	@return	address of sub folders list.
 	*/
-	const BinarySearchTree<FolderType>* GetSubFolders() {
+	const BinarySearchTree<FolderType>* GetSubFolders() const {
 		return sub_folder_list_;
 	}
 
@@ -85,7 +85,7 @@ public:
 	*	@post	none.
 	*	@return	boolean that expresses whether this is root folder.
 	*/
-	bool IsRootFolder() {
+	bool IsRootFolder() const{
 		return (parent_folder_ == NULL);
 	}
 
@@ -94,7 +94,7 @@ public:
 	*	@pre	num_sub_folder is set.
 	*	@post	number of sub folders is on screen.
 	*/
-	void DisplayNumOfSubFoldersOnScreen() {
+	void DisplayNumOfSubFoldersOnScreen() const{
 		cout << "\tNumber of Sub folders : " << num_sub_folder_ << endl;
 	}
 
@@ -137,7 +137,7 @@ public:
 	*   @param  folder    folder reference that user tried to find.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	FolderType* GetSubFolder();
+	FolderType* GetSubFolder() const;
 
 	/**
 	*	@brief  Retrieve folder by folder name.
@@ -145,14 +145,14 @@ public:
 	*	@post	none.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int RetrieveFolderByName();
+	int RetrieveFolderByName() const;
 
 	/**
 	*	@brief  Display all sub folders information on screen.
 	*	@pre	sub folder list is set.
 	*	@post	sub folder list is diaplyed on screen.
 	*/
-	void DisplayAllSubFolders();
+	void DisplayAllSubFolders() const;
 
 	/**
 	*	@brief	Read a record from file.

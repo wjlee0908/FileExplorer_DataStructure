@@ -245,7 +245,7 @@ private:
 	*/
 	Node<T>* Copy(Node<T>* tree, const Node<T>* copied_tree);
 
-	Node<T>* root_;		// Node 타입의 root
+	Node<T>* root_;		///< Node 타입의 root
 };
 
 // 생성자

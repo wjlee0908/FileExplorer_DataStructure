@@ -195,7 +195,7 @@ int FolderType::ChangeSubFolderName()
 } 
 
 // Get sub folder by name
-FolderType* FolderType::GetSubFolder() {
+FolderType* FolderType::GetSubFolder() const{
 	FolderType finding_folder;
 	FolderType* sub_folder;
 	bool is_found;
@@ -213,7 +213,7 @@ FolderType* FolderType::GetSubFolder() {
 }
 
 // Retrieve folders containing finding name
-int FolderType::RetrieveFolderByName() {
+int FolderType::RetrieveFolderByName() const {
 	FolderType retrieving_folder;
 	bool is_found = false;
 
@@ -238,7 +238,7 @@ int FolderType::RetrieveFolderByName() {
 }
 
 // Display all sub folders of this folder
-void FolderType::DisplayAllSubFolders() {
+void FolderType::DisplayAllSubFolders() const {
 	FolderType displayed_folder;
 
 	cout << "\n\tSub Folder list" << endl;

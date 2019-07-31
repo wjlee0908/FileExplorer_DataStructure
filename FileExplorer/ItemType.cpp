@@ -11,7 +11,7 @@ ItemType::ItemType(const ItemType & copied_data)
 }
 
 // Get item path by string type
-string ItemType::GetPathString()
+string ItemType::GetPathString() const
 {
 	string path_string = "";
 
@@ -59,7 +59,7 @@ void ItemType::AssignCopy(const ItemType & copied_object)
 	
 }
 
-RelationType ItemType::CompareByName(const ItemType & data)
+RelationType ItemType::CompareByName(const ItemType & data) const
 {
 	if (this->name_.compare(data.name_) > 0)
 		return GREATER;

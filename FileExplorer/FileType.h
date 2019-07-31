@@ -3,8 +3,11 @@
 class FileType : public ItemType
 {
 public:
-	FileType();
-	FileType(string name, FolderType* parent_folder);
-	~FileType();
+	FileType() : ItemType::ItemType() {}
+
+	FileType(string name, FolderType* parent_folder)
+		: ItemType::ItemType(name, 0, parent_folder) {}
+
+	~FileType() {}
 };
 

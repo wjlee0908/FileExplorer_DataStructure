@@ -30,12 +30,13 @@ public:
 	/**
 	*	default constructor.
 	*/
-	ItemType() {
-		name_ = "";
-		size_ = 0;
+	ItemType() : ItemType("", 0, nullptr) {}
+
+	ItemType(string name, int size, FolderType* parent_folder)
+		: name_(name), size_(size), parent_folder_(parent_folder_) {
 		GenerateCreatedTime();
-		parent_folder_ = NULL;
 	}
+
 	/**
 	*	destructor.
 	*/
@@ -77,7 +78,7 @@ public:
 	*	@post	none.
 	*	@return	item path string.
 	*/
-	string GetPathString();
+	string GetPathString() const;
 
 	/**
 	*	@brief	Get Created time.
@@ -129,7 +130,7 @@ public:
 	*	@pre	item name is set.
 	*	@post	item name is on screen.
 	*/
-	void DisplayNameOnScreen()
+	void DisplayNameOnScreen() const
 	{
 		cout << "\tName : " << name_ << endl;
 	}
@@ -140,7 +141,7 @@ public:
 	*	@pre	item size is set.
 	*	@post	item size is on screen.
 	*/
-	void DisplaySizeOnScreen() {
+	void DisplaySizeOnScreen() const {
 		cout << "\tSize : " << size_ << endl;
 	}
 
@@ -149,7 +150,7 @@ public:
 	*	@pre	item path is set.
 	*	@post	item path is on screen.
 	*/
-	void DisplayPathOnScreen()
+	void DisplayPathOnScreen() const
 	{
 		cout << "\tPath : " << GetPathString() << endl;
 	}
@@ -159,7 +160,7 @@ public:
 	*	@pre	item's created time is set.
 	*	@post	item's  is on screen.
 	*/
-	void DisplayCreatedTimeOnScreen() {
+	void DisplayCreatedTimeOnScreen() const {
 		cout << "\tCreated time : " << created_time_ << endl;
 	}
 
@@ -168,7 +169,7 @@ public:
 	*	@pre	item information is set.
 	*	@post	item information is on screen.
 	*/
-	virtual void DisplayInformationOnScreen()
+	virtual void DisplayInformationOnScreen() const
 	{
 		DisplayNameOnScreen();
 		DisplayPathOnScreen();
@@ -207,7 +208,7 @@ public:
 	*   @param  comparing_data    data to compare
 	*   @return retruns boolean expresses whether this is greater than comparing data.
 	*/
-	bool operator> (const ItemType& comparing_data) { return (CompareByName(comparing_data) == GREATER); }
+	bool operator> (const ItemType& comparing_data) const { return (CompareByName(comparing_data) == GREATER); }
 
 	/**
 	*	@brief	Returns whether this is less than comparing data.
@@ -217,7 +218,7 @@ public:
 	*   @param  comparing_data    data to compare
 	*   @return retruns boolean expresses whether this is less than comparing data.
 	*/
-	bool operator< (const ItemType& comparing_data) { return (CompareByName(comparing_data) == LESS); }
+	bool operator< (const ItemType& comparing_data) const { return (CompareByName(comparing_data) == LESS); }
 
 	/**
 	*	@brief	Returns whether this is equal to comparing data
@@ -227,7 +228,7 @@ public:
 	*   @param  comparing_data    data to compare
 	*   @return retruns boolean expresses whether whether this is equal to comparing data.
 	*/
-	bool operator== (const ItemType& comparing_data) { return (CompareByName(comparing_data) == EQUAL); }
+	bool operator== (const ItemType& comparing_data) const { return (CompareByName(comparing_data) == EQUAL); }
 
 	/**
 	*	@brief	output stream 출력 함수 오버로딩
@@ -257,7 +258,7 @@ protected:
 	*			return GREATER if this.name > data.name then,
 	*			otherwise return EQUAL.
 	*/
-	RelationType CompareByName(const ItemType &data);
+	RelationType CompareByName(const ItemType &data) const;
 
 	string name_;		///< item name.
 	int size_;          ///< item size.

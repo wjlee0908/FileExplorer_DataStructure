@@ -98,28 +98,28 @@ public:
 	*	@pre	folder should be initialized.
 	*	@post	folder property is displayed on screen.
 	*/
-	void DisplayProperty();
+	void DisplayProperty() const;
 
 	/**
 	*	@brief	displays current working directory.
 	*	@pre	folder should be initialized.
 	*	@post	folder directory is displayed on screen.
 	*/
-	void DisplayWoringDirectory();
+	void DisplayWoringDirectory() const;
 
 	/**
 	*	@brief	Display all sub folders of current folder on screen.
 	*	@pre	none.
 	*	@post	none.
 	*/
-	void DisplayAllSubFolders();
+	void DisplayAllSubFolders() const;
 
 	/**
 	*	@brief	Display all recent folders on screen.
 	*	@pre	none.
 	*	@post	none.
 	*/
-	void DisplayRecentFolders();
+	void DisplayRecentFolders() const;
 
 	/**
 	*	@brief	Open a file by file descriptor as an input file.
@@ -145,7 +145,7 @@ public:
 	*	@post	prints all folders that contain input word.
 	*	@return	return 1 if this function works well, otherwise 0.
 	*/
-	int RetriveFolderByName();
+	int RetriveFolderByName() const;
 
 	/**
 	*	@brief	Change Folder name.

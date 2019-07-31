@@ -156,19 +156,19 @@ int Application::GoToPreviousFolder()
 	return 1;
 }
 
-void Application::DisplayProperty() {
+void Application::DisplayProperty() const {
 	current_folder_->DisplayInformationOnScreen();
 }
 
 // displays current working directory.
-void Application::DisplayWoringDirectory()
+void Application::DisplayWoringDirectory() const
 {
 	cout << "\tWorking Directory" << endl;
 	current_folder_->DisplayPathOnScreen();
 }
 
 //이름을 입력받은 item으로 리스트에서 item을 찾아서 출력한다.
-int Application::RetriveFolderByName()
+int Application::RetriveFolderByName() const
 {
 	return current_folder_->RetrieveFolderByName();
 }
@@ -210,13 +210,13 @@ int Application::DeleteFolder()
 }
 
 // Display all sub folders of current folder on screen.
-void Application::DisplayAllSubFolders()
+void Application::DisplayAllSubFolders() const
 {
 	current_folder_->DisplayAllSubFolders();
 }
 
 // Display all recent folders on screen.
-void Application::DisplayRecentFolders()
+void Application::DisplayRecentFolders() const
 {
 	CircularQueue<FolderType*> folders;    // folders to display
 	string folder_name;    // folder name to display.

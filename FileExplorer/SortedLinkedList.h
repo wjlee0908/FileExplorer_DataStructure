@@ -16,7 +16,7 @@ class SortedLinkedList : public LinkedList<T>
 	*	@post	Item is inserted in this list.
 	*	@return	retrun address of created item if works well, oterwise return NULL;
 	*/
-	T* Add(T item);
+	virtual T* Add(const T& item) override;
 
 	/**
 	*	@brief	Change key of item which is in this list.
@@ -26,7 +26,7 @@ class SortedLinkedList : public LinkedList<T>
 	*   @param  changed_item    item that its key is changed
 	*	@return	1 if this function works well, otherwise 0.
 	*/
-	int ChangeItemKey(T original_item, T changed_item);
+	int ChangeItemKey(const T& original_item, const T& changed_item);
 
 private:
 	/**
@@ -44,12 +44,12 @@ private:
 	*   @param  item_check    item to check duplication.
 	*   @return retruns boolean expresses whether duplicated item is exist.
 	*/
-	bool IsDupliactedItemExists(T item_check);
+	bool IsDupliactedItemExists(T item_check) const;
 };
 
 // Add item into this list.
 template <typename T>
-T* SortedLinkedList<T>::Add(T item)
+T* SortedLinkedList<T>::Add(const T& item)
 {
 	ListNode<T>* new_node = new ListNode<T>;
 
@@ -66,7 +66,7 @@ T* SortedLinkedList<T>::Add(T item)
 
 // Change value of item which is in this list.
 template<typename T>
-int SortedLinkedList<T>::ChangeItemKey(T original_item, T changed_item)
+int SortedLinkedList<T>::ChangeItemKey(const T& original_item, const T& changed_item)
 {
 	ListNode<T>* previous = NULL;
 	ListNode<T>* replaced_node = NULL;
@@ -157,7 +157,7 @@ int SortedLinkedList<T>::InsertNodeSorted(ListNode<T>* node)
 }
 
 template<typename T>
-bool SortedLinkedList<T>::IsDupliactedItemExists(T item_check)
+bool SortedLinkedList<T>::IsDupliactedItemExists(T item_check) const
 {
 	if (Get(item_check) == 1) {
 		return true;

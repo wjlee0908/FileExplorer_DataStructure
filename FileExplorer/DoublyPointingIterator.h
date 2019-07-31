@@ -42,23 +42,23 @@ public:
 	*	@post	None.
 	*	@return	nullptr true, otherwise false.
 	*/
-	bool IsNextNull();
+	bool IsNextNull() const;
 
 	/**
-	*	@brief	Get first data of the list.
+	*	@brief	Get first data of the list. For const iterator.
 	*	@pre	Iterator has been initialized.
 	*	@post	Current pointer is moved to the first node.
 	*	@return	Return first data of the list.
 	*/
-	T First();
+	T& First();
 
 	/**
-	*	@brief	Get next data of the current pointer.
+	*	@brief	Get next data of the current pointer. For const iterator.
 	*	@pre	Iterator has been initialized.
 	*	@post	Current pointer is moved to the next node.
 	*	@return	Return next data of the list. if next is null, return current data.
 	*/
-	T Next();
+	T& Next();
 
 	/**
 	*	@brief	Get current node of the list
@@ -66,7 +66,21 @@ public:
 	*	@post	out_node is assigned to current_node reference.
 	*	@return	true if current node exist, otherwise false.
 	*/
-	DoublyPointingNode<T>* GetCurrentNode();
+	DoublyPointingNode<T>* GetCurrentNode() {
+		// call const version of GetCurrentNode() and cast return value to non-const
+		return const_cast<DoublyPointingNode<T>*>(
+			static_cast<const DoublyPointingIterator<T>&>(*this).GetCurrentNode()
+			);
+	}
+
+	/**
+	*	@brief	Get current node of the list.
+	*	@pre	Iterator has been initialized.
+	*	@post	out_node is assigned to current_node reference.
+	*	@return	true if current node exist, otherwise false.
+	*/
+	const DoublyPointingNode<T>* GetCurrentNode() const;
+
 
 	/**
 	*	@brief	Get current item of the list
@@ -74,7 +88,20 @@ public:
 	*	@post	None
 	*	@return	current item reference. 
 	*/
-	T& operator*() const;
+	T& operator*() {
+		// call const version of operator*() and cast return value to non-const
+		return const_cast<T&>(
+			static_cast<const DoublyPointingIterator<T>&>*(*this)
+			);
+	}
+
+	/**
+	*	@brief	Get current item of the list. For const iterator.
+	*	@pre	Iterator has been initialized.
+	*	@post	None
+	*	@return	current item reference.
+	*/
+	const T& operator*() const;
 
 	/**
 	*	@brief	Reference current item of the list
@@ -82,7 +109,20 @@ public:
 	*	@post	None
 	*	@return	current item reference.
 	*/
-	T& operator-> () const;
+	T& operator->() {
+		// call const version of operator->() and cast return value to non-const
+		return const_cast<T&>(
+			static_cast<const DoublyPointingIterator<T>&>(*this).operator->()
+			);
+	}
+
+	/**
+	*	@brief	Reference current item of the list
+	*	@pre	Iterator has been initialized.
+	*	@post	None
+	*	@return	current item reference.
+	*/
+	const T& operator->() const;
 
 private:
 	const DoublyLinkedList<T>& list_;	///< list for iterating
@@ -103,7 +143,7 @@ bool DoublyPointingIterator<T>::IsNull() const{
 
 // Returns whether pointer of next node is null.
 template <typename T>
-bool DoublyPointingIterator<T>::IsNextNull() {
+bool DoublyPointingIterator<T>::IsNextNull() const{
 	if (current_node_ == nullptr || current_node_->next == nullptr) {
 		return true;
 	}
@@ -114,11 +154,11 @@ bool DoublyPointingIterator<T>::IsNextNull() {
 
 // Get first data of the list.
 template <typename T>
-T DoublyPointingIterator<T>::First() {
+T& DoublyPointingIterator<T>::First(){
 	current_node_ = list_.head_;
 	if (list_.IsEmpty()) {
-		// throw std::out_of_range("Head(): list is empty");
-		return T(); // return dummy
+		throw std::out_of_range("Head(): list is empty");
+		//return T(); // return dummy
 	}
 
 	return current_node_->data;
@@ -126,7 +166,7 @@ T DoublyPointingIterator<T>::First() {
 
 // Get next data of the current pointer.
 template <typename T>
-T DoublyPointingIterator<T>::Next() {
+T& DoublyPointingIterator<T>::Next(){
 	if (IsNull()) {
 		throw std::out_of_range("Next() : current node is NULL");
 	}
@@ -141,7 +181,7 @@ T DoublyPointingIterator<T>::Next() {
 
 // Get current node of the list
 template <typename T>
-DoublyPointingNode<T>* DoublyPointingIterator<T>::GetCurrentNode() {
+const DoublyPointingNode<T>* DoublyPointingIterator<T>::GetCurrentNode() const {
 	if (IsNull()) {
 		throw std::invalid_argument("GetCurrentNode(): current node is null");
 		return nullptr;
@@ -152,7 +192,7 @@ DoublyPointingNode<T>* DoublyPointingIterator<T>::GetCurrentNode() {
 }
 
 template<typename T>
-T & DoublyPointingIterator<T>::operator*() const
+const T & DoublyPointingIterator<T>::operator*() const
 {
 	if (IsNull()) {
 		throw invalid_argument("iterating item is null");
@@ -161,7 +201,7 @@ T & DoublyPointingIterator<T>::operator*() const
 }
 
 template<typename T>
-T & DoublyPointingIterator<T>::operator->() const
+const T & DoublyPointingIterator<T>::operator->() const
 {
 	if (IsNull()) {
 		throw invalid_argument("iterating item is null");

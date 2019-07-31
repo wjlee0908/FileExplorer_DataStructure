@@ -105,11 +105,18 @@ public:
 	T Pop();
 
 	/**
-	*	@brief	Returns a copy of top item on the stack.
+	*	@brief	Returns a top item on the stack.
 	*	@pre	Stack has been initialized.
-	*	@post	If (stack is empty), EmptyStack exception is thrown; otherwise, top element has been removed from stack.
+	*	@post	If (stack is empty), EmptyStack exception is thrown; oterwise none.
 	*/
-	T GetTopElement();
+	T& GetTopElement();
+
+	/**
+	*	@brief	Returns a top item on the stack. for the const stack.
+	*	@pre	Stack has been initialized.
+	*	@post	If (stack is empty), EmptyStack exception is thrown; otherwise none.
+	*/
+	const T& GetTopElement() const;
 
 	/**
 	*	@brief	Print all the items in the stack on output stream.
@@ -243,7 +250,17 @@ T Stack<T>::Pop()
 
 // Returns a copy of top item on the stack.
 template<typename T>
-T Stack<T>::GetTopElement()
+T& Stack<T>::GetTopElement()
+{
+	// cast return type to non-const reference
+	return const_cast<T&>(
+		// calls const version of GetTopElement
+		static_cast<const Stack<T>&>(*this).GetTopElement()
+		);
+}
+
+template<typename T>
+const T& Stack<T>::GetTopElement() const
 {
 	if (IsEmpty())
 		throw ExceptionEmptyStack();
