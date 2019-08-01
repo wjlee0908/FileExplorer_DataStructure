@@ -100,6 +100,27 @@ public:
 	/**
 	*	@brief	Retrieve list element whose key matches item's key (if present).
 	*	@pre	Key member of item is initialized.
+	*	@post	found item's reference is returned
+	*	@return	1 if any element's primary key matches with item's, otherwise 0.
+	*/
+	T& Get(const T& key) {
+		// call const version and cast return value to non-const
+		return const_cast<T&>(
+			static_cast<const LinkedList<T>&>(*this).Get()
+			);
+	}
+
+	/**
+	*	@brief	Retrieve list element whose key matches item's key (if present, for const object).
+	*	@pre	Key member of item is initialized.
+	*	@post	found item's reference is returned
+	*	@return	1 if any element's primary key matches with item's, otherwise 0.
+	*/
+	const T& Get(const T& key) const;
+
+	/**
+	*	@brief	Retrieve list element whose key matches item's key (if present).
+	*	@pre	Key member of item is initialized.
 	*	@post	none.
 	*	@return	address of found item. if not found, returns NULL
 	*/
@@ -370,6 +391,12 @@ int LinkedList<T>::Get(T& item)
 		return 1;
 	else
 		return 0;	//찾으면 1, 그렇지 못하면 0을 리턴한다.
+}
+
+template<typename T>
+const T& LinkedList<T>::Get(const T& key) const
+{
+	// TODO: 여기에 반환 구문을 삽입합니다.
 }
 
 // Retrieve list element whose key matches item's key (if present).

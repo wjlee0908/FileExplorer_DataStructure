@@ -107,12 +107,24 @@ public:
 	int Replace(const T& item);
 
 	/**
-	*	@brief	Returns list element whose key matches item's key (if present).
+	*	@brief	Returns list element whose key matches item's key (if present)
 	*	@pre	Key member of item is initialized.
-	*	@post	If there is an element whose key matches with item's key then the element's record is assigned to the item.
-	*	@return	1 if any element's primary key matches with item's, otherwise 0.
+	*	@post	If there is an element whose key matches with parameter key then the element's record is returned.
+	*	@return	Found element's reference.
 	*/
-	bool Get(T& item);
+	T& Get(const T& key) {
+		return const_cast<T&>(
+			static_cast<const DoublyLinkedList<T>&>(*this).Get(key)
+			);
+	}
+
+	/**
+	*	@brief	Returns list element whose key matches item's key (if present, for const object).
+	*	@pre	Key member of item is initialized.
+	*	@post	If there is an element whose key matches with parameter key then the element's record is returned.
+	*	@return	Found element's reference.
+	*/
+	const T& Get(const T& key) const;
 
 	/**
 	*	@brief	Returns list node whose key matches item's key (if present).
@@ -358,20 +370,20 @@ int DoublyLinkedList<T>::Replace(const T& item)
 	}
 }
 
-// Retrieve list element whose key matches item's key (if present).
-template <typename T>
-bool DoublyLinkedList<T>::Get(T& item)
+// Returns list element whose key matches item's key (if present, for const object)
+template<typename T>
+const T& DoublyLinkedList<T>::Get(const T& key) const
 {
 	DoublyPointingNode<T>* found_node;    // 일치하는 아이템을 찾은 노드
 
 	found_node = GetNode(item);
 
-	if (found_node != nullptr) {
-		return true;
+	// if not found, throw except
+	if (found_node == nullptr) {
+		throw std::invalid_argument("Get(): item is not found");
 	}
-	else {
-		return false;
-	}
+
+	return found_node->data;
 }
 
 // Returns list node whose key matches item's key (if present).
