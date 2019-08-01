@@ -23,13 +23,17 @@ public:
 	/**
 	*	default constructor.
 	*/
-	LinkedList() : length_(0), head_(nullptr), iterator_(nullptr) {}
+	LinkedList(): 
+		head_(nullptr), 
+		iterator_(nullptr), 
+		length_(0)
+	{}
 
 	/**
 	*    copy constructor
 	*/
-	LinkedList(const LinkedList<T>& copied_object)
-	{
+	LinkedList(const LinkedList<T>& copied_object):
+		LinkedList() {
 		AssignCopy();
 	}
 
@@ -451,13 +455,11 @@ template<typename T>
 void LinkedList<T>::AssignCopy(const LinkedList<T> & copied_object)
 {
 	ListNode<T>* node = copied_object.head_;	// node for iteration
-	T copied_item;
 
 	// 빈 리스트에 복사 대상의 아이템 모두 삽입
 	MakeEmpty();
-	while (node != NULL) {
-		copied_item = node->data;
-		this->Add(copied_item);
+	while (node != nullptr) {
+		this->Add(node->data);
 		node = node->next;
 	}
 }

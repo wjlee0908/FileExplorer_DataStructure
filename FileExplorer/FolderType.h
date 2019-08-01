@@ -18,20 +18,23 @@ public:
 	/**
 	*	default constructor.
 	*/
-	FolderType()
-	{
-		ItemType::ItemType();
-		sub_folder_list_ = nullptr;
-		file_list_ = nullptr;
-		num_sub_folder_ = 0;
+	FolderType() :
+		FolderType(nullptr)
+	{ }
+
+	FolderType(FolderType* parent_folder) :
+		ItemType::ItemType(parent_folder),
+		sub_folder_list_(nullptr),
+		file_list_(nullptr),
+		num_sub_folder_(0) {
+		SetPath();
 	}
 
 	/**
 	*	destructor.
 	*/
-	~FolderType()	
+	~FolderType()
 	{
-		ItemType::~ItemType();
 		if (num_sub_folder_ != 0) {
 			delete sub_folder_list_;
 		}
@@ -40,7 +43,16 @@ public:
 	/**
 	*    copy constructor
 	*/
-	FolderType(const FolderType &copied_data);
+	FolderType(const FolderType& copied_data) :
+		ItemType::ItemType(copied_data),
+		sub_folder_list_(nullptr),
+		file_list_(nullptr),
+		num_sub_folder_(copied_data.num_sub_folder_)
+	{
+		CopySubFolderList(copied_data.sub_folder_list_);
+		CopyFileList(copied_data.file_list_);
+	}
+
 
 	/**
 	*	@brief	Get number of sub folders.
@@ -189,11 +201,27 @@ protected:
 private:
 	/**
 	*	@brief	Copy parameter folder and assign to this folder. (deep copy)
-	*	@pre	copide_object is set.
+	*	@pre	copied_object is set.
 	*	@post	folder record is set.
 	*   @param  copied_object    object to assign
 	*/
 	void AssignCopy(const FolderType& copied_object);
+
+	/**
+	*	@brief	Copy sub folder list (deep copy)
+	*	@pre	copied_list is set.
+	*	@post	member sub_folder_list_ is set.
+	*   @param  copied_list    list to copy
+	*/
+	void CopySubFolderList(const BinarySearchTree<FolderType>* copied_list);
+
+	/**
+	*	@brief	Copy file list (deep copy)
+	*	@pre	copied_list is set.
+	*	@post	member file_list_ is set.
+	*   @param  copied_list    list to copy
+	*/
+	void CopyFileList(const BinarySearchTree<FileType>* copied_list);
 
 	/**
 	*	@brief	Finds the folder that its name duplicates and return its result.

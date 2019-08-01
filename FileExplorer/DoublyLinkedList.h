@@ -31,7 +31,11 @@ public:
 	/**
 	*	default constructor.
 	*/
-	DoublyLinkedList() : length_(0), head_(nullptr), tail_(nullptr) {}
+	DoublyLinkedList() : 
+		head_(nullptr),
+		tail_(nullptr),
+		length_(0)
+	{}
 
 	/**
 	*	destructor.
@@ -41,8 +45,8 @@ public:
 	/**
 	*    copy constructor
 	*/
-	DoublyLinkedList(const DoublyLinkedList<T>& copied_object)
-	{
+	DoublyLinkedList(const DoublyLinkedList<T>& copied_object) :
+		DoublyLinkedList() {
 		AssignCopy(copied_object);
 	}
 
@@ -413,13 +417,11 @@ template<typename T>
 void DoublyLinkedList<T>::AssignCopy(const DoublyLinkedList<T> & copied_object)
 {
 	DoublyPointingNode<T>* node = copied_object.head_;	// node for iteration
-	T copied_item;
 
 	// 빈 리스트에 복사 대상의 아이템 모두 삽입
 	MakeEmpty();
 	while (node != NULL) {
-		copied_item = node->data;
-		this->Add(copied_item);
+		this->Add(node->data);
 		node = node->next;
 	}
 }

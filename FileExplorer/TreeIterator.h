@@ -28,7 +28,11 @@ public:
 	/**
 	*	Initialize tree_ and current_node_. (constructor overloading)
 	*/
-	TreeIterator(const BinarySearchTree<T>& tree) : tree_(tree), current_node_(tree.root_) {}
+	TreeIterator(const BinarySearchTree<T>& tree) :
+		tree_(tree),
+		current_node_(tree.root_),
+		stack_()
+	{}
 
 	/**
 	*	@brief	Returns whether pointer of current node is null.

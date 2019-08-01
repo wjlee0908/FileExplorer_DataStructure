@@ -47,7 +47,12 @@ public:
 	/**
 	*	default constructor.
 	*/
-	Stack();
+	Stack() :
+		items_(nullptr),
+		top_(-1),
+		size_(kDefaultMaxSize)	{
+		InitializeStackArray();
+	}
 
 	/**
 	*	@brief	Constructs stack whose size is parameter size.
@@ -55,12 +60,22 @@ public:
 	*	@post	Member of items points the allocated array.
 	*   @param  size    size of constructing stack.
 	*/
-	Stack(int size);
+	Stack(int size) :
+		items_(nullptr),
+		top_(-1),
+		size_(size) {
+		InitializeStackArray();
+	}
 
 	/**
 	*    copy constructor.
 	*/
-	Stack(const Stack<T>& copied_object);
+	Stack(const Stack<T>& copied_object) :
+		items_(nullptr),
+		top_(copied_object.top_),
+		size_(copied_object.size_) {
+		InitializeStackArray(copied_object.items_, copied_object.size_);
+	}
 
 	/**
 	*	destructor.
@@ -125,63 +140,44 @@ public:
 	*/
 	friend ostream& operator<<(ostream& output_stream, const Stack<T>& stack_object);
 
+	/**
+	*	@brief	Copy parameter stack and assign to this stack.
+	*	@pre	copied_data is set.
+	*	@post	stack record is set.
+	*   @param  copied_data    data to assign
+	*   @return return this after assigning parameter.
+	*/
+	Stack<T>& operator=(const Stack<T>& copied_data);
+
 private:
 	/**
-	*	@brief	Initialize stack to size parameter.
-	*	@pre	none.
-	*	@post	stack is initialized.
-	*   @param  size of stack.
+	*	@brief	Initialize stack array to size member.
+	*	@pre	stack size is initialized.
+	*	@post	items array is initialized.
 	*/
-	void InitializeStack(int size);
+	void InitializeStackArray();
+
+	/**
+	*	@brief	Initialize stack array to size parameter and copy item from parmeter array.
+	*	@pre	stack size is initialized.
+	*	@post	items array is initialized.
+	*/
+	void InitializeStackArray(T* copied_items, int arr_size);
 
 	static const int kDefaultMaxSize = 10;    ///< default max size of stack 
 
+	T* items_;	///< dynamically allocated item array.
 	int top_;	///< Number of elements in current array.
 	int size_;	///< size of the stack.
-	T* items_;	///< dynamically allocated item array.
 };
-
-// default constructor
-template<typename T>
-Stack<T>::Stack()
-{
-	InitializeStack(kDefaultMaxSize);
-}
-
-//Constructs stack whose size is parameter size.
-template<typename T>
-inline Stack<T>::Stack(int size)
-{
-	InitializeStack(size);
-}
-
-// copy constructor
-template<typename T>
-Stack<T>::Stack(const Stack<T>& copied_object)
-{
-	// size 더 큰 스택 복사할 수도 있으므로 동적 할당 해제하고 다시 할당함.
-	delete[] this->items_;
-	this->InitializeStack(copied_object.size_);
-
-	// 속성 복사
-	this->top_ = copied_object.top_;
-
-	// 데이터 array 복사
-	// 비어 있는 큐에서는 수행하지 않음.
-	if (!copied_object.IsEmpty()) {
-		for (int i = 0; i <= top; i++)
-		{
-			this->items_[i] = copied_object.items_[i];
-		}
-	}
- }
-
 
 // destructor.
 template<typename T>
 Stack<T>::~Stack()
 {
-	delete[] items_;	// 동적 할당된 배열 메모리 해제
+	if (items_ != nullptr) {
+		delete[] items_;	// 동적 할당된 배열 메모리 해제
+	}
 }
 
 
@@ -280,13 +276,39 @@ ostream& operator<<(ostream& output_stream, const Stack<T>& stack_object) {
 	return output_stream;
 }
 
+// Copy parameter stack and assign to this stack.
+template<typename T>
+Stack<T>& Stack<T>::operator=(const Stack<T>& copied_data)
+{
+	top_ = copied_data.top_;
+	size_ = copied_data.size_;
+
+	// 사이즈 더 큰 스택 들어올 수도 있으니 초기화후 재할당
+	delete items_[];
+	InitializeStackArray(copied_data.items_, copied_data.size_);
+
+}
+
 // Initialize stack to size parameter.
 template<typename T>
-void Stack<T>::InitializeStack(int size)
+void Stack<T>::InitializeStackArray()
 {
-	size_ = size;
 	items_ = new T[size_];    // dynamically allocate items array
-	top_ = -1;
+}
+
+// Initialize stack array to size parameter and copy item from parmeter array.
+template<typename T>
+void Stack<T>::InitializeStackArray(T* copied_items, int arr_size)
+{
+	items = new T[arr_size];
+	// 데이터 array 복사
+	// 비어 있는 배열에서는 수행하지 않음.
+	if (copied_items != nullptr) {
+		for (int i = 0; i < arr_size; i++)
+		{
+			this->items_[i] = copied_items[i];
+		}
+	}
 }
 
 #endif // _STACK_H

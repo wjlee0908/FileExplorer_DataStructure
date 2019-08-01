@@ -46,7 +46,10 @@ public:
 	/**
 	*	default constructor.
 	*/
-	CircularQueue();
+	CircularQueue() :
+		CircularQueue(kDefaultMaxSize) {
+		InitializeQueue();
+	}
 
 	/**
 	*	@brief	Constructs circular queue whose size is parameter.
@@ -54,12 +57,24 @@ public:
 	*	@post	Member of items points the allocated array.
 	*   @param  size    size of constructing queue.
 	*/
-	CircularQueue(int size);
+	CircularQueue(int size) :
+		items_(nullptr),
+		size_(size),
+		front_(size_ - 1),
+		rear_(size_ - 1) {
+		InitializeQueue();
+	}
 
 	/**
     *    copy constructor.
 	*/
-	CircularQueue(const CircularQueue<T>& copied_object);
+	CircularQueue(const CircularQueue<T>& copied_object) :
+		items_(nullptr),
+		size_(copied_object.size_),
+		front_(copied_object.front_),
+		rear_(copied_object.rear_) {
+		InitializeQueue(copied_object.items_);
+	}
 
 	/**
 	*	destructor
@@ -131,12 +146,21 @@ private:
 	void AssignCopy(const CircularQueue<T> & copied_object);
 
 	/**
-	*	@brief	Initialize queue to size parameter.
+	*	@brief	Initialize queue to size member.
 	*	@pre	none.
-	*	@post	queue is initialized.
-	*   @param  size of queue.
+	*	@post	queue item is initialized.
 	*/
-	void InitializeQueue(int size);
+	void InitializeQueue();
+
+	/**
+	*	@brief	Initialize queue item and copy array parameter.
+	*	@pre	none.
+	*	@post	queue item is initialized.
+	*   @param  copied_items    item array to copy item
+	*   @param  arr_size    size of item array.
+	*/
+	void InitializeQueue(T* copied_items, int arr_size);
+
 
 	/**
 	*	@brief	Circulate circular queue index.
@@ -148,32 +172,11 @@ private:
 
 	static const int kDefaultMaxSize = 10;    ///< default max size of queue
 
+	T* items_;	///< dynamically allocated item array.
+	int size_;	///< size of the queue.
 	int front_;	///< index of the first-1 element.
 	int rear_;	///< index of the last element.
-	int size_;	///< size of the queue.
-	T* items_;	///< dynamically allocated item array.
 };
-
-// default constructor.
-template <typename T>
-CircularQueue<T>::CircularQueue()
-{
-	InitializeQueue(kDefaultMaxSize);   // set queue to max size.
-}
-
-// Allocate queue whose size is parameter
-template <typename T>
-CircularQueue<T>::CircularQueue(int size)
-{
-	InitializeQueue(size);
-}
-
-// copy constructor. (deep copy)
-template<typename T>
-CircularQueue<T>::CircularQueue(const CircularQueue<T>& copied_object)
-{
-	AssignCopy(copied_object);
-}
 
 // destructor.
 template <typename T>
@@ -248,9 +251,20 @@ T CircularQueue<T>::DeQueue()
 
 // Copy parameter queue and assign to this queue.
 template<typename T>
-CircularQueue<T>& CircularQueue<T>::operator=(const CircularQueue<T>& copied_data)
+CircularQueue<T>& CircularQueue<T>::operator=(const CircularQueue<T>& copied_object)
 {
-	AssignCopy(copied_data);
+	// size 더 큰 큐 복사할 수도 있으므로 동적 할당 해제하고 다시 할당함.
+	if (this != nullptr) {
+		delete[] this->items_;
+	}
+	
+	// 속성 복사
+	this->size_ = copied_object.size_;
+	this->front_ = copied_object.front_;
+	this->rear_ = copied_object.rear_;
+
+	// 배열 할당 후 내용 복사
+	this->InitializeQueue(copied_object.items_, copied_object.size_);
 
 	return *this;
 }
@@ -316,12 +330,34 @@ void CircularQueue<T>::AssignCopy(const CircularQueue<T> & copied_object)
 
 // Initialize queue to size parameter.
 template<typename T>
-void CircularQueue<T>::InitializeQueue(int size)
+void CircularQueue<T>::InitializeQueue()
 {
-	size_ = size;
 	items_ = new T[size_];	// items 배열 동적 할당
-	front_ = size_ - 1;
-	rear_ = size_ - 1;
+}
+
+// Initialize queue item and copy array parameter.
+template<typename T>
+void CircularQueue<T>::InitializeQueue(T* copied_items, int arr_size)
+{
+	items_ = new T[arr_size];    // items 배열 동적 할당
+	// 데이터 array 내용 복사
+	// 비어있는 큐에서는 수행하지 않음
+	if (copied_items != nullptr) {
+		if (front_ > rear_) {   // front+1 ~ 0 ~ rear 순으로 데이터 저장된 경우
+			for (int i = this->front_ + 1; i < this->size_; i++) {
+				this->items_[i] = copied_items[i];
+			}
+			for (int i = 0; i <= this->rear_; i++) {
+				this->items_[i] = copied_items[i];
+			}
+		}
+		else	// 선형처럼 front가 rear보다 작은 경우
+		{
+			for (int i = this->front_ + 1; i <= this->rear_; i++) {
+				this->items_[i] = copied_items[i];
+			}
+		}
+	}
 }
 
 // Circulate circular queue index.

@@ -5,11 +5,6 @@ ItemType::~ItemType()
 {
 }
 
-ItemType::ItemType(const ItemType & copied_data)
-{
-	AssignCopy(copied_data);
-}
-
 // Get item path by string type
 string ItemType::GetPathString() const
 {
@@ -49,14 +44,14 @@ void ItemType::SetPath()
 	}
 }
 
-// Assign copy of parameter
-void ItemType::AssignCopy(const ItemType & copied_object)
+// Copy parameter itemand assign to this item. (deep copy)
+void ItemType::AssignCopy(const ItemType& copied_object)
 {
 	this->name_ = copied_object.name_;
-	this->created_time_ = copied_object.created_time_;
 	this->size_ = copied_object.size_;
-	this->path_ = copied_object.path_;    // path list deep copy
-	
+	this->path_ = copied_object.path_;
+	this->created_time_ = copied_object.created_time_;
+	this->parent_folder_ = copied_object.parent_folder_;
 }
 
 RelationType ItemType::CompareByName(const ItemType & data) const

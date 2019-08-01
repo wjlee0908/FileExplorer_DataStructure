@@ -1,11 +1,5 @@
 #include "FolderType.h"
 
-// copy constructor for deep copy.
-FolderType::FolderType(const FolderType & copied_data)
-{
-	AssignCopy(copied_data);
-}
-
 // copy and assgin parameter to this folder
 FolderType & FolderType::operator=(const FolderType & copied_data)
 {
@@ -19,23 +13,35 @@ void FolderType::AssignCopy(const FolderType & copied_object)
 	ItemType::AssignCopy(copied_object);
 
 	this->num_sub_folder_ = copied_object.num_sub_folder_;
+	
+	CopySubFolderList(copied_object.sub_folder_list_);
+	CopyFileList(copied_object.file_list_);
 
-	if (copied_object.num_sub_folder_ == 0) {
+}
+
+// Copy sub folder list (deep copy)
+void FolderType::CopySubFolderList(const BinarySearchTree<FolderType>* copied_list)
+{
+	if (copied_list == nullptr) {
 		this->sub_folder_list_ = nullptr;
 	}
 	else {
 		// 공간 생성하고 데이터 deep copy.
 		this->sub_folder_list_ = new BinarySearchTree<FolderType>;
-		*(this->sub_folder_list_) = *(copied_object.sub_folder_list_);
+		*(this->sub_folder_list_) = *copied_list;
 	}
-	if (copied_object.file_list_ == nullptr) {
+}
+
+// Copy file list (deep copy)
+void FolderType::CopyFileList(const BinarySearchTree<FileType>* copied_list)
+{
+	if (copied_list == nullptr) {
 		this->file_list_ = nullptr;
 	}
 	else {
 		this->file_list_ = new BinarySearchTree<FileType>;
-		*(this->file_list_) = *(copied_object.file_list_);
+		*(this->file_list_) = *(copied_list);
 	}
-
 }
 
 // Set folder path using item name and parent folders
@@ -49,27 +55,25 @@ void FolderType::SetPath()
 
 // add sub folder into sub folder list.
 int FolderType::AddSubFolder() {
-	FolderType* new_folder = new FolderType;
+	FolderType new_folder(this);    // parent folder를 this로 설정
 	FolderType* created_folder;
-	string new_folder_path;
 
 	if (num_sub_folder_ == 0) {
 		sub_folder_list_ = new BinarySearchTree<FolderType>;
 	}
 
-	new_folder->SetAttributesFromKeyboard();
+	new_folder.SetAttributesFromKeyboard();
 
 	// 이름이 중복된 폴더면 생성 불가
-	if (IsDupliactedSubFolderExists(*new_folder)) {
+	if (IsDupliactedSubFolderExists(new_folder)) {
 		cout << "\tExisting folder name" << endl;
 		return 0;
 	}
 
-	new_folder->parent_folder_ = this;  
-	sub_folder_list_->Insert(*new_folder);
+	sub_folder_list_->Insert(new_folder);
 
 	// 리스트 안에 들어있는 생성한 폴더의 원본에 Path 설정
-	created_folder = sub_folder_list_->GetItemAdderess(*new_folder);
+	created_folder = sub_folder_list_->GetItemAdderess(new_folder);
 	num_sub_folder_++;
 	created_folder->SetPath();
 

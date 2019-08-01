@@ -26,7 +26,10 @@ public:
 	/**
 	*	Initialize list_ and current_node_. (constructor overloading)
 	*/
-	DoublyPointingIterator(const DoublyLinkedList<T>& list) : list_(list), current_node_(list.head_) {}
+	DoublyPointingIterator(const DoublyLinkedList<T>& list) : 
+		list_(list),
+		current_node_(list.head_)
+	{}
 
 	/**
 	*	@brief	Returns whether pointer of current node is null.

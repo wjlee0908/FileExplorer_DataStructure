@@ -30,11 +30,22 @@ public:
 	/**
 	*	default constructor.
 	*/
-	ItemType() : ItemType("", 0, nullptr) {}
+	ItemType() :
+		ItemType("", 0, nullptr) 
+	{}
 
-	ItemType(string name, int size, FolderType* parent_folder)
-		: name_(name), size_(size), parent_folder_(parent_folder_) {
+	ItemType(FolderType* parent_folder) :
+		ItemType("", 0, parent_folder)
+	{}
+
+	ItemType(string name, int size, FolderType* parent_folder) :
+		name_(name),
+		size_(size),
+		path_(),
+		created_time_(),
+		parent_folder_(parent_folder) {
 		GenerateCreatedTime();
+		SetPath();
 	}
 
 	/**
@@ -45,7 +56,13 @@ public:
 	/**
 	*    copy constructor
 	**/
-	ItemType(const ItemType &copied_data);
+	ItemType(const ItemType& copied_data) :
+		name_(copied_data.name_),
+		size_(copied_data.size_),
+		path_(copied_data.path_),    // call copy constructor. deep copy.
+		created_time_(copied_data.created_time_),
+		parent_folder_(copied_data.parent_folder_)
+	{}
 
 	/**
 	*	@brief	Get Item name.

@@ -32,11 +32,14 @@ class BinarySearchTree
 	friend class TreeIterator<T>;
 public:
 	// 생성자
-	BinarySearchTree();
+	BinarySearchTree() :
+		root_(nullptr)
+	{}
 
 	// 복사 생성자
-	BinarySearchTree(const BinarySearchTree<T>& copied_object) {
-		AssignCopy();
+	BinarySearchTree(const BinarySearchTree<T>& copied_object) :
+		root_(nullptr) {
+		Copy(root_, copied_object.root_);
 	}
 
 	// 소멸자
@@ -247,13 +250,6 @@ private:
 
 	Node<T>* root_;		///< Node 타입의 root
 };
-
-// 생성자
-template<typename T>
-BinarySearchTree<T>::BinarySearchTree()
-{
-	root_ = NULL;
-}
 
 template<typename T>
 BinarySearchTree<T>::~BinarySearchTree()
