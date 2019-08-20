@@ -218,27 +218,37 @@ FolderType* FolderType::GetSubFolder() const{
 
 // Retrieve folders containing finding name
 int FolderType::RetrieveFolderByName() const {
-	FolderType retrieving_folder;
-	bool is_found = false;
+	try {
+		FolderType retrieving_folder;
+		bool is_found = false;
 
-	retrieving_folder.SetNameFromKeyboard(); //name을 입력받는다.
+		retrieving_folder.SetNameFromKeyboard(); //name을 입력받는다.
 
-	// 리스트 순차 탐색
-	TreeIterator<FolderType> iter((*sub_folder_list_));    // 서브 폴더들 탐색할 iterator
-	for (iter.First(); !iter.IsNull(); iter.Next()) {
-		// 이름 확인
-		if ((*iter).GetName().find(retrieving_folder.GetName()) != string::npos) {
-			(*iter).DisplayNameOnScreen();
-			is_found = true;
+		// if sub folder list isn't valid
+		if (sub_folder_list_ == nullptr) {
+			throw std::invalid_argument("RetrieveFolderByName(): sub folder list is NULL");
 		}
-	}
 
-	if (!is_found) {
+		// 리스트 순차 탐색
+		TreeIterator<FolderType> iter((*sub_folder_list_));    // 서브 폴더들 탐색할 iterator
+		for (iter.First(); !iter.IsNull(); iter.Next()) {
+			// 이름 확인
+			if ((*iter).GetName().find(retrieving_folder.GetName()) != string::npos) {
+				(*iter).DisplayNameOnScreen();
+				is_found = true;
+			}
+		}
+
+		if (!is_found) {
+			throw std::invalid_argument("RetrieveFolderByName(): finding folder isn't exist");
+		}
+
+		return 0;
+	}
+	catch (invalid_argument e) {
 		cout << "\tFolder not found" << endl;
 		return 1;
 	}
-
-	return 0;
 }
 
 // Display all sub folders of this folder

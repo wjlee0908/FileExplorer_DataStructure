@@ -323,7 +323,7 @@ T BinarySearchTree<T>::Get(T key)
 	found_node = Search(root_, key);
 
 	if (found_node == nullptr) {
-		throw invalid_argument("Get(): key not found");
+		throw invalid_argument("Get(): key is not found");
 		return key;
 	}
 	else {

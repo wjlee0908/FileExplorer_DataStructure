@@ -1,6 +1,8 @@
 #ifndef _LINKED_LIST_H
 #define _LINKED_LIST_H
 
+#include <iostream>
+#include <exception>
 
 /**
 *	Structure for node to use in Unsorted Linked list.
@@ -23,16 +25,16 @@ public:
 	/**
 	*	default constructor.
 	*/
-	LinkedList(): 
-		head_(nullptr), 
-		iterator_(nullptr), 
+	LinkedList() :
+		head_(nullptr),
+		iterator_(nullptr),
 		length_(0)
 	{}
 
 	/**
 	*    copy constructor
 	*/
-	LinkedList(const LinkedList<T>& copied_object):
+	LinkedList(const LinkedList<T>& copied_object) :
 		LinkedList() {
 		AssignCopy();
 	}
@@ -92,16 +94,8 @@ public:
 	/**
 	*	@brief	Retrieve list element whose key matches item's key (if present).
 	*	@pre	Key member of item is initialized.
-	*	@post	If there is an element whose key matches with item's key then the element's record is copied to the item.
-	*	@return	1 if any element's primary key matches with item's, otherwise 0.
-	*/
-	int Get(T& item);
-
-	/**
-	*	@brief	Retrieve list element whose key matches item's key (if present).
-	*	@pre	Key member of item is initialized.
-	*	@post	found item's reference is returned
-	*	@return	1 if any element's primary key matches with item's, otherwise 0.
+	*	@post	Found item's reference is returned. Otherwise, throws exception.
+	*	@return	Found item's reference
 	*/
 	T& Get(const T& key) {
 		// call const version and cast return value to non-const
@@ -113,26 +107,10 @@ public:
 	/**
 	*	@brief	Retrieve list element whose key matches item's key (if present, for const object).
 	*	@pre	Key member of item is initialized.
-	*	@post	found item's reference is returned
-	*	@return	1 if any element's primary key matches with item's, otherwise 0.
+	*	@post	Found item's reference is returned. Otherwise, throws exception.
+	*	@return	Found item's reference
 	*/
 	const T& Get(const T& key) const;
-
-	/**
-	*	@brief	Retrieve list element whose key matches item's key (if present).
-	*	@pre	Key member of item is initialized.
-	*	@post	none.
-	*	@return	address of found item. if not found, returns NULL
-	*/
-	T* GetItemAddress(const T& item);
-
-	/**
-	*	@brief	Retrieve list element whose key matches item's key (if present). For const list.
-	*	@pre	Key member of item is initialized.
-	*	@post	none.
-	*	@return	address of found item. if not found, returns NULL.
-	*/
-	const T* GetItemAddress(const T& item) const;
 
 	/**
 	*	@brief	Initialize current pointer for an iteration through the list.
@@ -150,12 +128,25 @@ public:
 	ListNode<T>* WalkIterator() const;
 
 	/**
-	*	@brief	Get the next element in list.
-	*	@pre	current pointer is defined. Element at current pointer is not last in list.
-	*	@post	current pointer is updated to next position. item is a copy of element at current pointer.
+	*	@brief	Get the next element in list. (for const object)
+	*	@pre	Current pointer is assigned. Element at current pointer is not last in list.
+	*	@post	Current pointer is updated to next position.
 	*	@return	1 if this function works well, otherwise 0.
 	*/
-	int GetNextItem(T& item);
+	T& GetNextItem() {
+		// call const version of function and cast return value to non const
+		return const_cast<T&>(
+			static_cast<const LinkedList<T>&>(*this).GetNextItem()
+			);
+	}
+
+	/**
+	*	@brief	Get the next element in list. (for const object)
+	*	@pre	Current pointer is assigned. Element at current pointer is not last in list.
+	*	@post	Current pointer is updated to next position. 
+	*	@return	1 if this function works well, otherwise 0.
+	*/
+	const T& GetNextItem() const;
 
 	/**
 	*	@brief	Get last element of list
@@ -357,75 +348,41 @@ int LinkedList<T>::Replace(T item)
 		return 0;	//수정에 성공하면 1, 그렇지 못하면 0을 리턴한다.
 }
 
+
 // Retrieve list element whose key matches item's key (if present).
-template <typename T>
-int LinkedList<T>::Get(T& item)
+template<typename T>
+const T& LinkedList<T>::Get(const T& key) const
 {
-	bool moreToSearch, is_found;
+	bool more_to_search, is_found;
 	ListNode<T>* location;	//변수 선언
 
 	// 빈 리스트에서는 항상 못 찾음
 	if (IsEmpty()) {
-		return 0;
+		throw std::out_of_range("Get(): list is empty");
 	}
 
 	location = head_;
 	is_found = false;
-	moreToSearch = (location != NULL);	//변수 초기화
+	more_to_search = (location != nullptr);	//변수 초기화
 
-	while (moreToSearch && !is_found)	//리스트의 끝이 아니면서 아직 찾지 않았으면 반복한다.
+	while (more_to_search && !is_found)	//리스트의 끝이 아니면서 아직 찾지 않았으면 반복한다.
 	{
-		if (item == location->data)
+		if (key == location->data)
 		{
 			is_found = true;
-			item = location->data;
-		}	//일치하는 항목을 찾았을 때 found의 값을 변경해주고 item에 해당 항목을 복사해준다.
+			return location->data;
+		}	//일치하는 항목을 찾았을 때 found의 값을 변경해주고 해당 아이템을 리턴
 		else
 		{
 			location = location->next;
-			moreToSearch = (location != NULL);
+			more_to_search = (location != nullptr);
 		}	//찾지 못했을 때 다음 항목으로 location을 옮기고 그 값이 NULL이면 리스트의 끝이므로 moreToSearch의 값을 변경해준다.
 	}
 
-	if (is_found)
-		return 1;
-	else
-		return 0;	//찾으면 1, 그렇지 못하면 0을 리턴한다.
-}
-
-template<typename T>
-const T& LinkedList<T>::Get(const T& key) const
-{
-	// TODO: 여기에 반환 구문을 삽입합니다.
-}
-
-// Retrieve list element whose key matches item's key (if present).
-template<typename T>
-T* LinkedList<T>::GetItemAddress(const T& item)
-{
-	// cast const pointer to not-const pointer
-	return const_cast<T*>(
-		// call const version of GetItemAddress
-		static_cast<const LinkedList<T>&>(*this).GetItemAddress(item);
-	)
-}
-
-// const list version of GetItemAddress
-template<typename T>
-const T* LinkedList<T>::GetItemAddress(const T& item) const
-{
-	ResetIterator();
-
-	if (IsEmpty()) {
-		return NULL;
-	}
-	while (WalkIterator() != NULL) {
-		if (iterator_->data == item) {
-			return &(iterator_->data);
-		}
+	if (!is_found) {
+		throw std::invalid_argument("Get(): key is not found");
 	}
 
-	return nullptr;
 }
 
 // Initializes iterator pointer to NULL
@@ -453,18 +410,17 @@ ListNode<T>* LinkedList<T>::WalkIterator() const
 
 // Gets the next element in list.
 template <typename T>
-int LinkedList<T>::GetNextItem(T& item)
+const T& LinkedList<T>::GetNextItem() const
 {
 	WalkIterator();
 
-	if (iterator_ != NULL) {
-		// 하나 증가한 노드의 data를 레퍼런스로 전달
-		item = iterator_->data;
-		return 1;
+	if (iterator_ != nullptr) {
+		// 하나 증가한 노드의 data를 반환
+		return iterator_->data;
 	}
 	else {
 		// 마지막 노드에서 walk 했을 경우
-		return 0;
+		throw std::out_of_range("GetNextItem(): out of range");
 	}
 }
 
