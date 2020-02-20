@@ -174,28 +174,38 @@ int FolderType::DeleteSubFolder() {
 // Change sub folder name and rearrange it in the list
 int FolderType::ChangeSubFolderName()
 {
-	FolderType folder_change;
-	bool is_found = false;    // 이름 바꿀 폴더를 찾았는지 저장
+	try {
+		FolderType folder_change;
+		bool is_found = false;    // 이름 바꿀 폴더를 찾았는지 저장
 
-	// 바꿀 폴더 찾기
-	cout << "\tinput name of folder to change" << endl;
-	folder_change.SetNameFromKeyboard();
-	is_found = sub_folder_list_->Search(folder_change);
+		// 바꿀 폴더 찾기
+		cout << "\tinput name of folder to change" << endl;
+		folder_change.SetNameFromKeyboard();
 
-	// 바꿀 폴더 없으면 에러 메세지 출력하고 종료
-	if (!is_found) {
+		if (sub_folder_list_ == nullptr) {
+			throw std::invalid_argument("ChangeFolderName(): sub folder list is NULL");
+		}
+
+		is_found = sub_folder_list_->Search(folder_change);
+
+		// 바꿀 폴더 없으면 에러 메세지 출력하고 종료
+		if (!is_found) {
+			throw std::invalid_argument("ChangeFolderName(): folder doesn't exist");
+		}
+
+		// 바꿀 폴더 이름 바꾸기
+		folder_change = sub_folder_list_->Get(folder_change);    // 실제 바꿀 폴더 데이터를 Get
+		sub_folder_list_->Remove(folder_change);    // 정렬을 위해 리스트에서 제거하고
+		cout << "\tinput name to change" << endl;
+		folder_change.SetNameFromKeyboard();
+		sub_folder_list_->Insert(folder_change);	// 다시 삽입
+
+		return 1;
+	}
+	catch (std::invalid_argument e) {
 		cout << "\tfolder not found!" << endl;
 		return 0;
 	}
-	 
-	// 바꿀 폴더 이름 바꾸기
-	folder_change = sub_folder_list_->Get(folder_change);    // 실제 바꿀 폴더 데이터를 Get
-	sub_folder_list_->Remove(folder_change);    // 정렬을 위해 리스트에서 제거하고
-	cout << "\tinput name to change" << endl;
-	folder_change.SetNameFromKeyboard();
-	sub_folder_list_->Insert(folder_change);	// 다시 삽입
-
-	return 1;
 } 
 
 // Get sub folder by name
@@ -240,12 +250,13 @@ int FolderType::RetrieveFolderByName() const {
 		}
 
 		if (!is_found) {
-			throw std::invalid_argument("RetrieveFolderByName(): finding folder isn't exist");
+			throw std::invalid_argument("RetrieveFolderByName(): finding folder doesn't exist");
 		}
 
 		return 0;
 	}
 	catch (invalid_argument e) {
+		// 못 찾으면 에러 메세지 출력하고 종료
 		cout << "\tFolder not found" << endl;
 		return 1;
 	}
